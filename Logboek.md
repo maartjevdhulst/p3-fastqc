@@ -13,4 +13,7 @@ toevoegen bronnenlijst; plan van aanpak ingeleverd en geüpload naar github
 ---
 Datum: 25-2-2025
 Omschrijving werk: Feedback plan van aanpak; reflectie geschreven; ticketing fase 2
-opgezet en bijgewerkt; html & css bestanden in git;
+opgezet en bijgewerkt; html & css bestanden in git; teksten uit PvA op juiste pagina's;
+footer github link gemaakt; menu en andere links werkend gemaakt;
+---
+

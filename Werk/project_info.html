@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Static html page</title>
+    <title>project page</title>
     <link rel="stylesheet" type="text/css" href="Static_style.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 </head>
@@ -13,9 +13,9 @@
            <div class="nav-links" id="navLinks">
                <i class="fa fa-times" onclick="hideMenu()"></i>
                <ul>
-                   <li><a href="static_page.html">HOME</a> </li>
-                   <li><a href="">PROJECT INFO</a> </li>
-                   <li><a href="">FORMAT INFO</a> </li>
+                   <li><a href="home_page.html">HOME</a> </li>
+                   <li><a href="project_info.html">PROJECT</a> </li>
+                   <li><a href="tool_page.html">TOOL INFO</a> </li>
                    <li><a href="">GRAPHS</a> </li>
                    <li><a href="">ABOUT</a> </li>
                </ul>
@@ -29,26 +29,28 @@
    <section class="project_info">
        <div class="row">
            <div class="project-col">
-               <h3>Information about this format</h3>
-               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                   sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                   laboris nisi ut aliquip ex ea commodo consequat.
-                   Duis aute irure dolor in reprehenderit in voluptate velit esse
-                   cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                   cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+               <h3>Information about this project</h3>
+               <p>
+                   In dit project ga ik een website maken door middel van HTML, CSS, Flask, Jinja en Python. De website zal meerdere pagina’s bevatten namelijk:
+-	En een homepagina met een menu voor navigatie en een footer met relevantie informatie.
+-	Een pagina waar de achtergrond informatie beschreven staat.
+-	Een pagina die het project toelicht.
+-	Een pagina waar de gebruiker haar bestand kan uploaden en de parameters voor de controles en bijpassende visualisaties kan instellen.
+-	Een pagina voor de resultaten doormiddel van de FastQC tool, die gedownload kunnen.  Deze website wordt interactief en krijgt nette error handling. Verder zal het project object georiënteerd geprogrammeerd worden(OOP).
+
+               </p>
            </div>
            <div class="project-col">
-               <img src="../Markdown_Images/Click_install_packages.png"
+               <img src="../images/Picture1.jpg"
            </div>
        </div>
    </section>
 
    <section class="footer">
        <h4>about us</h4>
-       <p>contact informatie</p>
+       <p>Maartje van der Hulst, 374361</p>
        <div class="icons">
-           <i class="fa fa-github"></i>
+           <a href="https://github.com/maartjevdhulst/p3-fastqc" class="fa fa-github"></a>
            <i class="fa fa-heart"></i>
            <i class="fa fa-star"></i>
         </div>

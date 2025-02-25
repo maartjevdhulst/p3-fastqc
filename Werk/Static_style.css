@@ -25,7 +25,7 @@ nav {
     position: relative;
 }
 .nav-links ul li a{
-    color: #000;
+    color: #4b0b1e;
     text-decoration: none;
     font-size: 18px;
 }
@@ -77,6 +77,8 @@ nav {
 nav .fa{
     display: none;
 }
+
+
 @media (max-width: 700px){
     .text-box h1{
         font-size: 28px;
@@ -132,6 +134,7 @@ nav .fa{
     width: 100%;
     text-align: center;
     padding: 30px 0;
+    background-image: linear-gradient(#e65681, #8e1438);
 }
 .footer h4{
     margin-bottom: 2px;
@@ -139,11 +142,63 @@ nav .fa{
     font-weight: 600;
 }
 .icons .fa{
-    color: #4b0b1e;
+    color: #ffffff;
     margin: 0 13px;
     cursor: pointer;
     padding: 18px 0;
 }
+
+.icons .fa:hover{
+    color: #e65681;
+}
+/*------toolpage-----*/
+.tool_info{
+    margin: auto;
+    text-align: left;
+    padding-top: 100px;
+    background-image: linear-gradient( #e65681, #ffffff);
+
+}
+.tool-col{
+    color: black;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 22px;
+    width: 50%;
+}
+.tool-col img{
+    padding: 10px;
+    width: 100%;
+}
+.tool-col h3{
+    color: #4b0b1e;
+}
+
+.footer{
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+}
+.footer h4{
+    margin-bottom: 2px;
+    margin-top: 2px;
+    font-weight: 600;
+}
+.icons .fa{
+    color: #ffffff;
+    margin: 0 13px;
+    cursor: pointer;
+    padding: 18px 0;
+    text-decoration: none;
+}
+.icons .fa:hover{
+    color: #e65681;
+}
+
+
+
+
+
 
 /*---------------project-info-page -----------*/
 .sub-header{
@@ -172,10 +227,11 @@ nav .fa{
 .project_info h3{
     font-size: 20px;
     padding-top: 0;
+    color: #4b0b1e;
 }
 .project_info p{
     font-size: 16px;
-    color: #8e1438;
+    color: #000000;
     padding: 15px 0 25px;
 }
 .project-col{
