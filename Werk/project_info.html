@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static html page</title>
+    <link rel="stylesheet" type="text/css" href="Static_style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+</head>
+<body>
+   <section class="sub-header">
+       <nav>
+           <div class="nav-links" id="navLinks">
+               <i class="fa fa-times" onclick="hideMenu()"></i>
+               <ul>
+                   <li><a href="static_page.html">HOME</a> </li>
+                   <li><a href="">PROJECT INFO</a> </li>
+                   <li><a href="">FORMAT INFO</a> </li>
+                   <li><a href="">GRAPHS</a> </li>
+                   <li><a href="">ABOUT</a> </li>
+               </ul>
+           </div>
+           <i class="fa fa-bars" onclick="showMenu()"></i>
+       </nav>
+       <h1>project information</h1>
+   </section>
+
+   <!--project info-->
+   <section class="project_info">
+       <div class="row">
+           <div class="project-col">
+               <h3>Information about this format</h3>
+               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                   sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                   laboris nisi ut aliquip ex ea commodo consequat.
+                   Duis aute irure dolor in reprehenderit in voluptate velit esse
+                   cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                   cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+           </div>
+           <div class="project-col">
+               <img src="../Markdown_Images/Click_install_packages.png"
+           </div>
+       </div>
+   </section>
+
+   <section class="footer">
+       <h4>about us</h4>
+       <p>contact informatie</p>
+       <div class="icons">
+           <i class="fa fa-github"></i>
+           <i class="fa fa-heart"></i>
+           <i class="fa fa-star"></i>
+        </div>
+   </section>
+
+
+
+<!--  javascript for toggle menu  -->
+<script>
+
+  var navLinks = document.getElementById("navLinks");
+  function showMenu(){
+      navLinks.style.right = "0";
+}
+  function hideMenu(){
+      navLinks.style.right = "-200px";
+}
+</script>
+
+</body>
+</html>
