@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home page</title>
-    <link rel="stylesheet" type="text/css" href="Static_style.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="Static_style.css">
+
 </head>
 <body>
    <section class="header">
        <nav>
+           <a class="fa fa-bars" onclick="showMenu()"></a>
            <div class="nav-links" id="navLinks">
-               <i class="fa fa-times" onclick="hideMenu()"></i>
+               <a class="fa fa-times" onclick="hideMenu()"></a>
                <ul>
                    <li><a href="home_page.html">HOME</a> </li>
                    <li><a href="project_info.html">PROJECT</a> </li>
                    <li><a href="tool_page.html">TOOL INFO</a> </li>
                    <li><a href="">GRAPHS</a> </li>
-                   <li><a href="">ABOUT</a> </li>
+                   <li><a href="references_page.html">REFERENCES</a> </li>
                </ul>
            </div>
-           <i class="fa fa-bars" onclick="showMenu()"></i>
        </nav>
         <div class="text-box">
         <h2>FastQC</h2>
@@ -35,9 +36,10 @@
         <h4>About us</h4>
         <p>Maartje van der Hulst, 374361</p>
         <div class="icons">
-            <a href="https://github.com/maartjevdhulst/p3-fastqc" class="fa fa-github"></a>
+            <a href="https://github.com/maartjevdhulst/p3-fastqc" class="fa fa-github" target="_blank"></a>
             <i class="fa fa-heart"></i>
-            <i href="https://www.hanze.nl/nl/opleidingen/voltijd/bachelor/bio-informatica" class="fa fa-graduation-cap"></i>
+            <a href="https://www.hanze.nl/nl/opleidingen/voltijd/bachelor/bio-informatica"
+               class="fa fa-graduation-cap" target="_blank"></a>
         </div>
     </section>
 

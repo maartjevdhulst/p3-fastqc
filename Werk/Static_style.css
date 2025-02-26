@@ -6,16 +6,40 @@
 }
 
 /*----menu navigatielinkjes---------*/
+.fa-bars{
+    color: #4b0b1e;
+    display: block;
+    right: 3%;
+    position: absolute;
+    padding-top: 20px;
+    cursor: pointer;
+    font-size: 30px;
+}
 .nav-links{
     flex: 1;
-    text-align: right;
     font-weight: bold;
+    position: fixed;
+    right: -200px;
+    height: 100%;
+    background-image: linear-gradient(#e65681,#4b0b1e);
+    width: 200px;
+    text-align: left;
+    z-index: 2;
+    transition: 1s;
+}
+.nav-links a {
+    display: block;
+    color: #4b0b1e;
+    margin: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.nav-links ul{
+   padding: 30px;
 }
 .nav-links ul li{
-    list-style: none;
-    display: inline-block;
-    padding: 8px 12px;
-    position: relative;
+   display: block;
+    color: #4b0b1e;
 }
 .nav-links ul li a{
     color: #4b0b1e;
@@ -34,9 +58,15 @@
 .nav-links ul li:hover::after{
     width: 100%;
 }
-nav .fa{
-    display: none;
-}
+
+
+
+
+
+
+
+
+
 
 /*----footer----*/
 .footer{
@@ -54,7 +84,7 @@ nav .fa{
 .footer p{
     margin-bottom: 2px;
     margin-top: 2px;
-    font-weight: 6400;
+    font-weight: 400;
     color: #f5bdce;
 }
 .icons .fa{
@@ -124,7 +154,7 @@ nav .fa{
 
 
 
-/*---------------project-info-page -----------*/
+/*---------------header for all pages except homepage -----------*/
 .sub-header{
     min-height: 30vh;
     width: 100%;
@@ -134,10 +164,12 @@ nav .fa{
     position: relative;
 }
 .sub-header h1{
-    margin-top: 80px;
+    padding-top: 10%;
     text-align: center;
     color: #4b0b1e;
 }
+
+/*------ project page-----*/
 .project_info{
     width: 100%;
     margin: auto;
@@ -155,7 +187,12 @@ nav .fa{
 .project_info p{
     font-size: 15px;
     color: #000000;
-    padding: 15px 0 25px;
+    padding: 15px 0 5px;
+}
+.project_info ol{
+    color: #000000;
+    padding: 0 15px 25px;
+    font-size: 15px;
 }
 .project-col{
     flex-basis: 48%;
@@ -163,6 +200,7 @@ nav .fa{
 }
 .project-col img{
     width: 100%;
+    padding-top: 25%;
 }
 
 
@@ -182,6 +220,7 @@ nav .fa{
 }
 .tool-col img{
     width: 100%;
+    padding-top: 15%;
 }
 .tool-col h3{
     color: #4b0b1e;
@@ -192,6 +231,30 @@ nav .fa{
     font-size: 15px;
     padding: 15px 0 25px;
 }
+
+/*----references page-----*/
+.references{
+    background-image: linear-gradient(#e65681, #8e1438);
+    width: auto;
+    padding-bottom: 50px;
+    padding-left: 10%;
+    color: #4b0b1e;
+    position: relative;
+    text-align: left;
+}
+
+.references p{
+    padding-top: 40px;
+    color: black;
+    font-size: 15px;
+}
+.references a{
+    color: #4b0b1e;
+}
+.references a:visited{
+    color: #4b0b1e;
+}
+
 
 
 /*-----kleinere scherm instellingen of opties-----*/

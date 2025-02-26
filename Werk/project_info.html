@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>project page</title>
-    <link rel="stylesheet" type="text/css" href="Static_style.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="Static_style.css">
 </head>
 <body>
    <section class="sub-header">
        <nav>
            <div class="nav-links" id="navLinks">
-               <i class="fa fa-times" onclick="hideMenu()"></i>
+               <a class="fa fa-times" onclick="hideMenu()"></a>
                <ul>
                    <li><a href="home_page.html">HOME</a> </li>
                    <li><a href="project_info.html">PROJECT</a> </li>
                    <li><a href="tool_page.html">TOOL INFO</a> </li>
                    <li><a href="">GRAPHS</a> </li>
-                   <li><a href="">ABOUT</a> </li>
+                   <li><a href="references_page.html">REFERENCES</a> </li>
                </ul>
            </div>
            <i class="fa fa-bars" onclick="showMenu()"></i>
@@ -31,17 +31,25 @@
            <div class="project-col">
                <h3>Information about this project</h3>
                <p>
-                   In dit project ga ik een website maken door middel van HTML, CSS, Flask, Jinja en Python. De website zal meerdere pagina’s bevatten namelijk:
--	En een homepagina met een menu voor navigatie en een footer met relevantie informatie.
--	Een pagina waar de achtergrond informatie beschreven staat.
--	Een pagina die het project toelicht.
--	Een pagina waar de gebruiker haar bestand kan uploaden en de parameters voor de controles en bijpassende visualisaties kan instellen.
--	Een pagina voor de resultaten doormiddel van de FastQC tool, die gedownload kunnen.  Deze website wordt interactief en krijgt nette error handling. Verder zal het project object georiënteerd geprogrammeerd worden(OOP).
+                   This is a schoolproject for the Hanze University of applied sciences in which I will be making
+                   this website. On this website there will be the FastQC-tool available. I will be using
+                   HTML, CSS, Python, Flask en Jinja to make this happen. At the bottom of the page you can
+                   click the github logo to visit the repository for this project.
 
-               </p>
+                   The image shows the planning for this project. <br><br>The project is split into 7 phases.</p>
+                   <ol>
+                       <li>Writing the project proposal</li>
+                       <li>Creating the static website</li>
+                       <li>Making the static website dynamic</li>
+                       <li>Creating the results page</li>
+                       <li>Making the OOP backend</li>
+                       <li>Linking backend and results page</li>
+                       <li>Finishing the website and making and doing the final presentation</li>
+                    </ol>
+
            </div>
            <div class="project-col">
-               <img src="../images/Picture1.jpg" alt="Graph made using FastQC">
+               <img src="../images/Picture2.png" alt="Gantt chart of the project planning">
            </div>
        </div>
    </section>
@@ -50,9 +58,10 @@
        <h4>About us</h4>
        <p>Maartje van der Hulst, 374361</p>
        <div class="icons">
-           <a href="https://github.com/maartjevdhulst/p3-fastqc" class="fa fa-github"></a>
+           <a href="https://github.com/maartjevdhulst/p3-fastqc" class="fa fa-github" target="_blank"></a>
            <i class="fa fa-heart"></i>
-           <a href="https://www.hanze.nl/nl/opleidingen/voltijd/bachelor/bio-informatica" class="fa fa-graduation-cap"></a>
+           <a href="https://www.hanze.nl/nl/opleidingen/voltijd/bachelor/bio-informatica"
+              class="fa fa-graduation-cap" target="_blank"></a>
         </div>
    </section>
 
