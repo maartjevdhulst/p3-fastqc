@@ -1,22 +1,15 @@
+/*-----algemeen------*/
 *{
     margin: 0;
     padding: 0;
     font-family: "Comic Sans MS", sans-serif;
 }
-.header{
-    min-height: 100vh;
-    width: 100%;
-    background-image: linear-gradient(#ffffff,#e65681);
-    background-position: center;
-    background-size: cover;
-    position: relative;
-}
-nav {
 
-}
+/*----menu navigatielinkjes---------*/
 .nav-links{
     flex: 1;
     text-align: right;
+    font-weight: bold;
 }
 .nav-links ul li{
     list-style: none;
@@ -41,6 +34,56 @@ nav {
 .nav-links ul li:hover::after{
     width: 100%;
 }
+nav .fa{
+    display: none;
+}
+
+/*----footer----*/
+.footer{
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+    background-image: linear-gradient(#8e1438,#4b0b1e);
+}
+.footer h4{
+    margin-bottom: 2px;
+    margin-top: 2px;
+    font-weight: 600;
+    color: #f5bdce;
+}
+.footer p{
+    margin-bottom: 2px;
+    margin-top: 2px;
+    font-weight: 6400;
+    color: #f5bdce;
+}
+.icons .fa{
+    color: #f5bdce;
+    margin: 0 13px;
+    cursor: pointer;
+    padding: 18px 0;
+    text-decoration: none;
+}
+.icons .fa:hover{
+    color: #e65681;
+    transition: 0.3s;
+}
+
+.row{
+    margin: 5%;
+    display: flex;
+    justify-content: space-between;
+}
+
+/*----home page------*/
+.header{
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(#ffffff,#8e1438);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
 .text-box{
     width: 90%;
     top: 50%;
@@ -61,7 +104,7 @@ nav {
 .knopje{
     display: inline-block;
     text-decoration: none;
-    color: #e65681;
+    color: #8e1438;
     border: 2px solid #4b0b1e;
     padding: 8px 16px;
     font-size: 15px;
@@ -72,13 +115,86 @@ nav {
 .knopje:hover{
     border: 2px solid #4b0b1e;
     background: #4b0b1e;
-    transition: 1s;
+    transition: 0.6s;
 }
-nav .fa{
-    display: none;
+/*-----link in tekst home page------*/
+.tekst-ref{
+    color: #8e1438;
 }
 
 
+
+/*---------------project-info-page -----------*/
+.sub-header{
+    min-height: 30vh;
+    width: 100%;
+    background-image: linear-gradient(#ffffff,#e65681);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+.sub-header h1{
+    margin-top: 80px;
+    text-align: center;
+    color: #4b0b1e;
+}
+.project_info{
+    width: 100%;
+    margin: auto;
+    padding-top: 10px;
+    padding-bottom: 50px;
+    color: #4b0b1e;
+    position: relative;
+    text-align: left;
+    background-image: linear-gradient(#e65681, #8e1438);
+}
+.project_info h3{
+    font-size: 20px;
+    color: #4b0b1e;
+}
+.project_info p{
+    font-size: 15px;
+    color: #000000;
+    padding: 15px 0 25px;
+}
+.project-col{
+    flex-basis: 48%;
+    ;
+}
+.project-col img{
+    width: 100%;
+}
+
+
+/*------toolpage-----*/
+.tool_info{
+    background-image: linear-gradient(#e65681, #8e1438);
+    width: 100%;
+    margin: auto;
+    padding-top: 10px;
+    padding-bottom: 50px;
+    color: #4b0b1e;
+    position: relative;
+    text-align: left;
+}
+.tool-col{
+    flex-basis: 48%;
+}
+.tool-col img{
+    width: 100%;
+}
+.tool-col h3{
+    color: #4b0b1e;
+    font-size: 20px;
+}
+.tool-col p{
+    color: black;
+    font-size: 15px;
+    padding: 15px 0 25px;
+}
+
+
+/*-----kleinere scherm instellingen of opties-----*/
 @media (max-width: 700px){
     .text-box h1{
         font-size: 28px;
@@ -88,10 +204,10 @@ nav .fa{
    }
    .nav-links {
        position: absolute;
-       background-image: linear-gradient(#e65681,#000000);
-       height: 102vh;
+       background-image: linear-gradient(#e65681,#4b0b1e);
+       height: 100%;
        width: 200px;
-       top: -2%;
+       top: -20%;
        right: -200px;
        text-align: left;
        z-index: 2;
@@ -111,141 +227,3 @@ nav .fa{
        flex-direction: column;
    }
 }
-/*------project-----*/
-.project{
-    width: 80%;
-    margin: auto;
-    text-align: center;
-    padding-top: 100px;
-}
-.project h1{
-    font-size: 36px;
-    font-weight: 600;
-}
-.project p{
-    color: black;
-    font-weight: 300;
-    font-size: 14px;
-    line-height: 22px;
-    padding: 10px;
-}
-
-.footer{
-    width: 100%;
-    text-align: center;
-    padding: 30px 0;
-    background-image: linear-gradient(#e65681, #8e1438);
-}
-.footer h4{
-    margin-bottom: 2px;
-    margin-top: 2px;
-    font-weight: 600;
-}
-.icons .fa{
-    color: #ffffff;
-    margin: 0 13px;
-    cursor: pointer;
-    padding: 18px 0;
-}
-
-.icons .fa:hover{
-    color: #e65681;
-}
-/*------toolpage-----*/
-.tool_info{
-    margin: auto;
-    text-align: left;
-    padding-top: 100px;
-    background-image: linear-gradient( #e65681, #ffffff);
-
-}
-.tool-col{
-    color: black;
-    font-weight: 300;
-    font-size: 14px;
-    line-height: 22px;
-    width: 50%;
-}
-.tool-col img{
-    padding: 10px;
-    width: 100%;
-}
-.tool-col h3{
-    color: #4b0b1e;
-}
-
-.footer{
-    width: 100%;
-    text-align: center;
-    padding: 30px 0;
-}
-.footer h4{
-    margin-bottom: 2px;
-    margin-top: 2px;
-    font-weight: 600;
-}
-.icons .fa{
-    color: #ffffff;
-    margin: 0 13px;
-    cursor: pointer;
-    padding: 18px 0;
-    text-decoration: none;
-}
-.icons .fa:hover{
-    color: #e65681;
-}
-
-
-
-
-
-
-/*---------------project-info-page -----------*/
-.sub-header{
-    min-height: 30vh;
-    width: 100%;
-    background-image: linear-gradient(#ffffff,#e65681);
-    background-position: center;
-    background-size: cover;
-    position: relative;
-}
-.sub-header h1{
-    margin-top: 10px;
-    text-align: center;
-    color: #4b0b1e;
-}
-.project_info{
-    width: 100%;
-    margin: auto;
-    padding-top: 10px;
-    padding-bottom: 50px;
-    color: #4b0b1e;
-    position: relative;
-    text-align: left;
-    background-color: #e65681;
-}
-.project_info h3{
-    font-size: 20px;
-    padding-top: 0;
-    color: #4b0b1e;
-}
-.project_info p{
-    font-size: 16px;
-    color: #000000;
-    padding: 15px 0 25px;
-}
-.project-col{
-    flex-basis: 48%;
-    ;
-}
-.project-col img{
-    width: 100%;
-    height: 100%;
-}
-
-.row{
-    margin: 5%;
-    display: flex;
-    justify-content: space-between;
-}
-

@@ -16,4 +16,6 @@ Omschrijving werk: Feedback plan van aanpak; reflectie geschreven; ticketing fas
 opgezet en bijgewerkt; html & css bestanden in git; teksten uit PvA op juiste pagina's;
 footer github link gemaakt; menu en andere links werkend gemaakt;
 ---
-
+Datum 26-2-2025
+Omschrijving werk: Inhoudelijke teksten verbeteren; styling consistent maken; css bestand
+ordenen en opschonen; footer schoollink gemaakt; 
