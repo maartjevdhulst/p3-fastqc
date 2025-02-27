@@ -60,14 +60,6 @@
 }
 
 
-
-
-
-
-
-
-
-
 /*----footer----*/
 .footer{
     width: 100%;
@@ -99,6 +91,7 @@
     transition: 0.3s;
 }
 
+/*-----columns----*/
 .row{
     margin: 5%;
     display: flex;

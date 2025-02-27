@@ -2,22 +2,22 @@
 
 ---
 Template;
-Datum:
+**Datum:**
 Omschrijving werk:
 ---
-Datum: 24-2-2025
+**Datum: 24-2-2025**
 Omschrijving werk: Github repository aangemaakt. Logboek aangemaakt. 
 Afmaken plan van aanpak; evaluatie en reflectie schrijven; 
 planning afbeelding vervangen; inleiding, achtergrond informatie, 
 project beschrijving, project fases en planning afgemaakt; spellingscontrole; 
 toevoegen bronnenlijst; plan van aanpak ingeleverd en geüpload naar github
 ---
-Datum: 25-2-2025
+**Datum: 25-2-2025**
 Omschrijving werk: Feedback plan van aanpak; reflectie geschreven; ticketing fase 2
 opgezet en bijgewerkt; html & css bestanden in git; teksten uit PvA op juiste pagina's;
 footer github link gemaakt; menu en andere links werkend gemaakt;
 ---
-Datum 26-2-2025
+**Datum 26-2-2025**
 Omschrijving werk: Inhoudelijke teksten verbeteren; styling consistent maken; css bestand
 ordenen en opschonen; footer schoollink gemaakt; gekregen feedback op plan van aanpak verwerkt; menu verplaatst &
 icoontjes werkend op juiste plek; alle documenten gevalideerd online;
@@ -45,5 +45,7 @@ De resultaten zijn:
 
 Verder is er een header-template.html waar je de look van de output kan veranderen. Als je je eigen plotjes maakt minder relevant.
 
-
+----
+**Datum: 27-2-2025**
+Omschrijving werk: bestanden van meer comments voorzien; reflectie fase 2;
 
