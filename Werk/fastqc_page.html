@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>project page</title>
+    <title>tool page</title>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="Static_style.css">
 </head>
@@ -22,34 +22,30 @@
            </div>
            <i class="fa fa-bars" onclick="showMenu()"></i>
        </nav>
-       <h1>Project information</h1>
+       <h1>FastQC tool</h1>
    </section>
 
-   <!--project info tekst en plaatjes in kolommen-->
-   <section class="project_info">
+   <!--tool info tekst en plaatje in 2 kolommen-->
+   <section class="tool_info">
        <div class="row">
-           <div class="project-col">
-               <h3>Information about this project</h3>
-               <p>
-                   This is a schoolproject for the Hanze University of applied sciences in which I will be making
-                   this website. On this website there will be the FastQC-tool available. I will be using
-                   HTML, CSS, Python, Flask en Jinja to make this happen. At the bottom of the page you can
-                   click the github logo to visit the repository for this project.
-
-                   The image shows the planning for this project. <br><br>The project is split into 7 phases.</p>
-                   <ol>
-                       <li>Writing the project proposal</li>
-                       <li>Creating the static website</li>
-                       <li>Making the static website dynamic</li>
-                       <li>Creating the results page</li>
-                       <li>Making the OOP backend</li>
-                       <li>Linking backend and results page</li>
-                       <li>Finishing the website and making and doing the final presentation</li>
-                    </ol>
-
+           <div class="tool-col">
+               <h3>The FastQC tool</h3>
+               <p>Please enter all your desired input in the following forms</p>
+               <form>
+                   <input type="radio" id="html" name="fav_language" value="HTML">
+                  <label for="html">HTML</label><br>
+                  <input type="radio" id="css" name="fav_language" value="CSS">
+                  <label for="css">CSS</label><br>
+                  <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+                  <label for="javascript">JavaScript</label>
+               </form>
+               <form>
+                  <label for="myfile">Select a file:</label>
+                  <input type="file" id="myfile" name="myfile">
+               </form>
            </div>
-           <div class="project-col">
-               <img src="../images/Picture2.png" alt="Gantt chart of the project planning">
+           <div class="tool-col">
+               <img src="../images/Picture1.jpg" alt="Graph made using FastQC">
            </div>
        </div>
    </section>
