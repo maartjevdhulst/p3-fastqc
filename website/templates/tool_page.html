@@ -1,30 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tool page</title>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="Static_style.css">
-</head>
-<body>
-   <section class="sub-header">
-       <nav>
-           <div class="nav-links" id="navLinks">
-               <a class="fa fa-times" onclick="hideMenu()"></a>
-               <ul>
-                   <li><a href="home_page.html">HOME</a> </li>
-                   <li><a href="project_info.html">PROJECT</a> </li>
-                   <li><a href="tool_page.html">TOOL INFO</a> </li>
-                   <li><a href="fastqc_page.html">FASTQC</a> </li>
-                   <li><a href="references_page.html">REFERENCES</a> </li>
-               </ul>
-           </div>
-           <i class="fa fa-bars" onclick="showMenu()"></i>
-       </nav>
-       <h1>FastQC tool</h1>
-   </section>
+{% extends "base.html"%}
 
+{% block head %}
+<title>tool information page</title>
+{% endblock %}
+
+
+{% block subheader %}
+    <section class="sub-header">
+       <h1>Tool info</h1>
+   </section>
+{% endblock%}
+
+{% block body%}
    <!--tool info tekst en plaatje in 2 kolommen-->
    <section class="tool_info">
        <div class="row">
@@ -52,35 +39,9 @@
                    dit specifieke project, accurate analyse en rapport.<small>(Babraham bioinf, 2010)</small> </p>
            </div>
            <div class="tool-col">
-               <img src="../images/Picture1.jpg" alt="Graph made using FastQC">
+               <img src="../static/images/Picture1.jpg" alt="Graph made using FastQC" />
            </div>
        </div>
    </section>
 
-   <section class="footer">
-       <h4>About us</h4>
-       <p>Maartje van der Hulst, 374361</p>
-       <div class="icons">
-           <a href="https://github.com/maartjevdhulst/p3-fastqc" class="fa fa-github" target="_blank"></a>
-           <i class="fa fa-heart"></i>
-           <a href="https://www.hanze.nl/nl/opleidingen/voltijd/bachelor/bio-informatica"
-              class="fa fa-graduation-cap" target="_blank"></a>
-        </div>
-   </section>
-
-
-
-<!--  javascript for toggle menu  -->
-<script>
-
-  var navLinks = document.getElementById("navLinks");
-  function showMenu(){
-      navLinks.style.right = "0";
-}
-  function hideMenu(){
-      navLinks.style.right = "-200px";
-}
-</script>
-
-</body>
-</html>
+{% endblock%}

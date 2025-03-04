@@ -47,5 +47,11 @@ Verder is er een header-template.html waar je de look van de output kan verander
 
 ----
 **Datum: 27-2-2025**
-Omschrijving werk: bestanden van meer comments voorzien; reflectie fase 2;
+Omschrijving werk: bestanden van meer comments voorzien; reflectie fase 2; fastqc_page gemaakt; 
+start research html forms; begonnen met readme;
 
+-----
+**Datum:4-3-2025**
+Omschrijving werk: br syntax; feedback verwerking; Flask demo's doorwerken; Flask tutorial;
+app.py aangemaakt; base.html aangemaakt als basis template; alle html files op de base html aangepast;
+css kloppend gemaakt met flask & jinja veranderingen;

@@ -1,0 +1,40 @@
+{% extends "base.html"%}
+
+{% block head %}
+<title>fastqc page</title>
+{% endblock %}
+
+
+{% block header %}
+    <section class="sub-header">
+       <h1>FastQC tool</h1>
+   </section>
+{% endblock%}
+
+{% block body %}
+
+   <!--tool info tekst en plaatje in 2 kolommen-->
+   <section class="tool_info">
+       <div class="row">
+           <div class="tool-col">
+               <h3>The FastQC tool</h3>
+               <p>Please enter all your desired input in the following forms</p>
+               <form>
+                   <input type="radio" id="html" name="fav_language" value="HTML">
+                  <label for="html">HTML</label><br />
+                  <input type="radio" id="css" name="fav_language" value="CSS">
+                  <label for="css">CSS</label><br />
+                  <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+                  <label for="javascript">JavaScript</label>
+               </form>
+               <form>
+                  <label for="myfile">Select a file:</label>
+                  <input type="file" id="myfile" name="myfile">
+               </form>
+           </div>
+           <div class="tool-col">
+               <img src="../static/images/Picture1.jpg" alt="Graph made using FastQC"/>
+           </div>
+       </div>
+   </section>
+{% endblock %}
