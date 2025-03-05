@@ -207,6 +207,7 @@
     width: 100%;
     margin: auto;
     padding-top: 10px;
+    padding-left: 50px;
     padding-bottom: 50px;
     color: #4b0b1e;
     position: relative;
@@ -252,7 +253,61 @@
     color: #4b0b1e;
 }
 
+/*-----fastqc page------*/
+.tool-col1{
+    width:  25%;
+    color: black;
+}
+.tests ul{
+    list-style: none;
+}
+.tests ul li input[type=checkbox]{
+    height: 12px;
+    width: 12px;
+    accent-color: #4b0b1e;
+}
+.tool_info p{
+    color: black;
+}
 
+.tests ul li ul{
+    padding-left: 15px;
+    padding-top: 10px;
+}
+.tests ul li ul li input[type=number]{
+    width: 50px;
+    background: #8e1438;
+    color: #f5bdce;
+    border: #4b0b1e;
+    border-style: solid;
+
+}
+.tests input[type=submit]{
+    background-color: #4b0b1e;
+    color: #f5bdce;
+    cursor: pointer;
+    height: 30px;
+    width: 70px;
+    margin-top: 10px;
+
+}
+.tool-col2{
+    width: 75%;
+}
+
+.file input[type=file]{
+    display: none;
+}
+.file label{
+    background-color: #4b0b1e;
+    color: #f5bdce;
+    cursor: pointer;
+    margin-top: 20px;
+    border: 1.5px solid #f5bdce;
+    display: inline-block;
+    padding: 6px 12px;;
+
+}
 
 /*-----kleinere scherm instellingen of opties-----*/
 @media (max-width: 700px){

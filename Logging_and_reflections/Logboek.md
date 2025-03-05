@@ -60,7 +60,7 @@ css kloppend gemaakt met flask & jinja veranderingen;
 **Datum: 5-3-2025**
 Omschrijving werk: resultaten pagina aangemaakt; html forms toegevoegd; forms via app.py aan resultaten
 pagina gekoppeld; teksten en limits uitklapbaar gemaakt; ticketing opgeschoond en verbeterd;
-
+ help fastqc html's aan forms gekoppeld en uitklapbaar gemaakt; styling fastqc pagina;
 
 
 
