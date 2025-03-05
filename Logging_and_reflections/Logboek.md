@@ -55,3 +55,12 @@ start research html forms; begonnen met readme;
 Omschrijving werk: br syntax; feedback verwerking; Flask demo's doorwerken; Flask tutorial;
 app.py aangemaakt; base.html aangemaakt als basis template; alle html files op de base html aangepast;
 css kloppend gemaakt met flask & jinja veranderingen;
+
+-----
+**Datum: 5-3-2025**
+Omschrijving werk: resultaten pagina aangemaakt; html forms toegevoegd; forms via app.py aan resultaten
+pagina gekoppeld; teksten en limits uitklapbaar gemaakt; ticketing opgeschoond en verbeterd;
+
+
+
+

@@ -1,0 +1,32 @@
+{% extends "base.html"%}
+
+{% block head %}
+<title>fastqc results page</title>
+{% endblock %}
+
+
+{% block header %}
+    <section class="sub-header">
+       <h1>FastQC tool</h1>
+   </section>
+{% endblock%}
+
+{% block body %}
+
+   <!--tool info tekst en plaatje in 2 kolommen-->
+    <ul>
+        <!-- display the values provided in the form ('form_GET.html') -->
+        <li><strong>Duplication:</strong> {{ duplication }}</li>
+        <li><strong>Kmer:</strong> {{ kmer }}</li>
+        <li><strong>N content:</strong> {{ n_content }}</li>
+        <li><strong>Overrepresented:</strong> {{overrepresented}}</li>
+        <li><strong>Quality base:</strong> {{quality_base}}</li>
+        <li><strong>Sequence:</strong> {{ sequence }}</li>
+        <li><strong>GC sequence:</strong> {{ gc_sequence }}</li>
+        <li><strong>Quality sequence:</strong> {{ quality_sequence }}</li>
+        <li><strong>Tile:</strong> {{tile}}</li>
+        <li><strong>Sequence length:</strong> {{sequence_length}}</li>
+        <li><strong>Adapter:</strong> {{adapter}}</li>
+
+    </ul>
+{% endblock %}
