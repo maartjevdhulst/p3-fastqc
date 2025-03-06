@@ -60,7 +60,13 @@ css kloppend gemaakt met flask & jinja veranderingen;
 **Datum: 5-3-2025**
 Omschrijving werk: resultaten pagina aangemaakt; html forms toegevoegd; forms via app.py aan resultaten
 pagina gekoppeld; teksten en limits uitklapbaar gemaakt; ticketing opgeschoond en verbeterd;
- help fastqc html's aan forms gekoppeld en uitklapbaar gemaakt; styling fastqc pagina;
+ help fastqc html's aan forms gekoppeld en uitklapbaar gemaakt; styling fastqc pagina; repo ingeleverd
+
+---
+**Datum: 6-3-2025**
+Omschrijving werk: feedback ontvangen en besproken; alle html en css gevalideerd; app.py bekommentariseerd
+en van docstring voorzien; alle html bekommentariseerd; referentielink onder help pagina's gemaakt;
+css voor referentielink; opnieuw repo ingeleverd
 
 
 

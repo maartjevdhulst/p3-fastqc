@@ -1,21 +1,43 @@
-from flask import Flask, render_template, request, redirect
+#!/usr/bin/env python3
+"""
+main script running the flask application
+use: python .\website\app.py  > click on the link ( http://127.0.0.1:5000/ )
+"""
+
+__author__ = "Maartje van der Hulst"
+__date__ = 2025.3
+__version__ = 1.2
+
+
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
+    """makes home page by rendering base & index files"""
     return render_template('index.html')
 
 @app.route('/project')
 def project():
+    """makes project page by rendering base & project info files"""
     return render_template("project_info.html")
 
 @app.route('/tool_page')
 def tool_page():
+    """makes tool page by rendering base & tool files"""
     return render_template("tool_page.html")
+
+@app.route('/references')
+def references():
+    """makes references page by rendering base & references files"""
+    return render_template("references_page.html")
 
 @app.route('/fastqc', methods=['GET', 'POST'])
 def fastqc():
+    """makes fastqc tool page by rendering base & fastqc files
+    if user uses the submit button the post method is used
+    which renders the base en results files"""
     if request.method == 'GET':
         return render_template('fastqc_page.html')
 
@@ -35,55 +57,65 @@ def fastqc():
         }
         return render_template('fastqc_page_results.html', **kwargs)
 
+
+# giving help pages from fastqc a route so they can be hosted inside the fastqc page using iframes
 @app.route('/duplicate')
 def duplicate():
+    """makes the duplicate help page by rendering the duplicate file"""
     return render_template('fastqc_help/8_Duplicate_Sequences.html')
 
 @app.route('/kmer')
 def kmer():
+    """makes the kmer help page by rendering the kmer file"""
     return render_template('fastqc_help/11_Kmer_Content.html')
 
 @app.route('/ncontent')
 def ncontent():
+    """makes the n content help page by rendering the n content file"""
     return render_template('fastqc_help/6_Per_Base_N_Content.html')
 
 @app.route('/overrepresented')
 def overrepresented():
+    """makes the overrepresented help page by rendering the overrepresented file"""
     return render_template('fastqc_help/9OverrepresentedSequences.html')
 
 @app.route('/quality_base')
 def quality_base():
+    """makes the base quality help page by rendering the base quality file"""
     return render_template('fastqc_help/2_Per_Base_Sequence_Quality.html')
 
 @app.route('/sequence')
 def sequence():
+    """makes the sequences help page by rendering the sequence file"""
     return render_template('fastqc_help/4_Per_Base_Sequence_Content.html')
 
 @app.route('/gc_sequence')
 def gc_sequence():
+    """makes the gc content help page by rendering the gc content file"""
     return render_template('fastqc_help/5PerSequenceGCContent.html')
 
 @app.route('/quality_sequence')
 def quality_sequence():
+    """makes the sequence quality help page by rendering the sequence quality file"""
     return render_template('fastqc_help/3_Per_Sequence_Quality_Scores.html')
 
 @app.route('/tile')
 def tile():
+    """makes the tile help page by rendering the tile file"""
     return render_template('fastqc_help/12PerTileSequenceQuality.html')
 
 @app.route('/sequence_length')
 def sequence_length():
+    """makes the sequence length help page by rendering sequence length file"""
     return render_template('fastqc_help/7SequenceLengthDistribution.html')
 
 @app.route('/adapter')
 def adapter():
+    """makes the adapter page by rendering adapter file"""
     return render_template('fastqc_help/10AdapterContent.html')
 
 
 
-@app.route('/references')
-def references():
-    return render_template("references_page.html")
 
 
 if __name__ == '__main__':

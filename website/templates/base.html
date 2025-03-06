@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='Static_style.css')}}">
-    {% block head %} {% endblock %}
+    {% block head %} {% endblock %}  <!--possibility to add to head when used as template-->
 </head>
 
 <body>
    <nav class="nav">
-       <a class="fa fa-bars" onclick="showMenu()"></a> <!--clickbare menu-icoontjes -->
+       <a class="fa fa-bars" onclick="showMenu()"></a> <!--clickable menu open en close icons -->
        <div class="nav-links" id="navLinks">
            <a class="fa fa-times" onclick="hideMenu()"></a>
-           <ul> <!--pagina's in menu gelinkt aan juist doc-->
+           <ul> <!--list of linked pages-->
                <li><a href="{{ url_for('index')}}">HOME</a> </li>
                <li><a href="{{ url_for('project')}}">PROJECT</a> </li>
                <li><a href="{{ url_for('tool_page')}}">TOOL INFO</a> </li>
@@ -22,14 +22,15 @@
            </ul>
        </div>
    </nav>
-   {% block header %} {% endblock %}
-   {% block subheader %} {% endblock %}
-   {% block body %} {% endblock %}
+   {% block header %} {% endblock %} <!--possibility to add to the header when used as template-->
+   {% block subheader %} {% endblock %}  <!--possibility to add to the subheader for different layout from header when used as template-->
+   {% block body %} {% endblock %}  <!--possibility to add to the body when used as template-->
 
+   <!--footer at bottom of page-->
     <section class="footer">
         <h4>About us</h4>
         <p>Maartje van der Hulst, 374361</p>
-        <div class="icons">
+        <div class="icons"> <!--clickable icons who open in a different tab/window-->
             <a href="https://github.com/maartjevdhulst/p3-fastqc" class="fa fa-github" target="_blank"></a>
             <i class="fa fa-heart"></i>
             <a href="https://www.hanze.nl/nl/opleidingen/voltijd/bachelor/bio-informatica"
@@ -41,13 +42,12 @@
 
 <!--javascript for toggle menu-->
 <script>
-
-  var navLinks = document.getElementById("navLinks");
-  function showMenu(){
-      navLinks.style.right = "0";
+    const navLinks = document.getElementById("navLinks");
+    function showMenu(){
+        navLinks.style.right = "0";
 }
-  function hideMenu(){
-      navLinks.style.right = "-200px";
+    function hideMenu(){
+        navLinks.style.right = "-200px";
 }
 </script>
 

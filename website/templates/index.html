@@ -1,18 +1,21 @@
+<!--extending from the base.html layout-->
 {% extends "base.html"%}
 
+<!--setting the page title-->
 {% block head %}
 <title>Home page</title>
 {% endblock %}
 
-
+<!--using the header layout for the header-->
 {% block header %}
 <section class="header">
+
     <div class="text-box">
         <h2>FastQC</h2>
         <p>Op deze website is de FastQC tool interactief te gebruiken. Ga naar
-            <a href="{{ url_for('project')}}" class="tekst-ref">project info</a> <br /> voor een uitgebreide beschrijving
-            van dit project.</p>
-        <a href="{{ url_for('fastqc')}}" class="knopje">Ga direct naar de tool</a>
+            <a href="{{ url_for('project')}}" class="tekst-ref">project info</a> <br> <!--reference in text to the project page-->
+            voor een uitgebreide beschrijving van dit project.</p>
+        <a href="{{ url_for('fastqc')}}" class="knopje">Ga direct naar de tool</a>  <!--button to take you to the tools page-->
     </div>
 
 </section>

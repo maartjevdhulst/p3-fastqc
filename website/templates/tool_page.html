@@ -1,21 +1,25 @@
+<!--extending from the base.html layout-->
 {% extends "base.html"%}
 
+<!--setting the page title-->
 {% block head %}
 <title>tool information page</title>
 {% endblock %}
 
-
+<!--using the sub-header layout for the header-->
 {% block subheader %}
     <section class="sub-header">
        <h1>Tool info</h1>
    </section>
 {% endblock%}
 
+<!--adding the pages content to the base body-->
 {% block body%}
-   <!--tool info tekst en plaatje in 2 kolommen-->
+
    <section class="tool_info">
-       <div class="row">
-           <div class="tool-col">
+       <div class="row">  <!--dividing the page into 2 colomns-->
+
+           <div class="tool-col"> <!--colomn 1; text-->
                <h3>Background information about the FastQC tool</h3>
                <p>De FastQC tool voert kwaliteitscontroles uit over fastq-, SAM- of BAM-bestanden.
                    Deze bestanden bevatten o.a. genetische informatie in de vorm van nucleotiden
@@ -38,8 +42,9 @@
                    Daarom is het belangrijk dat de gebruiker zelf de parameters kan aanpassen, voor een, voor
                    dit specifieke project, accurate analyse en rapport.<small>(Babraham bioinf, 2010)</small> </p>
            </div>
-           <div class="tool-col">
-               <img src="../static/images/Picture1.jpg" alt="Graph made using FastQC" />
+
+           <div class="tool-col">  <!--colomn 2; image-->
+               <img src="../static/images/Picture1.jpg" alt="Graph made using FastQC">
            </div>
        </div>
    </section>

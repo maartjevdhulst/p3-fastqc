@@ -1,21 +1,22 @@
+<!--extending from the base.html layout-->
 {% extends "base.html"%}
 
+<!--setting the page title-->
 {% block head %}
 <title>fastqc results page</title>
 {% endblock %}
 
-
+<!--using the sub-header layout for the header-->
 {% block header %}
     <section class="sub-header">
        <h1>FastQC tool</h1>
    </section>
 {% endblock%}
 
+<!--adding the pages content to the base body-->
 {% block body %}
-
-   <!--tool info tekst en plaatje in 2 kolommen-->
     <ul>
-        <!-- display the values provided in the form ('form_GET.html') -->
+        <!-- display the values provided in the form ('fastqc_page.html') -->
         <li><strong>Duplication:</strong> {{ duplication }}</li>
         <li><strong>Kmer:</strong> {{ kmer }}</li>
         <li><strong>N content:</strong> {{ n_content }}</li>
