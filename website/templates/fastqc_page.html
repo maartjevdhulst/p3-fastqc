@@ -290,7 +290,7 @@
       // checking for checked checkbox
       if (checkBox.checked === true){
           const paragraphs = document.getElementsByTagName("p");  //resetting all text to invisible
-          for (let i = 1; i < paragraphs.length; i++){  // skipping the first paragraph with instructions
+          for (let i = 1; i < paragraphs.length -1; i++){  // skipping the first paragraph with instructions and the last in the footer
               paragraphs[i].style.display = "none";
           }
           limits.style.display = "block"; //displaying the limits of the checked checkbox

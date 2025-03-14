@@ -5,6 +5,8 @@ Practicum 3 &amp; BIN toolbox opdracht met FastQC als tool.
 
 **System requirements** 
 FastQC is a java application. To run you need a Java Runtime Environment (JRE)
+
+
 FastQC is een java applicatie en om die te runnen heb je een 
 Java Runtime Environment (JRE) nodig. Voor de meeste linux ?systemen?
 is dit automatisch geïnstalleerd. Dit kun je controleren door:

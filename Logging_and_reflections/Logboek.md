@@ -68,5 +68,6 @@ Omschrijving werk: feedback ontvangen en besproken; alle html en css gevalideerd
 en van docstring voorzien; alle html bekommentariseerd; referentielink onder help pagina's gemaakt;
 css voor referentielink; opnieuw repo ingeleverd
 
-
+**Datum: 8-3-2025**
+Omschrijving werk: reflectie fase 3 geschreven; ticketing fase 4; readme
 

@@ -25,3 +25,12 @@ toepassing. Het ding waar ik deze keer tegen aan liep, is dat het nooit echt af 
 me bedacht hoe ik het wou hebben. Het was dus deze keer erg goed dat er een deadline was en ik dus op slot
 vanzelf over moest op afronding.
 -----
+##### Reflectie 2 8-3-2025 Fase 3 *(89 woorden)*
+Ik was deze keer niet helemaal tevreden met wat ik ingeleverd had. De dingen die ik gemaakt had waren op zich 
+netjes en af, maar ik had nog meer ideeën waar ik niet aan toe gekomen was. Verder waren de onderdelen van 
+week 3 en 4 eigenlijk met elkaar verweven, dus ik heb niet volledig de opdracht gevolgd omdat het daar 
+voor mijn gevoel alleen maar ingewikkelder van werd. Verder heb ik deze keer de ticketing niet erg gedaan, dus
+daar wil ik de komende fase beter op letten.
+
+
+
