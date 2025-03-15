@@ -13,8 +13,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 import pandas as pd
+import matplotlib as mpl
 from dask.dataframe.methods import values
-from matplotlib.colors import Normalize
+import matplotlib.colors as colors
 
 
 def read_data(file):
@@ -168,7 +169,7 @@ def make_per_tile(line):
                 num = int(num)
                 x = num
         elif i == 2:
-            num = float(num)
+            num = abs(float(num))
             z = num
 
 
@@ -312,34 +313,24 @@ def make_heatplot(df_tile):
     :param data:
     :return:
     """
-    # Y, X= np.meshgrid(df_tile['y'], df_tile['x'])
-    # Z = np.array(df_tile['z'])
-    # print(df_tile.loc[0])
-    # Z = Z.reshape(len(X), len(Y))
 
-    # Z = np.transpose(Z)
-    # data = Z
 
-    # plt.style.use('_mpl-gallery-nogrid')
 
     # Pivot the dataframe
-    df_pivot = df_tile.pivot(index='x', columns='y', values='z')
-    print(df_pivot)
+    df_pivot = df_tile.pivot(index='y', columns='x', values='z')
 
-    # ax = sns.heatmap(df_pivot, cmap="YlGnBu")
-    # ax.set_title("Heatmap of Z values")
-    #
-    # plt.show()
+
+
     fig, ax = plt.subplots()
     #
-    ax.imshow(df_pivot, cmap= "RdYlBu", vmin= -1, vmax= 1 )
-    # plt.colorbar()
-    ax.set_ylim(top=df_tile['y'].max(), bottom=df_tile['y'].min())
-    ax.set_xlim(right=df_tile['x'].max(), left=df_tile['x'].min())
+    h = ax.matshow(df_pivot, cmap=mpl.colormaps['jet'], origin='lower')
+    plt.colorbar(h, ax=ax)
+    # ax.set_ylim(top=df_tile['y'].max(), bottom=df_tile['y'].min())
+    # ax.set_xlim(right=df_tile['x'].max(), left=df_tile['x'].min())
     fig.tight_layout()
-    plt.show()
-    # plt.savefig("../static/images/heatmap1.png")
-    # plt.close()
+    # plt.show()
+    plt.savefig("../static/images/heatmap1.png")
+    plt.close()
 
 def make_lineplot(data):
     """
