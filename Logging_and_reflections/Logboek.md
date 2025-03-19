@@ -77,6 +77,6 @@ Omschrijving werk: reflectie fase 3 geschreven; ticketing fase 4; readme;
 Omschrijving werk: plotting boxplot; plotting table; 
 
 ----
-**Datum: 13-3-2025**
-Omschrijving werk: 
+**Datum: 19-3-2025**
+Omschrijving werk: Duplication plot gefixt; 
 
