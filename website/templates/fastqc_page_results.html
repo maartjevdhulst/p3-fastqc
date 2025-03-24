@@ -8,13 +8,15 @@
 
 <!--using the sub-header layout for the header-->
 {% block header %}
-    <section class="sub-header">
-       <h1>FastQC tool</h1>
+    <section class="sub-header_small">
+       <h1>FastQC report</h1>
+        <p>wo 26 feb 2025<br>test.fastq</p>
    </section>
 {% endblock%}
 
 <!--adding the pages content to the base body-->
 {% block body %}
+
     <ul>
         <!-- display the values provided in the form ('fastqc_page.html') -->
         <li><strong>Duplication:</strong> {{ duplication }}</li>
@@ -28,9 +30,216 @@
         <li><strong>Tile:</strong> {{tile}}</li>
         <li><strong>Sequence length:</strong> {{sequence_length}}</li>
         <li><strong>Adapter:</strong> {{adapter}}</li>
+        <li><strong>File:</strong> {{file}}</li>
+        <a href="{{ url_for('access_file', filename=file, as_attachment=True )}}">Index</a>
 
     </ul>
+<div class="colomns">
+    <div class="summary">
+        <h2>Summary</h2>
+        <ul>
+            <li>
+                <img src="../static/images/Icons/tick_pink.png" alt="[PASS]"/>
+                <a href="#M0">Basic Statistics</a>
+            </li>
+            <li>
+                <img src="../static/images/Icons/error_pink.png" alt="[FAIL]"/>
+                <a href="#M1">Per base sequence quality</a>
+            </li>
+            <li><img src="../static/images/Icons/tick_pink.png" alt="[FAIL]"/>
+                <a href="#M2">Per tile sequence quality</a>
+            </li>
+            <li>
+                <img src="../static/images/Icons/tick_pink.png" alt="[PASS]"/>
+                <a href="#M3">Per sequence quality scores</a>
+            </li>
+            <li>
+                <img src="../static/images/Icons/error_pink.png" alt="[FAIL]"/>
+                <a href="#M4">Per base sequence content</a>
+            </li>
+            <li>
+                <img src="../static/images/Icons/tick_pink.png" alt="[PASS]"/>
+                <a href="#M5">Per sequence GC content</a>
+            </li>
+            <li>
+                <img src="../static/images/Icons/tick_pink.png" alt="[PASS]"/>
+                <a href="#M6">Per base N content</a>
+            </li>
+            <li>
+                <img src="../static/images/Icons/warning_pink.png" alt="[WARNING]"/>
+                <a href="#M7">Sequence Length Distribution</a>
+            </li>
+            <li>
+                <img src="../static/images/Icons/tick_pink.png" alt="[PASS]"/>
+                <a href="#M8">Sequence Duplication Levels</a>
+            </li>
+            <li>
+                <img src="../static/images/Icons/tick_pink.png" alt="[PASS]"/>
+                <a href="#M9">Overrepresented sequences</a>
+            </li>
+            <li>
+                <img src="../static/images/Icons/tick_pink.png" alt="[PASS]"/>
+                <a href="#M10">Adapter Content</a>
+            </li>
+            <li>
+                <img src="../static/images/Icons/warning_pink.png" alt="[WARNING]"/>
+                <a href="#M11">Kmer Content</a>
+            </li>
+        </ul>
+    </div>
 
 
-<img src="../static/images/boxplot_test.png" alt="boxplot">
+    <div class="main">
+        <div class="module">
+            <h2 id="M0">
+                <img src="../static/images/Icons/tick_pink.png" alt="[OK]"/>
+                Basic Statistics
+            </h2>
+            <table border="1" class="dataframe">
+              <thead>
+                <tr style="text-align: center;">
+                  <th>Measure</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Filename</td>
+                  <td>ERR550643_1.fastq.gz</td>
+                </tr>
+                <tr>
+                  <td>File type</td>
+                  <td>Conventional base calls</td>
+                </tr>
+                <tr>
+                  <td>Encoding</td>
+                  <td>Sanger / Illumina 1.9</td>
+                </tr>
+                <tr>
+                  <td>Total Sequences</td>
+                  <td>503810</td>
+                </tr>
+                <tr>
+                  <td>Total Bases</td>
+                  <td>118.6 Mbp</td>
+                </tr>
+                <tr>
+                  <td>Sequences flagged as poor quality</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <td>Sequence length</td>
+                  <td>35-251</td>
+                </tr>
+                <tr>
+                  <td>%GC</td>
+                  <td>66</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        <div class="module">
+            <h2 id="M1">
+                <img src="../static/images/Icons/error_pink.png" alt="[FAIL]"/>
+                Per base sequence quality
+            </h2>
+            <p>
+                <img class="indented" src="../static/images/boxplot.png" alt="Per base quality graph"/>
+            </p>
+        </div>
+        <div class="module">
+            <h2 id="M2">
+                <img src="../static/images/Icons/error_pink.png" alt="[FAIL]"/>
+                Per tile sequence quality
+            </h2>
+            <p>
+                <img class="indented" src="../static/images/heatmap1.png" alt="Per tile quality graph"/>
+            </p>
+        </div>
+        <div class="module">
+            <h2 id="M3">
+                <img src="../static/images/Icons/tick_pink.png" alt="[OK]"/>
+                Per sequence quality scores
+            </h2>
+            <p>
+                <img class="indented" src="../static/images/lineplot_sequence_quality.png" alt="Per Sequence quality graph"/>
+            </p>
+        </div>
+        <div class="module">
+            <h2 id="M4">
+            <img src="../static/images/Icons/error_pink.png" alt="[FAIL]"/>
+                Per base sequence content
+            </h2>
+            <p>
+                <img class="indented" src="../static/images/lineplot_base_sequence.png" alt="Per base sequence content"/>
+            </p>
+        </div>
+        <div class="module">
+            <h2 id="M5">
+                <img src="../static/images/Icons/tick_pink.png" alt="[OK]"/>
+                Per sequence GC content
+            </h2>
+            <p>
+                <img class="indented" src="../static/images/lineplot_mean_percentage_gc.png" alt="Per sequence GC content graph"/>
+            </p>
+        </div>
+        <div class="module">
+            <h2 id="M6">
+                <img src="../static/images/Icons/tick_pink.png" alt="[OK]"/>
+                Per base N content
+            </h2>
+            <p>
+                <img class="indented" src="../static/images/lineplot_n_content.png" alt="N content graph"/>
+            </p>
+        </div>
+        <div class="module">
+            <h2 id="M7">
+                <img src="../static/images/Icons/warning_pink.png" alt="[WARN]"/>
+                Sequence Length Distribution
+            </h2>
+            <p>
+                <img class="indented" src="../static/images/lineplot_lenght_distribution.png" alt="Sequence length distribution"/>
+            </p>
+        </div>
+        <div class="module">
+            <h2 id="M8">
+                <img src="../static/images/Icons/tick_pink.png" alt="[OK]"/>
+                Sequence Duplication Levels
+            </h2>
+            <p>
+                <img class="indented" src="../static/images/lineplot_duplication_percentage.png" alt="Duplication level graph"/>
+            </p>
+        </div>
+        <div class="module">
+            <h2 id="M9">
+                <img src="../static/images/Icons/tick_pink.png" alt="[OK]"/>
+                Overrepresented sequences
+            </h2>
+            <p>
+                <img class="indented" src="../static/images/table_overrepresented.png" alt="Overrepresented sequences table"/>
+            </p>
+        </div>
+        <div class="module">
+            <h2 id="M10">
+                <img src="../static/images/Icons/tick_pink.png" alt="[OK]"/>
+                Adapter Content
+            </h2>
+            <p>
+                <img class="indented" src="../static/images/lineplot_adapter.png" alt="Adapter graph"/>
+            </p>
+        </div>
+        <div class="module">
+            <h2 id="M11">
+                <img src="../static/images/Icons/warning_pink.png" alt="[WARN]"/>
+                Kmer Content
+            </h2>
+            <p>
+                <img class="indented" src="../static/images/table_kmer.png" alt="Kmer graph"/>
+            </p>
+         </div>
+    </div>
+</div>
+
+
+
 {% endblock %}

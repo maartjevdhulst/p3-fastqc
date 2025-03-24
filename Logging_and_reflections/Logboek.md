@@ -75,8 +75,25 @@ Omschrijving werk: reflectie fase 3 geschreven; ticketing fase 4; readme;
 ----
 **Datum: 13-3-2025**
 Omschrijving werk: plotting boxplot; plotting table; 
-
+----
+**Datum: 14-3-2025**
+Omschrijving werk: start plotting heatmap; research in per tile quality module;
+----
+**Datum: 15-3-2025**
+Omschrijving werk: plotting heatmap werkend gemaakt; plot per sequence quality scores; plot
+per base sequence content; plot per sequence GC content; plot per base N content;
+----
+**Datum: 17-3-2025**
+Omschrijving werk: plot sequence length distribution; plot sequence duplication levels;
 ----
 **Datum: 19-3-2025**
-Omschrijving werk: Duplication plot gefixt; 
+Omschrijving werk: Duplication plot gefixt; overrepresented plot gemaakt; adapter plot gemaakt;
+kmer table gemaakt, plot is niet mogelijk;
 
+-----
+**Datum: 20-3-2025**
+Omschrijving werk: Opschoning ticketing & planning; 
+
+----
+**Datum: 20-3-2025**
+Omschrijving werk: Betere oplossing voor de tables gemaakt; OOP refresher; 

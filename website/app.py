@@ -9,9 +9,16 @@ __date__ = 2025.3
 __version__ = 1.2
 
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
+from werkzeug.utils import secure_filename
+from werkzeug.exceptions import RequestEntityTooLarge
+import os
+from scrips.Limits import Limits
 
 app = Flask(__name__)
+app.config["UPLOAD_FOLDER"] = "./uploads"
+app.config["ALLOWED_EXTENSIONS"] = [".fastq", ".SAM"]
+app.config["MAX_CONTENT_LENGTH"] = 300 * 1024 * 1024 #300 MB
 
 @app.route('/')
 def index():
@@ -42,7 +49,21 @@ def fastqc():
         return render_template('fastqc_page.html')
 
     elif request.method == 'POST':
-        kwargs = {
+
+        try:
+            file = request.files['myfile2']
+            extention = os.path.splitext(file.filename)[1]
+            if extention not in app.config['ALLOWED_EXTENSIONS']:
+                return f"file type not allowed, please use a {app.config['ALLOWED_EXTENSIONS']}"
+            if file:
+                file.save(os.path.join(
+                    app.config['UPLOAD_FOLDER'],
+                    secure_filename(file.filename)
+                ))
+        except RequestEntityTooLarge:
+            return f'File too large, try smaller file'
+
+        settings = {
             'duplication' : request.form.getlist('duplication'),
             'kmer' : request.form.getlist('kmer'),
             'n_content' : request.form.getlist('n_content'),
@@ -53,9 +74,18 @@ def fastqc():
             'quality_sequence' : request.form.getlist('quality_sequence'),
             'tile' : request.form.getlist('tile'),
             'sequence_length' : request.form.getlist('sequence_length'),
-            'adapter' : request.form.getlist('adapter')
+            'adapter' : request.form.getlist('adapter'),
+            'file': file.filename
         }
-        return render_template('fastqc_page_results.html', **kwargs)
+        limits = Limits(settings, "../../fastqc_v0.12.1/FastQC/Configuration/limits_kopie.txt")
+        print(limits)
+        return render_template('fastqc_page_results.html', **settings)
+
+@app.route("/uploads/<path:filename>", methods=['GET'])
+def access_file(filename):
+    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
+
+
 
 
 # giving help pages from fastqc a route so they can be hosted inside the fastqc page using iframes
@@ -113,9 +143,6 @@ def sequence_length():
 def adapter():
     """makes the adapter page by rendering adapter file"""
     return render_template('fastqc_help/10AdapterContent.html')
-
-
-
 
 
 if __name__ == '__main__':

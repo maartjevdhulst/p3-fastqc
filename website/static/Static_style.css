@@ -97,7 +97,7 @@
 
 /*-----columns----*/
 .row{
-    margin: 5%;
+    margin: 10px;
     display: flex;
     justify-content: space-between;
 }
@@ -204,7 +204,7 @@
 /*------toolpage-----*/
 .tool_info{
     background-image: linear-gradient(#e65681, #8e1438);
-    width: 100%;
+
     margin: auto;
     padding-top: 10px;
     padding-left: 50px;
@@ -325,6 +325,75 @@
     padding-right: 35px;
 
 }
+.sub-header_small{
+    column-count: 2;
+    width: 90%;
+    background-color: #f5bdce;
+    position: fixed;
+    z-index: 2;
+    overflow-x: hidden;
+}
+.sub-header_small h1{
+    text-align: left;
+}
+.sub-header_small p{
+    text-align: right;
+}
+.colomns{
+    background-color: #f5bdce;
+}
+.summary{
+    width: 250px;
+    height: 100%;
+    background-color: #e65681;
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
+    margin-top: 45px;
+}
+.summary ul li a:link{
+    color: #4b0b1e;
+}
+.summary ul li a:hover{
+    color: #000000;
+}
+.summary ul li a:visited{
+    color: #4b0b1e;
+}
+.module{
+    margin-left: 280px;
+    padding-top: 50px;
+}
+.module h2{
+    padding-bottom: 10px;
+}
+.module table thead{
+    background-color: #4b0b1e;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*-----kleinere scherm instellingen of opties-----*/
 @media (max-width: 700px){

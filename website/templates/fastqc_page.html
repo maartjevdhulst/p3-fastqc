@@ -24,11 +24,11 @@
        <!--dividing the rest of the page into 2 colomns-->
        <div class="row">
            <div class="tool-col1">
-               <form class="tests" action="/fastqc" method="post"> <!--when form submitted resultspage is loaded through the post method-->
+               <form class="tests" action="/fastqc" method="post" enctype="multipart/form-data"> <!--when form submitted resultspage is loaded through the post method-->
                    <ul>
                        <li>
                        <input type="checkbox" id="duplication" name="duplication"
-                              onclick="showLimits('duplication_limits', 'duplication', 'duplication_text')" > <!--fold out of corresponding limits from and explanation text-->
+                              onclick="showLimits('duplication_limits', 'duplication', 'duplication_text')"> <!--fold out of corresponding limits from and explanation text-->
                       <label for="duplication">Duplicate sequences</label><br>
                            <ul style="display:none" id="duplication_limits"> <!--only list of checkboxes is first visible-->
                                <li>
@@ -48,11 +48,11 @@
                            <ul style="display: none" id="kmer_limits">
                                <li>
                                    <label for="kmer_warn"><input type="number" value="2" step="any"
-                                                 class="limits" id="kmer_warn">warning</label>
+                                                 class="limits" id="kmer_warn" name="kmer">warning</label>
                                </li>
                                <li>
                                    <label for="kmer_error"><input type="number" value="5" step="any"
-                                                 class="limits" id="kmer_error">error</label>
+                                                 class="limits" id="kmer_error" name="kmer">error</label>
                                </li>
                            </ul>
                        </li>
@@ -63,11 +63,11 @@
                            <ul style="display: none" id="n_content_limits">
                                <li>
                                    <label for="n_content_warn"><input type="number" value="5" step="any"
-                                                 class="limits" id="n_content_warn">warning</label>
+                                                 class="limits" id="n_content_warn" name="n_content">warning</label>
                                </li>
                                <li>
                                    <label for="n_content_error"><input type="number" value="20" step="any"
-                                                 class="limits" id="n_content_error">error</label>
+                                                 class="limits" id="n_content_error" name="n_content">error</label>
                                </li>
                            </ul>
                        </li>
@@ -78,11 +78,11 @@
                            <ul style="display: none" id="overrepresented_limits">
                                <li>
                                    <label for="overrepresented_warn"><input type="number" value="0.1" step="any"
-                                                 class="limits" id="overrepresented_warn">warning</label>
+                                                 class="limits" id="overrepresented_warn" name="overrepresented">warning</label>
                                </li>
                                <li>
                                    <label for="overrepresented_error"><input type="number" value="1" step="any"
-                                                 class="limits" id="overrepresented_error">error</label>
+                                                 class="limits" id="overrepresented_error" name="overrepresented">error</label>
                                </li>
                            </ul>
                        </li>
@@ -93,19 +93,19 @@
                            <ul style="display: none" id="quality_base_limits">
                                <li>
                                    <label for="quality_base_warn_l"><input type="number" value="10" step="any"
-                                                 class="limits" id="quality_base_warn_l">warning lower</label>
+                                                 class="limits" id="quality_base_warn_l" name="quality_base">warning lower</label>
                                </li>
                                <li>
                                    <label for="quality_base_error_l"><input type="number" value="5" step="any"
-                                                 class="limits" id="quality_base_error_l">error lower</label>
+                                                 class="limits" id="quality_base_error_l" name="quality_base">error lower</label>
                                </li>
                                <li>
                                    <label for="quality_base_warn_m"><input type="number" value="25" step="any"
-                                                 class="limits" id="quality_base_warn_m">warning median</label>
+                                                 class="limits" id="quality_base_warn_m" name="quality_base">warning median</label>
                                </li>
                                <li>
                                    <label for="quality_base_error_m"><input type="number" value="20" step="any"
-                                                 class="limits" id="quality_base_error_m">error median</label>
+                                                 class="limits" id="quality_base_error_m" name="quality_base">error median</label>
                                </li>
                            </ul>
                        </li>
@@ -116,11 +116,11 @@
                            <ul style="display: none" id="sequence_limits">
                                <li>
                                    <label for="sequence_warn"><input type="number" value="10" step="any"
-                                                 class="limits" id="sequence_warn">warning</label>
+                                                 class="limits" id="sequence_warn" name="sequence">warning</label>
                                </li>
                                <li>
                                    <label for="sequence_error"><input type="number" value="20" step="any"
-                                                 class="limits" id="sequence_error">error</label>
+                                                 class="limits" id="sequence_error" name="sequence">error</label>
                                </li>
                            </ul>
                        </li>
@@ -131,11 +131,11 @@
                            <ul style="display: none" id="gc_sequence_limits">
                                <li>
                                    <label for="gc_sequence_warn"><input type="number" value="15" step="any"
-                                                 class="limits" id="gc_sequence_warn">warning</label>
+                                                 class="limits" id="gc_sequence_warn" name="gc_sequence">warning</label>
                                </li>
                                <li>
                                    <label for="gc_sequence_error"><input type="number" value="30" step="any"
-                                                 class="limits" id="gc_sequence_error">error</label>
+                                                 class="limits" id="gc_sequence_error" name="gc_sequence">error</label>
                                </li>
                            </ul>
                        </li>
@@ -146,11 +146,11 @@
                            <ul style="display: none" id="quality_sequence_limits">
                                <li>
                                    <label for="quality_sequence_warn"><input type="number" value="27" step="any"
-                                                 class="limits" id="quality_sequence_warn">warning</label>
+                                                 class="limits" id="quality_sequence_warn" name="quality_sequence">warning</label>
                                </li>
                                <li>
                                    <label for="quality_sequence_error"><input type="number" value="20" step="any"
-                                                 class="limits" id="quality_sequence_error">error</label>
+                                                 class="limits" id="quality_sequence_error" name="quality_sequence">error</label>
                                </li>
                            </ul>
                        </li>
@@ -161,11 +161,11 @@
                            <ul style="display: none" id="tile_limits">
                                <li>
                                    <label for="tile_warn"><input type="number" value="5" step="any"
-                                                 class="limits" id="tile_warn">warning</label>
+                                                 class="limits" id="tile_warn" name="tile">warning</label>
                                </li>
                                <li>
                                    <label for="tile_error"><input type="number" value="10" step="any"
-                                                 class="limits" id="tile_error">error</label>
+                                                 class="limits" id="tile_error" name="tile">error</label>
                                </li>
                            </ul>
                        </li>
@@ -176,11 +176,11 @@
                            <ul style="display: none" id="sequence_length_limits">
                                <li>
                                    <label for="sequence_length_warn"><input type="number" value="1" step="any"
-                                                 class="limits" id="sequence_length_warn">warning</label>
+                                                 class="limits" id="sequence_length_warn" name="sequence_length">warning</label>
                                </li>
                                <li>
                                    <label for="sequence_length_error"><input type="number" value="1" step="any"
-                                                 class="limits" id="sequence_length_error">error</label>
+                                                 class="limits" id="sequence_length_error" name="sequence_length">error</label>
                                </li>
                            </ul>
                        </li>
@@ -191,15 +191,19 @@
                            <ul style="display: none" id="adapter_limits">
                                <li>
                                    <label for="adapter_warn"><input type="number" value="5" step="any"
-                                                 class="limits" id="adapter_warn">warning</label>
+                                                 class="limits" id="adapter_warn" name="adapter">warning</label>
                                </li>
                                <li>
                                    <label for="adapter_error"><input type="number" value="10" step="any"
-                                                 class="limits" id="adapter_error">error</label>
+                                                 class="limits" id="adapter_error" name="adapter">error</label>
                                </li>
                            </ul>
                        </li>
                    </ul> <!--end of checkbox list-->
+                   <label for="myfile2">
+                      <input type="file" id="myfile2" name="myfile2">
+                      Select a fastq file:
+                  </label>
                    <!--submit button to load results page through post method option in app.py-->
                        <input type="submit" value="Submit"><br><br>
                </form> <!--end of form-->
@@ -207,7 +211,7 @@
 
 
 
-               <form class="file">
+               <form class="file" method="post" action="/fastqc">
                    <!--button to upload fastq file-->
                   <label for="myfile">
                       <input type="file" id="myfile" name="myfile">
