@@ -1,24 +1,20 @@
 #!/usr/bin/env python3
 """
 main script plotting all plots for fastqc report
-use: python .\website\scrips\edit_limits.py .\website\static\fastqc_data.txt
+use: python .\website\scrips\plotting.py .\website\static\fastqc_data.txt
 """
 
 __author__ = "Maartje van der Hulst"
 __date__ = 2025.3
 __version__ = 1.0
 
-
-import matplotlib.pyplot as plt
-import numpy as np
 import sys
 import pandas as pd
 import matplotlib as mpl
-import table
-from Tools.demo.spreadsheet import center
-from pandas.plotting import table
-from dask.dataframe.methods import values
-import matplotlib.colors as colors
+import matplotlib.pyplot as plt
+import numpy as np
+import dataframe_image as dfi
+
 
 
 def read_data(file):
@@ -27,7 +23,7 @@ def read_data(file):
     :param file:
     :return:
     """
-    with open(file) as openfile:
+    with (open(file) as openfile):
         counter = 0
 
         base_quality_list = []
@@ -60,7 +56,6 @@ def read_data(file):
         PolyG_list = []
         kmer = {}
         for line in openfile:
-            
             if not line.startswith(">>"): #modules start and end with line starting with >>
                 if counter == 1: #content inside first module
                     entry = make_basic_statistics(line, header_list, entry)
@@ -107,7 +102,7 @@ def read_data(file):
                     overrepresented = make_overrepresented(line, header_list, overrepresented)
 
                 elif counter == 21 and not line.startswith("#"):
-                    base, illumina_universal, illumina_small_3, illumina_small_5, nextera_transposase, PolyA, PolyG = make_adapter(line)
+                    base, illumina_universal, illumina_small_3, illumina_small_5, nextera_transposase,PolyA, PolyG = make_adapter(line)
                     base2_list.append(base)
                     illumina_universal_list.append(illumina_universal)
                     illumina_small_3_list.append(illumina_small_3)
@@ -121,9 +116,11 @@ def read_data(file):
             else:
                 counter += 1
 
-    # df_table = pd.DataFrame(entry)
-    # print(df_table)
-    # make_table(df_table)
+    df_table = pd.DataFrame(entry)
+    # df_table.style.hide(axis='index')
+    # print(df_table.head())
+    html_string = make_table(df_table, 'basic_statistics')
+    print(html_string)
     # make_boxplot(base_quality_list, meanplot_list)
     # tile_df = pd.DataFrame(tile_list)
     # make_heatplot(tile_df)
@@ -133,11 +130,12 @@ def read_data(file):
     # make_lineplot(base_list, 'n_content',n_count_list)
     # make_lineplot(length_list, 'lenght_distribution', length_count_list)
     # make_lineplot(duplication_list, 'duplication_percentage', duplication_perc_list)
-    # make_lineplot(base2_list, 'adapter', illumina_universal_list, illumina_small_3_list, illumina_small_5_list,
-    #               nextera_transposase_list, PolyA_list, PolyG_list)
-    # print(len(base2_list))
-    df_kmer = pd.DataFrame(kmer)
-    make_table(df_kmer)
+    # make_lineplot(base2_list, 'adapter', illumina_universal_list, illumina_small_3_list,
+    #               illumina_small_5_list, nextera_transposase_list, PolyA_list, PolyG_list)
+    # df_overrepresented = pd.DataFrame(overrepresented)
+    # make_table(df_overrepresented, 'overrepresented')
+    # df_kmer = pd.DataFrame(kmer)
+    # make_table(df_kmer, 'kmer')
 
     return 0
 
@@ -202,7 +200,8 @@ def make_base_sequence_quality_data(line, base_quality_list, meanplot_list):
             num = float(num)
             whishi = num
             # adding dict with the base quality statistics to list
-            base_quality_list.append({'label':label, 'mean':mean, 'med':median, 'q1':q1, 'q3':q3, 'whislo':whislo, 'whishi':whishi})
+            base_quality_list.append({'label':label, 'mean':mean, 'med':median, 'q1':q1, 'q3':q3, 'whislo':whislo,
+                                      'whishi':whishi})
             meanplot_list.append(mean) #adding mean to separate list for separate line plot
 
     return base_quality_list, meanplot_list
@@ -289,7 +288,6 @@ def make_gc_content(line):
         elif i == 1:
             count = float(num)
 
-    
     return  mean_perc_gc, count
 
 def make_n_count(line):
@@ -421,8 +419,6 @@ def make_kmer (line, header_list, entry):
 
     return entry
 
-
-
 def make_boxplot(data, meanplot):
     """
 
@@ -440,32 +436,37 @@ def make_boxplot(data, meanplot):
     plt.savefig("../static/images/boxplot.png")
     plt.close()
 
-def make_table(data):
+def make_table(data, plot_name=str):
     """
 
+    :param plot_name:
     :param data:
     :return:
     """
-
-    fig, ax = plt.subplots()
-
-    # hide axes
-    fig.patch.set_visible(False)
-    ax.axis('off')
-    ax.axis('tight')
-    fig.set_figheight(22, forward=True)
+    html_string = data.to_html(index=False, justify='center')
 
 
-    # table = ax.table(cellText=data, cellLoc='left', loc=center
-    table = pd.plotting.table(ax, data, loc='center')
-    table.auto_set_column_width(col=list(range(len(data.columns))))
 
+
+    # fig, ax = plt.subplots()
+    #
+    # # hide axes
+    # fig.patch.set_visible(False)
+    # ax.axis('off')
+    # ax.axis('tight')
+    # fig.set_size_inches(8,6, forward=True)
+    #
+    # table = ax.table(cellText=data, cellLoc='left', loc='center')
+    # # table = pd.plotting.table(ax, data, loc='center', rowLabels=None)
+    # table.auto_set_column_width(col=list(range(len(data.columns))))
 
 
     # ax.set_ylim(0, len(data.index))
     # plt.show()
-    plt.savefig("../static/images/table_overrepresented.png")
-    plt.close()
+    # plt.savefig(f"../static/images/table_{plot_name}.png")
+    # plt.close()
+
+    return html_string
 
 def make_heatplot(df_tile):
     """
@@ -484,7 +485,7 @@ def make_heatplot(df_tile):
 
     fig, ax = plt.subplots()
     #
-    h = ax.matshow(df_pivot, cmap=mpl.colormaps['jet'], origin='lower')
+    h = ax.matshow(df_pivot, cmap=mpl.colormaps['jet_r'], origin='lower')
     plt.colorbar(h, ax=ax)
     # ax.set_ylim(top=df_tile['y'].max(), bottom=df_tile['y'].min())
     # ax.set_xlim(right=df_tile['x'].max(), left=df_tile['x'].min())
@@ -525,17 +526,8 @@ def main(args):
     file2 = "../static/fastqc_data.txt"
     read_data(file) #opening file and sending the right parts of the file to the needed functions
 
-
-
+    return 0
 
 if __name__ == "__main__":
-    exitcode = main(sys.argv)
-    sys.exit(exitcode)
-
-
-
-
-
-
-
-
+    EXITCODE = main(sys.argv)
+    sys.exit(EXITCODE)
