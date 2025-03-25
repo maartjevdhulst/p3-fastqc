@@ -17,23 +17,23 @@
 <!--adding the pages content to the base body-->
 {% block body %}
 
-    <ul>
-        <!-- display the values provided in the form ('fastqc_page.html') -->
-        <li><strong>Duplication:</strong> {{ duplication }}</li>
-        <li><strong>Kmer:</strong> {{ kmer }}</li>
-        <li><strong>N content:</strong> {{ n_content }}</li>
-        <li><strong>Overrepresented:</strong> {{overrepresented}}</li>
-        <li><strong>Quality base:</strong> {{quality_base}}</li>
-        <li><strong>Sequence:</strong> {{ sequence }}</li>
-        <li><strong>GC sequence:</strong> {{ gc_sequence }}</li>
-        <li><strong>Quality sequence:</strong> {{ quality_sequence }}</li>
-        <li><strong>Tile:</strong> {{tile}}</li>
-        <li><strong>Sequence length:</strong> {{sequence_length}}</li>
-        <li><strong>Adapter:</strong> {{adapter}}</li>
-        <li><strong>File:</strong> {{file}}</li>
-        <a href="{{ url_for('access_file', filename=file, as_attachment=True )}}">Index</a>
+<!--    <ul>-->
+<!--        &lt;!&ndash; display the values provided in the form ('fastqc_page.html') &ndash;&gt;-->
+<!--        <li><strong>Duplication:</strong> {{ duplication }}</li>-->
+<!--        <li><strong>Kmer:</strong> {{ kmer }}</li>-->
+<!--        <li><strong>N content:</strong> {{ n_content }}</li>-->
+<!--        <li><strong>Overrepresented:</strong> {{overrepresented}}</li>-->
+<!--        <li><strong>Quality base:</strong> {{quality_base}}</li>-->
+<!--        <li><strong>Sequence:</strong> {{ sequence }}</li>-->
+<!--        <li><strong>GC sequence:</strong> {{ gc_sequence }}</li>-->
+<!--        <li><strong>Quality sequence:</strong> {{ quality_sequence }}</li>-->
+<!--        <li><strong>Tile:</strong> {{tile}}</li>-->
+<!--        <li><strong>Sequence length:</strong> {{sequence_length}}</li>-->
+<!--        <li><strong>Adapter:</strong> {{adapter}}</li>-->
+<!--        <li><strong>basic table:</strong> </li>-->
+<!--        <a href="{{ url_for('access_file', filename=file, as_attachment=True )}}">Index</a>-->
 
-    </ul>
+<!--    </ul>-->
 <div class="colomns">
     <div class="summary">
         <h2>Summary</h2>
@@ -95,48 +95,10 @@
                 <img src="../static/images/Icons/tick_pink.png" alt="[OK]"/>
                 Basic Statistics
             </h2>
-            <table border="1" class="dataframe">
-              <thead>
-                <tr style="text-align: center;">
-                  <th>Measure</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Filename</td>
-                  <td>ERR550643_1.fastq.gz</td>
-                </tr>
-                <tr>
-                  <td>File type</td>
-                  <td>Conventional base calls</td>
-                </tr>
-                <tr>
-                  <td>Encoding</td>
-                  <td>Sanger / Illumina 1.9</td>
-                </tr>
-                <tr>
-                  <td>Total Sequences</td>
-                  <td>503810</td>
-                </tr>
-                <tr>
-                  <td>Total Bases</td>
-                  <td>118.6 Mbp</td>
-                </tr>
-                <tr>
-                  <td>Sequences flagged as poor quality</td>
-                  <td>0</td>
-                </tr>
-                <tr>
-                  <td>Sequence length</td>
-                  <td>35-251</td>
-                </tr>
-                <tr>
-                  <td>%GC</td>
-                  <td>66</td>
-                </tr>
-              </tbody>
-            </table>
+<!--            <span>{{basic_table}}</span>-->
+            {{basic_table | safe}}
+
+
         </div>
         <div class="module">
             <h2 id="M1">

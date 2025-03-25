@@ -41,7 +41,7 @@ class MakeTables():
     def __init__(self, rows_list):
         self.rows_list = rows_list
         self.df = self.make_dataframe()
-        self.make_html_table(self.df)
+        self.html_string = self.make_html_table(self.df)
 
     def make_dataframe(self):
         keys = self.rows_list[1]
@@ -52,10 +52,18 @@ class MakeTables():
             value = value.strip().split("\t")
             new_values.append(value)
         rows_dict = {}
-        for key, value in zip(keys, new_values):
-            rows_dict[key] = value
+        for num, key in enumerate(keys):
+            rows_dict[key] = []
+            for value in new_values:
+                rows_dict[key].append(value[num])
         df_rows = pd.DataFrame(rows_dict)
         return df_rows
+
+
+
+
+
+
 
     def make_html_table(self,data):
 

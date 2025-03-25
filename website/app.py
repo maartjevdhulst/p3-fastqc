@@ -8,12 +8,15 @@ __author__ = "Maartje van der Hulst"
 __date__ = 2025.3
 __version__ = 1.2
 
+import base64
 
 from flask import Flask, render_template, request, send_from_directory
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
 import os
 from scrips.Limits import Limits
+from scrips.main import FastQC, ReadingDataTextFile
+from scrips.Plotting_v2 import MakeTables
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "./uploads"
@@ -52,13 +55,14 @@ def fastqc():
 
         try:
             file = request.files['myfile2']
+            file_name = os.path.splitext(file.filename)[0]
             extention = os.path.splitext(file.filename)[1]
             if extention not in app.config['ALLOWED_EXTENSIONS']:
                 return f"file type not allowed, please use a {app.config['ALLOWED_EXTENSIONS']}"
             if file:
                 file.save(os.path.join(
                     app.config['UPLOAD_FOLDER'],
-                    secure_filename(file.filename)
+                    secure_filename(file.filename),
                 ))
         except RequestEntityTooLarge:
             return f'File too large, try smaller file'
@@ -77,9 +81,18 @@ def fastqc():
             'adapter' : request.form.getlist('adapter'),
             'file': file.filename
         }
-        limits = Limits(settings, "../../fastqc_v0.12.1/FastQC/Configuration/limits_kopie.txt")
-        print(limits)
-        return render_template('fastqc_page_results.html', **settings)
+        # limits = Limits(settings, "../../fastqc_v0.12.1/FastQC/Configuration/limits_kopie.txt")
+        # print(limits)
+        # FastQC(file.filename)
+        tab = ReadingDataTextFile(f"static/{file_name}_fastqc/fastqc_data.txt")
+        # encoded = tab.output.encode('utf-8')
+        # b64 = base64.b64decode(encoded)
+        # output = b64.decode('utf-8')
+        results = { 'basic_table': tab.output,
+
+        }
+
+        return render_template('fastqc_page_results.html', **results)
 
 @app.route("/uploads/<path:filename>", methods=['GET'])
 def access_file(filename):
