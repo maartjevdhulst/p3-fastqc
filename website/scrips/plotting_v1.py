@@ -122,7 +122,7 @@ def read_data(file):
     # html_string = make_table(df_table, 'basic_statistics')
     # print(html_string)
     make_boxplot(base_quality_list, meanplot_list)
-    # tile_df = pd.DataFrame(tile_list)
+    tile_df = pd.DataFrame(tile_list)
     # make_heatplot(tile_df)
     # make_lineplot(line_x_list, 'sequence_quality',line_y_list)
     # make_lineplot(base_list, 'base_sequence', G_list, A_list, T_list, C_list )

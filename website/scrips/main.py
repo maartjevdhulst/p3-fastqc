@@ -32,7 +32,7 @@ class FastQC:
 class ReadingDataTextFile:
     def __init__(self, file):
         self.file = file
-        self.table, self.icons = self.reading_datafile()
+        self.table, self.icons, self.dataframe = self.reading_datafile()
 
 
     def reading_datafile(self):
@@ -43,18 +43,24 @@ class ReadingDataTextFile:
                 if line.startswith(">>END_MODULE"):
                     module = current_module[0]
                     if module[-5:-1] == 'pass':
-                        icon_list.append('pass;tick')
+                        icon_list.append('tick')
                     elif module[-5:-1] == 'warn':
                         icon_list.append('warning')
                     elif module[-5:-1] == 'fail':
                         icon_list.append('error')
+
                     if module.startswith(">>Basic Statistics"):
                         html_string = MakeTables(current_module)
-                        # print(html_string.html_string)
                     #     plotting class die module(->soort plot) en inhoud(current_module) meekrijgt
-                    elif module.startswith('>>Per base sequence quality'):
-                        boxplot = MakePlots(current_module)
-                        boxplot.make_boxplot('Per base sequence quality')
+                    # elif module.startswith('>>Per base sequence quality'):
+                    #     boxplot = MakePlots(current_module)
+                    #     boxplot.make_boxplot('Per_base_sequence_quality')
+                    # elif module.startswith('>>Per tile sequence quality'):
+                    #     heatmap = MakePlots(current_module)
+                    #     heatmap.make_heatplot('Per_base_sequence_quality')
+                    elif module.startswith(">>Per sequence quality scores"):
+                        lineplot = MakePlots(current_module)
+                        lineplot.make_lineplot("Per_sequence_quality_scores")
                         break
                     current_module = []
 
@@ -65,14 +71,15 @@ class ReadingDataTextFile:
                 elif not line.startswith(">>"):
                     current_module.append(line)
 
-        return html_string.html_string, icon_list
+        return html_string.html_string, icon_list, html_string.df
 
 
 def main():
     # subprocess.run("cd ../fastqc_v0.12.1/FastQC/ | /run_fastqc.bat ../../Practicum_3/Example_Data/test.fastq", shell=True)
     # run_fastqc("../../p3-fastqc/website/static/test.fastq")
     # unzip_results()
-    ReadingDataTextFile("../static/test_fastqc/fastqc_data.txt")
+
+    ReadingDataTextFile("../static/fastqc_data_lang.txt")
 
 
 if __name__ == "__main__":

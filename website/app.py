@@ -90,11 +90,10 @@ def fastqc():
         # FastQC(file.filename)
         output = ReadingDataTextFile(f"static/{file_name}_fastqc/fastqc_data.txt")
         results = { 'basic_table': output.table,
+                    'encoding': output.dataframe.loc[2]['Value'],
                     'today': today,
                     'filename': file.filename,
                     'icons': output.icons
-
-
 
         }
 
