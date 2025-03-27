@@ -17,6 +17,10 @@ import os
 from scrips.Limits import Limits
 from scrips.main import FastQC, ReadingDataTextFile
 from scrips.Plotting_v2 import MakeTables
+from datetime import date
+today = date.today()
+today = today.strftime('%a %d %B %Y')
+
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "./uploads"
@@ -84,11 +88,13 @@ def fastqc():
         # limits = Limits(settings, "../../fastqc_v0.12.1/FastQC/Configuration/limits_kopie.txt")
         # print(limits)
         # FastQC(file.filename)
-        tab = ReadingDataTextFile(f"static/{file_name}_fastqc/fastqc_data.txt")
-        # encoded = tab.output.encode('utf-8')
-        # b64 = base64.b64decode(encoded)
-        # output = b64.decode('utf-8')
-        results = { 'basic_table': tab.output,
+        output = ReadingDataTextFile(f"static/{file_name}_fastqc/fastqc_data.txt")
+        results = { 'basic_table': output.table,
+                    'today': today,
+                    'filename': file.filename,
+                    'icons': output.icons
+
+
 
         }
 

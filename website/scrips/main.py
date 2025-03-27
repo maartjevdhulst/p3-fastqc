@@ -11,7 +11,7 @@ __version__ = 1.0
 import sys
 import subprocess
 from subprocess import Popen
-from .Plotting_v2 import MakeTables
+from Plotting_v2 import MakeTables, MakePlots
 
 class FastQC:
     def __init__(self, file):
@@ -32,21 +32,32 @@ class FastQC:
 class ReadingDataTextFile:
     def __init__(self, file):
         self.file = file
-        self.output = self.reading_datafile()
+        self.table, self.icons = self.reading_datafile()
 
 
     def reading_datafile(self):
         current_module = []
+        icon_list = []
         with open(self.file, "r", encoding='UTF-8') as open_file:
             for line in open_file:
                 if line.startswith(">>END_MODULE"):
                     module = current_module[0]
+                    if module[-5:-1] == 'pass':
+                        icon_list.append('pass;tick')
+                    elif module[-5:-1] == 'warn':
+                        icon_list.append('warning')
+                    elif module[-5:-1] == 'fail':
+                        icon_list.append('error')
                     if module.startswith(">>Basic Statistics"):
                         html_string = MakeTables(current_module)
-                        print(html_string.html_string)
+                        # print(html_string.html_string)
                     #     plotting class die module(->soort plot) en inhoud(current_module) meekrijgt
+                    elif module.startswith('>>Per base sequence quality'):
+                        boxplot = MakePlots(current_module)
+                        boxplot.make_boxplot('Per base sequence quality')
+                        break
                     current_module = []
-                    break
+
                 elif line.startswith(">>") and not line.startswith(">>END_MODULE"):
                     current_module += [line]
                 elif line.startswith("##"):
@@ -54,7 +65,7 @@ class ReadingDataTextFile:
                 elif not line.startswith(">>"):
                     current_module.append(line)
 
-        return html_string.html_string
+        return html_string.html_string, icon_list
 
 
 def main():

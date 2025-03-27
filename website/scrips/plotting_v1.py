@@ -116,12 +116,12 @@ def read_data(file):
             else:
                 counter += 1
 
-    df_table = pd.DataFrame(entry)
-    # df_table.style.hide(axis='index')
-    # print(df_table.head())
-    html_string = make_table(df_table, 'basic_statistics')
-    print(html_string)
-    # make_boxplot(base_quality_list, meanplot_list)
+    # df_table = pd.DataFrame(entry)
+    # # df_table.style.hide(axis='index')
+    # # print(df_table.head())
+    # html_string = make_table(df_table, 'basic_statistics')
+    # print(html_string)
+    make_boxplot(base_quality_list, meanplot_list)
     # tile_df = pd.DataFrame(tile_list)
     # make_heatplot(tile_df)
     # make_lineplot(line_x_list, 'sequence_quality',line_y_list)
