@@ -343,7 +343,7 @@
     background-color: #f5bdce;
 }
 .summary{
-    width: 250px;
+    width: 280px;
     height: 100%;
     background-color: #e65681;
     position: fixed;
@@ -361,7 +361,7 @@
     color: #4b0b1e;
 }
 .module{
-    margin-left: 280px;
+    margin-left: 300px;
     padding-top: 50px;
 }
 .module h2{
@@ -370,6 +370,11 @@
 .module table thead{
     background-color: #4b0b1e;
     color: white;
+}
+
+.module p img{
+    width: 870px;
+    height: 600px;
 }
 
 

@@ -16,7 +16,7 @@ from werkzeug.exceptions import RequestEntityTooLarge
 import os
 from scrips.Limits import Limits
 from scrips.main import FastQC, ReadingDataTextFile
-from scrips.Plotting_v2 import MakeTables
+
 from datetime import date
 today = date.today()
 today = today.strftime('%a %d %B %Y')
@@ -85,15 +85,18 @@ def fastqc():
             'adapter' : request.form.getlist('adapter'),
             'file': file.filename
         }
-        # limits = Limits(settings, "../../fastqc_v0.12.1/FastQC/Configuration/limits_kopie.txt")
-        # print(limits)
-        # FastQC(file.filename)
-        output = ReadingDataTextFile(f"static/{file_name}_fastqc/fastqc_data.txt")
+        limits = Limits(settings, "Tools/fastqc_v0.12.1/FastQC/Configuration/limits.txt")
+        print(limits)
+        FastQC(file.filename)
+        # output = ReadingDataTextFile("static/fastqc_data_lang.txt")
+        output = ReadingDataTextFile(f"{file_name}_fastqc/fastqc_data.txt")
         results = { 'basic_table': output.table,
                     'encoding': output.dataframe.loc[2]['Value'],
                     'today': today,
                     'filename': file.filename,
-                    'icons': output.icons
+                    'icons': output.icons,
+                    'overrepresented': output.overrepresented,
+                    'kmer': output.kmer,
 
         }
 
