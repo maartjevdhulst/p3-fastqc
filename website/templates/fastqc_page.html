@@ -1,0 +1,309 @@
+<!--extending from the base.html layout-->
+{% extends "base.html"%}
+
+<!--setting the page title-->
+{% block head %}
+<title>fastqc page</title>
+{% endblock %}
+
+<!--using the sub-header layout for the header-->
+{% block header %}
+    <section class="sub-header">
+       <h1>FastQC tool</h1>
+   </section>
+{% endblock%}
+
+<!--adding the pages content to the base body-->
+{% block body %}
+    <!--instructions at the top of the page-->
+   <section class="tool_info">
+       <h3>Settings for the FastQC tool</h3>
+            <p>Please enter all your desired test methods in the following form.
+                <br> Set the corresponding limits to your desire and upload your file.</p>
+
+       <!--dividing the rest of the page into 2 colomns-->
+       <div class="row">
+           <div class="tool-col1">
+               <form class="tests" action="/fastqc" method="post" enctype="multipart/form-data" accept-charset="UTF-8"> <!--when form submitted resultspage is loaded through the post method-->
+                   <ul>
+                       <li>
+                       <input type="checkbox" id="duplication" name="duplication"
+                              onclick="showLimits('duplication_limits', 'duplication', 'duplication_text')"> <!--fold out of corresponding limits from and explanation text-->
+                      <label for="duplication">Duplicate sequences</label><br>
+                           <ul style="display:none" id="duplication_limits"> <!--only list of checkboxes is first visible-->
+                               <li>
+                                   <label for="duplication_warn"><input type="number" value="70" step="any"
+                                                 class="limits" name="duplication" id="duplication_warn">warning</label> <!--default values shown to user-->
+                               </li>
+                               <li>
+                                   <label for="duplication_error"><input type="number" value="50" step="any"
+                                                 class="limits" name="duplication" id="duplication_error">error</label>
+                               </li>
+                           </ul>
+                       </li> <!--duplicates for all test methods-->
+                       <li>
+                      <input type="checkbox" id="kmer" name="kmer"
+                             onclick="showLimits('kmer_limits', 'kmer', 'kmer_text')" >
+                      <label for="kmer">Kmer content</label><br>
+                           <ul style="display: none" id="kmer_limits">
+                               <li>
+                                   <label for="kmer_warn"><input type="number" value="2" step="any"
+                                                 class="limits" id="kmer_warn" name="kmer">warning</label>
+                               </li>
+                               <li>
+                                   <label for="kmer_error"><input type="number" value="5" step="any"
+                                                 class="limits" id="kmer_error" name="kmer">error</label>
+                               </li>
+                           </ul>
+                       </li>
+                       <li>
+                      <input type="checkbox" id="n_content" name="n_content"
+                             onclick="showLimits('n_content_limits', 'n_content', 'n_content_text')">
+                      <label for="n_content">Per base N content</label><br>
+                           <ul style="display: none" id="n_content_limits">
+                               <li>
+                                   <label for="n_content_warn"><input type="number" value="5" step="any"
+                                                 class="limits" id="n_content_warn" name="n_content">warning</label>
+                               </li>
+                               <li>
+                                   <label for="n_content_error"><input type="number" value="20" step="any"
+                                                 class="limits" id="n_content_error" name="n_content">error</label>
+                               </li>
+                           </ul>
+                       </li>
+                        <li>
+                      <input type="checkbox" id="overrepresented" name="overrepresented"
+                             onclick="showLimits('overrepresented_limits', 'overrepresented', 'overrepresented_text')">
+                      <label for="overrepresented">Overrepresented sequences</label><br>
+                           <ul style="display: none" id="overrepresented_limits">
+                               <li>
+                                   <label for="overrepresented_warn"><input type="number" value="0.1" step="any"
+                                                 class="limits" id="overrepresented_warn" name="overrepresented">warning</label>
+                               </li>
+                               <li>
+                                   <label for="overrepresented_error"><input type="number" value="1" step="any"
+                                                 class="limits" id="overrepresented_error" name="overrepresented">error</label>
+                               </li>
+                           </ul>
+                       </li>
+                        <li>
+                      <input type="checkbox" id="quality_base" name="quality_base"
+                             onclick="showLimits('quality_base_limits', 'quality_base', 'quality_base_text')">
+                      <label for="quality_base">Per base sequence quality</label><br>
+                           <ul style="display: none" id="quality_base_limits">
+                               <li>
+                                   <label for="quality_base_warn_l"><input type="number" value="10" step="any"
+                                                 class="limits" id="quality_base_warn_l" name="quality_base">warning lower</label>
+                               </li>
+                               <li>
+                                   <label for="quality_base_error_l"><input type="number" value="5" step="any"
+                                                 class="limits" id="quality_base_error_l" name="quality_base">error lower</label>
+                               </li>
+                               <li>
+                                   <label for="quality_base_warn_m"><input type="number" value="25" step="any"
+                                                 class="limits" id="quality_base_warn_m" name="quality_base">warning median</label>
+                               </li>
+                               <li>
+                                   <label for="quality_base_error_m"><input type="number" value="20" step="any"
+                                                 class="limits" id="quality_base_error_m" name="quality_base">error median</label>
+                               </li>
+                           </ul>
+                       </li>
+                        <li>
+                      <input type="checkbox" id="sequence" name="sequence"
+                             onclick="showLimits('sequence_limits', 'sequence', 'sequence_text')">
+                      <label for="sequence">Per base sequence content</label><br>
+                           <ul style="display: none" id="sequence_limits">
+                               <li>
+                                   <label for="sequence_warn"><input type="number" value="10" step="any"
+                                                 class="limits" id="sequence_warn" name="sequence">warning</label>
+                               </li>
+                               <li>
+                                   <label for="sequence_error"><input type="number" value="20" step="any"
+                                                 class="limits" id="sequence_error" name="sequence">error</label>
+                               </li>
+                           </ul>
+                       </li>
+                        <li>
+                      <input type="checkbox" id="gc_sequence" name="gc_sequence"
+                             onclick="showLimits('gc_sequence_limits', 'gc_sequence', 'gc_sequence_text')">
+                      <label for="gc_sequence">Per sequence GC sequence</label><br>
+                           <ul style="display: none" id="gc_sequence_limits">
+                               <li>
+                                   <label for="gc_sequence_warn"><input type="number" value="15" step="any"
+                                                 class="limits" id="gc_sequence_warn" name="gc_sequence">warning</label>
+                               </li>
+                               <li>
+                                   <label for="gc_sequence_error"><input type="number" value="30" step="any"
+                                                 class="limits" id="gc_sequence_error" name="gc_sequence">error</label>
+                               </li>
+                           </ul>
+                       </li>
+                        <li>
+                      <input type="checkbox" id="quality_sequence" name="quality_sequence"
+                             onclick="showLimits('quality_sequence_limits', 'quality_sequence', 'quality_sequence_text')" >
+                      <label for="quality_sequence">Per sequence quality score</label><br>
+                           <ul style="display: none" id="quality_sequence_limits">
+                               <li>
+                                   <label for="quality_sequence_warn"><input type="number" value="27" step="any"
+                                                 class="limits" id="quality_sequence_warn" name="quality_sequence">warning</label>
+                               </li>
+                               <li>
+                                   <label for="quality_sequence_error"><input type="number" value="20" step="any"
+                                                 class="limits" id="quality_sequence_error" name="quality_sequence">error</label>
+                               </li>
+                           </ul>
+                       </li>
+                        <li>
+                      <input type="checkbox" id="tile" name="tile"
+                             onclick="showLimits('tile_limits', 'tile', 'tile_text')">
+                      <label for="tile">Per tile sequence quality</label><br>
+                           <ul style="display: none" id="tile_limits">
+                               <li>
+                                   <label for="tile_warn"><input type="number" value="5" step="any"
+                                                 class="limits" id="tile_warn" name="tile">warning</label>
+                               </li>
+                               <li>
+                                   <label for="tile_error"><input type="number" value="10" step="any"
+                                                 class="limits" id="tile_error" name="tile">error</label>
+                               </li>
+                           </ul>
+                       </li>
+                        <li>
+                      <input type="checkbox" id="sequence_length" name="sequence_length"
+                             onclick="showLimits('sequence_length_limits', 'sequence_length', 'sequence_length_text')">
+                      <label for="sequence_length">Sequence length distribution</label><br>
+                           <ul style="display: none" id="sequence_length_limits">
+                               <li>
+                                   <label for="sequence_length_warn"><input type="number" value="1" step="any"
+                                                 class="limits" id="sequence_length_warn" name="sequence_length">warning</label>
+                               </li>
+                               <li>
+                                   <label for="sequence_length_error"><input type="number" value="1" step="any"
+                                                 class="limits" id="sequence_length_error" name="sequence_length">error</label>
+                               </li>
+                           </ul>
+                       </li>
+                        <li>
+                      <input type="checkbox" id="adapter" name="adapter"
+                             onclick="showLimits('adapter_limits', 'adapter', 'adapter_text')">
+                      <label for="adapter">Adapter content</label><br>
+                           <ul style="display: none" id="adapter_limits">
+                               <li>
+                                   <label for="adapter_warn"><input type="number" value="5" step="any"
+                                                 class="limits" id="adapter_warn" name="adapter">warning</label>
+                               </li>
+                               <li>
+                                   <label for="adapter_error"><input type="number" value="10" step="any"
+                                                 class="limits" id="adapter_error" name="adapter">error</label>
+                               </li>
+                           </ul>
+                       </li>
+                   </ul> <!--end of checkbox list-->
+                   <label for="myfile2">
+                      <input type="file" id="myfile2" name="myfile2">
+                      Select a fastq file:
+                  </label>
+                   <!--submit button to load results page through post method option in app.py-->
+                       <input type="submit" value="Submit"><br><br>
+               </form> <!--end of form-->
+
+
+
+
+               <form class="file" method="post" action="/fastqc">
+                   <!--button to upload fastq file-->
+                  <label for="myfile">
+                      <input type="file" id="myfile" name="myfile">
+                      Select a fastq file:
+                  </label>
+               </form>
+           </div>
+
+
+            <!--second colomn where the help pages will be visible-->
+           <div class="tool-col2" id="text_block">
+               <p id="duplication_text" style="display: none"> <!--setting all to invisible so only the most resently checked is visible-->
+                   <iframe src="{{ url_for('duplicate')}}" title="duplicate sequences help"></iframe> <!--link to routes of help pages-->
+               <a href="{{ url_for('references')}}#fastqc_ref" class="tekst-ref">REF</a> <!--link to reference page first link-->
+               </p>
+               <!--duplicates for all test methods-->
+               <p id="kmer_text" style="display: none">
+                   <iframe src="{{ url_for('kmer')}}" title="kmer help"></iframe>
+                   <a href="{{ url_for('references')}}#fastqc_ref" class="tekst-ref">REF</a>
+               </p>
+
+               <p id="n_content_text" style="display: none">
+                   <iframe src="{{ url_for('ncontent')}}" title="n content help"></iframe>
+                   <a href="{{ url_for('references')}}#fastqc_ref" class="tekst-ref">REF</a>
+               </p>
+
+               <p id="overrepresented_text" style="display: none">
+                   <iframe src="{{ url_for('overrepresented')}}" title="overrepresented sequences help"></iframe>
+               <a href="{{ url_for('references')}}#fastqc_ref" class="tekst-ref">REF</a>
+               </p>
+
+               <p id="quality_base_text" style="display: none">
+                   <iframe src="{{ url_for('quality_base')}}" title="Per base sequence quality help"></iframe>
+               <a href="{{ url_for('references')}}#fastqc_ref" class="tekst-ref">REF</a>
+               </p>
+
+               <p id="sequence_text" style="display: none">
+                   <iframe src="{{ url_for('sequence')}}" title="Per sequence quality score help"></iframe>
+               <a href="{{ url_for('references')}}#fastqc_ref" class="tekst-ref">REF</a>
+               </p>
+
+               <p id="gc_sequence_text" style="display: none">
+                   <iframe src="{{ url_for('gc_sequence')}}" title="Per sequence GC content help"></iframe>
+               <a href="{{ url_for('references')}}#fastqc_ref" class="tekst-ref">REF</a>
+               </p>
+
+               <p id="quality_sequence_text" style="display: none">
+                   <iframe src="{{ url_for('quality_sequence')}}" title="Per sequence quality score help"></iframe>
+               <a href="{{ url_for('references')}}#fastqc_ref" class="tekst-ref">REF</a>
+               </p>
+
+               <p id="tile_text" style="display: none">
+                   <iframe src="{{ url_for('tile')}}" title="Per tile sequence quality help"></iframe>
+               <a href="{{ url_for('references')}}#fastqc_ref" class="tekst-ref">REF</a>
+               </p>
+
+               <p id="sequence_length_text" style="display: none">
+                   <iframe src="{{ url_for('sequence_length')}}" title="Sequence lenght distribution help"></iframe>
+               <a href="{{ url_for('references')}}#fastqc_ref" class="tekst-ref">REF</a>
+               </p>
+
+               <p id="adapter_text" style="display: none">
+                   <iframe src="{{ url_for('adapter')}}" title="Adapter content help"></iframe>
+               <a href="{{ url_for('references')}}#fastqc_ref" class="tekst-ref">REF</a>
+               </p>
+
+           </div> <!--end of text colomn-->
+       </div> <!--end of 2 colomns-->
+   </section>
+
+
+<!--script using javascript to fold out the limits boxes and help page of the most recently checked checkbox-->
+<script>
+
+  function showLimits(limit_id, checkbox_id, text_id){
+      // setting the constants using the given input of the function
+      const limits = document.getElementById(limit_id);
+      const checkBox = document.getElementById(checkbox_id);
+      const text = document.getElementById(text_id);
+      // checking for checked checkbox
+      if (checkBox.checked === true){
+          const paragraphs = document.getElementsByTagName("p");  //resetting all text to invisible
+          for (let i = 1; i < paragraphs.length -1; i++){  // skipping the first paragraph with instructions and the last in the footer
+              paragraphs[i].style.display = "none";
+          }
+          limits.style.display = "block"; //displaying the limits of the checked checkbox
+          text.style.display = "block";  //displaying the help page of the checked checkbox
+
+    } else {
+        limits.style.display = "none"; //when unchecking a checkbox fold the corresponding limits back in
+        text.style.display = "none"; //when unchecking a checkbox fold the help page back in
+    }
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,49 @@
+<!--extending from the base.html layout-->
+{% extends "base.html"%}
+
+<!--setting the page title-->
+{% block head %}
+<title>Project page</title>
+{% endblock %}
+
+<!--using the sub-header layout for the header-->
+{% block subheader %}
+    <section class="sub-header">
+       <h1>Project information</h1>
+   </section>
+{% endblock%}
+
+<!--adding the pages content to the base body-->
+{% block body%}
+
+   <section class="project_info">
+       <div class="row">  <!--dividing the page into 2 colomns-->
+
+           <div class="project-col"> <!--colomn 1; text-->
+               <h3>Information about this project</h3>
+               <p>
+                   This is a schoolproject for the Hanze University of applied sciences in which I will be making
+                   this website. On this website there will be the FastQC-tool available. I will be using
+                   HTML, CSS, Python, Flask en Jinja to make this happen. At the bottom of the page you can
+                   click the github logo to visit the repository for this project.
+
+                   The image shows the planning for this project. <br><br>The project is split into 7 phases.</p>
+                   <ol>
+                       <li>Writing the project proposal</li>
+                       <li>Creating the static website</li>
+                       <li>Making the static website dynamic</li>
+                       <li>Creating the results page</li>
+                       <li>Making the OOP backend</li>
+                       <li>Linking backend and results page</li>
+                       <li>Finishing the website and making and doing the final presentation</li>
+                    </ol>
+           </div>
+
+           <div class="project-col">  <!--colomn 2; image-->
+               <img src="../static/images/Picture2.png" alt="Gantt chart of the project planning">
+           </div>
+       </div>
+   </section>
+
+{% endblock%}
+

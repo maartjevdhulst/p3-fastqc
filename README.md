@@ -1,9 +1,11 @@
 # p3-fastqc
-*versie 1.0 27-2-2025*
+*version 1.0 27-2-2025*
  
 Practicum 3 &amp; BIN toolbox opdracht met FastQC als tool.
 
-**Systeem requirements** en hoe check je dit
+**System requirements** 
+FastQC is a java application. To run you need a Java Runtime Environment (JRE)
+
 
 FastQC is een java applicatie en om die te runnen heb je een 
 Java Runtime Environment (JRE) nodig. Voor de meeste linux ?systemen?
