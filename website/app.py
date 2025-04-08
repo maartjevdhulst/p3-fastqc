@@ -1,26 +1,29 @@
 #!/usr/bin/env python3
 """
 main script running the flask application
+imports limits class to change the user uploaded limits and methods
+imports main script with FastQC and ReadingDataTextFile classes to execute the tool and read the
+created data to plot those using the plotting classes
 use: python .\website\app.py  > click on the link ( http://127.0.0.1:5000/ )
 """
 
 __author__ = "Maartje van der Hulst"
 __date__ = 2025.3
-__version__ = 1.2
+__version__ = 1.3
 
 import base64
 
+import os
+from datetime import date
 from flask import Flask, render_template, request, send_from_directory
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
-import os
-from scrips.Limits import Limits
+
+from scrips.limits import Limits
 from scrips.main import FastQC, ReadingDataTextFile
 
-from datetime import date
-today = date.today()
-today = today.strftime('%a %d %B %Y')
-
+#GLOBALS
+today = date.today().strftime('%a %d %B %Y')
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "./uploads"
@@ -58,19 +61,23 @@ def fastqc():
     elif request.method == 'POST':
 
         try:
+            # getting file from html form
             file = request.files['myfile2']
             file_name = os.path.splitext(file.filename)[0]
             extention = os.path.splitext(file.filename)[1]
+            # checking if file has the correct file extention for the tool
             if extention not in app.config['ALLOWED_EXTENSIONS']:
                 return f"file type not allowed, please use a {app.config['ALLOWED_EXTENSIONS']}"
-            if file:
+            if file: #checking if file is uploaded and saving it to the upload folder
                 file.save(os.path.join(
                     app.config['UPLOAD_FOLDER'],
                     secure_filename(file.filename),
                 ))
+        # error handling when file exceeds allowed size
         except RequestEntityTooLarge:
-            return f'File too large, try smaller file'
-
+            return 'File too large, try smaller file'
+        # making dict with which module should be switched on and which corresponding limits
+        # should be used
         settings = {
             'duplication' : request.form.getlist('duplication'),
             'kmer' : request.form.getlist('kmer'),
@@ -85,9 +92,13 @@ def fastqc():
             'adapter' : request.form.getlist('adapter'),
             'file': file.filename
         }
+        #changing limits.txt file of the tool using user entered settings
         limits = Limits(settings, "Tools/fastqc_v0.12.1/FastQC/Configuration/limits.txt")
         print(limits)
+        # executing fastqc tool via FastQC class
         FastQC(file.filename)
+
+        # plotting output by using ReadingDataTextFile and plotting classes
         # output = ReadingDataTextFile("static/fastqc_data_lang.txt")
         output = ReadingDataTextFile(f"{file_name}_fastqc/fastqc_data.txt")
         results = { 'basic_table': output.table,
@@ -97,13 +108,12 @@ def fastqc():
                     'icons': output.icons,
                     'overrepresented': output.overrepresented,
                     'kmer': output.kmer,
-
         }
-
         return render_template('fastqc_page_results.html', **results)
 
 @app.route("/uploads/<path:filename>", methods=['GET'])
 def access_file(filename):
+    """uploading file?!"""
     return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
 

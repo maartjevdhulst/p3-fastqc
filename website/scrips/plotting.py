@@ -1,38 +1,55 @@
 #!/usr/bin/env python3
 """
-main script plotting all plots for fastqc report
+two plotting classes using inheritance to make all plots for the fastqc report. PrepPlotData has
+a function for each module, which calls their corresponding MakePlots function for the correct plot.
 
+This class gets imported in the main.py script of this project. To use this class in other projects
+import the class like you would any other selfmade class.
 """
 
 __author__ = "Maartje van der Hulst"
 __date__ = 2025.3
-__version__ = 3.1
+__version__ = 3.2
 
 
 import pandas as pd
-import matplotlib.colors as colors
-import matplotlib.pyplot as plt
 import numpy as np
-from scipy.stats import norm, alpha
+from matplotlib import pyplot as plt
+from matplotlib import colors
+
 
 
 class MakePlots:
     """
-
+    Parent class for making plots. all functions of this class are only used through direct
+    calling and none are executed through initializing the MakePlots class object.
     """
     def __init__(self):
-        pass
+        """
+        pass, making all functions only available through direct calling and none are executed by
+        initializing the MakePlots class object.
+        """
+
+
+    def __repr__(self):
+        """
+        An unambiguous string representation of an object, primarily for developers and debugging.
+        :return: string
+        """
+        return "MakePlots()"
 
     def make_boxplot(self, boxplot_data_list, meanplot_list, x_labels=None, plotname=str):
         """
+        makes a graph with boxplots from a list of dictionaries and a overlapping lineplot from a
+        list of means
 
-
-        :param plotname:
-        :param boxplot_data_list:
-        :param meanplot_list:
-        :return:
+        :param plotname: string with the name of the plot
+        :param x_labels: optional list of labels for the x-axis
+        :param meanplot_list: list of floats of the means
+        :type boxplot_data_list: list of dictionaries containing the boxplot data
+        :return: string
         """
-        label_list = []
+
 
         # making the figure and axis with as little whitespace surrounding as possible and
         # setting the figure size
@@ -87,13 +104,13 @@ class MakePlots:
 
     def make_heatplot(self, tile_list, plotname=str):
         """
+        makes a graph containing a heatmap of the tile list
+        :param plotname: string with the name of the plot
+        :param tile_list: list of dictionaries containing the value (z) of each tile (x, y)
 
-        :param plotname:
-        :param tile_list:
-        :return:
         """
 
-        # Pivot the dataframe
+        # make a dataframe from the list and pivot the dataframe so each tile (x,y) has a value (z)
         df_tile = pd.DataFrame(tile_list)
         df_pivot = df_tile.pivot(index='y', columns='x', values='z')
 
@@ -102,9 +119,6 @@ class MakePlots:
         fig, ax = plt.subplots(layout='constrained')
         fig.set_size_inches(8, 6, forward=True)
 
-        # making custom colormap to set the wanted colors
-        # cmap = colors.LinearSegmentedColormap.from_list('blue-red-blue',['#F9000D',
-        #                                             '#00bbb8', '#000BC9', '#00bbb8', '#F9000D'])
 
         # if the tile quality is equal everywhere resize plot and normalize color around 0
         if df_pivot.index.size < 1/4 * df_pivot.columns.size :
@@ -120,14 +134,17 @@ class MakePlots:
         plt.savefig(f"static/images/heatmap{plotname}.png")
         plt.close()
 
-    def make_lineplot(self, x_list, *y_lists, x_labels=None, title=None, labels=None, plot_name=str):
+    def make_lineplot(self, x_list, *y_lists, x_labels=None, title=None,
+                      labels=None, plot_name=str):
         """
+        create a graph with line plots from an x-list and y-list(s)
+        :type y_lists: list of lists of floats of the x-values
+        :param labels: optional list of label(s) for the line(s) for the legend
+        :param title: optional title for the graph
+        :param x_labels: optional list of labels for the x-axis
+        :param plot_name: string with the name of the plot
+        :param x_list: list of floats of the x-values
 
-        :param x_labels:
-        :param plot_name:
-        :param x_list:
-        :param data:
-        :return:
         """
         # making the figure and axis with as little whitespace surrounding as possible and
         # setting the figure size
@@ -144,12 +161,7 @@ class MakePlots:
             for i in range(min(x_list), max(x_list)+1):
                 if i % 2 == 0:
                     plt.axvspan(i - 0.5, i + 0.5, facecolor='xkcd:lilac', alpha=0.3)
-        #             kan als het goed is genegeerd nu er geen theoretische normaalverdeling
-        #             geplot wordt bij GC
-        # elif isinstance(x_list[0], float):
-        #     for i in range(min(y_lists[0]), max(y_lists[0])+1):
-        #         if i % 2 == 0:
-        #             plt.axvspan(i - 0.5, i + 0.5, facecolor='xkcd:lilac', alpha=0.3)
+
         # when x_labels are given to the function, use them
         if x_labels:
             ax.set_xticks(x_labels[0], x_labels[1])
@@ -164,8 +176,8 @@ class MakePlots:
     def make_html_table(self,dataframe):
         """
         turning dataframe into html table
-        :param dataframe:
-        :return:
+        :param dataframe: dataframe containing the data for the html table
+        :return: string containing the html table
         """
         html_string = dataframe.to_html(index=False, justify='center')
         # returning it in string format
@@ -175,22 +187,32 @@ class MakePlots:
 
 class PrepPlotData(MakePlots):
     """
-
+    class which preps the data from the ReadingDataTextFile class from main.py to be plotted
+    using the MakePlots class
     """
     def __init__(self, rows_list):
         """
+        initializes global variables and executes super().__init__() to give access to the functions
+        of the parent class MakePlots
 
-        :param rows_list:
+        :param rows_list: list of strings containing the rows of the text file of one module
         """
         self.rows_list = rows_list
         self.df_basics = ""
         super().__init__()
 
+    def __repr__(self):
+        """
+        An unambiguous string representation of an object, primarily for developers and debugging.
+        :return: string
+        """
+        return f"PrepPlotData({self.rows_list})"
 
     def make_basics_dataframe(self):
         """
-
-        :return:
+        Takes data from basic  statistics module turns it into a dataframe, which is passed into
+        the super function to make a html table
+        :return: string of html table, dataframe
         """
         # Skipping the module name, taking the columnnames as keys for the following data
         keys = self.rows_list[1]
@@ -202,9 +224,12 @@ class PrepPlotData(MakePlots):
 
         # making dictionary using above keys and values
         rows_dict = {}
-        lc = [rows_dict[key].append(value[i]) if key in rows_dict.keys() else
-              rows_dict.update({key:[value[i]]} ) for i, key in enumerate(keys) for value in
-              new_values]
+        lc = [rows_dict[key].append(value[i])
+              if key in rows_dict.keys()
+              else
+                rows_dict.update({key:[value[i]]} )
+                for i, key in enumerate(keys)
+                    for value in new_values]
 
         # turning dict into database
         self.df_basics = pd.DataFrame(rows_dict)
@@ -215,9 +240,11 @@ class PrepPlotData(MakePlots):
 
     def make_base_sequence_quality_data(self, plotname=str):
         """
-
-        :param plotname:
-        :return:
+        Takes data from the per base sequence quality module and turns into a list of
+        dictionaries and a list of the means. This is passed to the super function to turn it
+        into a boxplot
+        :param plotname: string with the name of the plot
+        :return: 0
         """
         boxplot_data_list = []
         meanplot_list = []
@@ -263,7 +290,7 @@ class PrepPlotData(MakePlots):
                         boxplot_data_list.append(
                             {'label': label, 'mean': mean, 'med': median, 'q1': q1, 'q3': q3,
                              'whislo': whislo, 'whishi': whishi})
-                        meanplot_list.append(mean)  #adding mean to separate list for separate line plot
+                        meanplot_list.append(mean)  #adding mean to separate list for line plot
 
         # when there are bases grouped (e.g. 14-19), use fewer x-tick labels so they don't overlap
         if x_ticks:
@@ -282,9 +309,10 @@ class PrepPlotData(MakePlots):
 
     def make_per_tile(self, plotname=str):
         """
-
-        :param line:
-        :return:
+        Takes data from the per tile sequence quality module and turns into a list of
+        dictionaries. This is passed to the super function turning that into a heatplot
+        :param plotname: string with the name of the plot
+        :return: 0
         """
         tile_list = []
         for line in self.rows_list:
@@ -297,7 +325,8 @@ class PrepPlotData(MakePlots):
                         y = num
                     elif i == 1:
                         if num.find("-"):
-                            num = num.split("-")[0]
+                            num = num.split("-")[0] #using only the first int so it can be used
+                            # for plotting
                             num = int(num)
                             x = num
                         else:
@@ -315,10 +344,12 @@ class PrepPlotData(MakePlots):
 
     def make_sequence_quality(self, plotname=str):
         """
-        Extracts phred scores and their corresponding count from line and returns those seperately
+        Takes the data from the per sequence quality scores module and adds the phred scores and
+        their corresponding counts to seperate lists, which get passed to the super function to
+        turn them into a lineplot.
 
-        :param line: one line from uploaded file
-        :return: x variable holding 1 float number, y variable holding 1 float number
+        :param plotname: string with the name of the plot
+        :return: 0
         """
         x_list = []
         y_list = []
@@ -342,9 +373,10 @@ class PrepPlotData(MakePlots):
 
     def make_base_sequence(self, plotname=str):
         """
-
-        :param line:G	A	T	C
-        :return:
+        Takes the data from the per base sequence content module and turns those into seperate
+        lists, which get passed to the super function to turn them into a lineplot.
+        :param plotname: string with the name of the plot
+        :return: 0
         """
         base_num = []
         G_base = []
@@ -375,6 +407,7 @@ class PrepPlotData(MakePlots):
         x_list = [i + 1 for i, num in enumerate(base_num)]
         x_ticks = [x for x in x_list if x>=10 and x%5 == 0 or x<10]
         base_num = [x for i, x in enumerate(base_num) if x > 10 and i % 5 == 0 or x < 10]
+        # using parent class to plot the processed data
         super().make_lineplot(x_list, T_base, C_base, A_base, G_base, labels=labels,
                               x_labels=[x_ticks, base_num], plot_name=plotname)
 
@@ -382,9 +415,10 @@ class PrepPlotData(MakePlots):
 
     def make_gc_content(self, plotname=str):
         """
-
-        :param line:
-        :return:
+        Takes the data from the per sequence GC content module and turns those into lists,
+        which get passed to the super function to turn them into a lineplot.
+        :param plotname: string with the name of the plot
+        :return: 0
         """
         mean_gc_perc = []
         count = []
@@ -392,32 +426,25 @@ class PrepPlotData(MakePlots):
         for line in self.rows_list:
             # skipping module title and column names
             if not line.startswith(">>") and not line.startswith("#"):
-                line = line.rstrip().split("\t")
+                line = line.rstrip().split("\t") #list of strings
                 for i, num in enumerate(line):
                     if i == 0:
                         mean_gc_perc.append(int(num))
                     elif i == 1:
                         count.append(float(num))
 
-        # count.sort()
-        # mu = np.mean(count)
-        # std = np.std(count)
-        # # mu, std = norm.fit(count)
-        # pdf = norm.pdf(count, mu, std)
-        # print(mu, std, pdf)
+        # using parent class to plot the processed data
         super().make_lineplot(mean_gc_perc, count, plot_name=plotname,
                               labels=["GC count per read"])
-        # count = [int(x) for x in count]
-        # count.sort()
-        # super().make_lineplot(count, pdf, plot_name=plotname,
-        #                       labels=["Theoretical distribution"])
+
         return 0
 
     def make_n_count(self, plotname=str):
         """
-
-        :param line:
-        :return:
+        Takes the data from the per base N content module and turns those into lists,
+        which get passed to the super function to turn them into a lineplot.
+        :param plotname: string with the name of the plot
+        :return: 0
         """
         base = []
         n_count = []
@@ -425,7 +452,7 @@ class PrepPlotData(MakePlots):
         for line in self.rows_list:
             # skipping module title and column names
             if not line.startswith(">>") and not line.startswith("#"):
-                line = line.rstrip().split("\t")
+                line = line.rstrip().split("\t") #list of strings
                 for i, num in enumerate(line):
                     if i == 0:
                         if num.find("-"):
@@ -436,16 +463,17 @@ class PrepPlotData(MakePlots):
 
                     elif i == 1:
                         n_count.append(float(num))
-
+        # using parent class to plot the processed data
         super().make_lineplot(base, n_count, plot_name=plotname, labels= ["%N"])
 
         return 0
 
     def make_sequence_length(self, plotname=str):
         """
-
-        :param line:
-        :return:
+        Takes the data from the sequence lenght distribution module and turns those into lists,
+        which get passed to the super function to turn them into a line plot.
+        :param plotname: string with the name of the plot
+        :return: 0
         """
         length = []
         count = []
@@ -453,7 +481,7 @@ class PrepPlotData(MakePlots):
         for line in self.rows_list:
             # skipping module title and column names
             if not line.startswith(">>") and not line.startswith("#"):
-                line = line.rstrip().split("\t")
+                line = line.rstrip().split("\t") #list of strings
                 for i, num in enumerate(line):
                     if i == 0:
                         if num.find("-"):
@@ -463,20 +491,22 @@ class PrepPlotData(MakePlots):
                             length.append(int(num))
                     elif i == 1:
                         count.append(float(num))
-
+        #when all sequences are the same length add to the lists to be able to make a straight plot
         if len(length) < 2:
             length = [length[0] - 1, length[0], length[0] + 1]
             count = [0, count[0], 0]
 
+        # using parent class to plot the processed data
         super().make_lineplot(length, count, plot_name=plotname, labels=["Sequence Length"])
 
         return 0
 
     def make_sequence_duplication(self, plotname=str):
         """
-
-        :param line:
-        :return:
+        Takes the data from the sequence duplication levels module and turns those into lists,
+        which get passed to the super function to turn them into a line plot.
+        :param plotname: string with the name of the plot
+        :return: 0
         """
 
         duplication = []
@@ -492,18 +522,20 @@ class PrepPlotData(MakePlots):
                 for i, num in enumerate(line):
                     if i == 0:
                         x_label.append(num)
-                        if num.startswith(">"):
+                        if num.startswith(">"): #for the last large numbers eg '>5k'
                             duplication.append(last_num + 1)
                         else:
                             duplication.append(int(num))
                     elif i == 1:
                         perc.append(float(num))
-                        last_num += 1
-            elif line.startswith("#Total Deduplicated Percentage"):
+                        last_num += 1 #keeping track of the numbers even for the non int/floats
+            elif line.startswith("#Total Deduplicated Percentage"): #extra end result
                 line = line.rstrip().split("\t")
-                title = line[-1]
+                title = f"Percent of secs remaining if deduplicated {line[-1]}%"
+
         x_labels = [duplication, x_label]
         label = ["% Total sequences"]
+        # using parent class to plot the processed data
         super().make_lineplot(duplication, perc, x_labels=x_labels, labels=label,
                               title=title, plot_name=plotname)
 
@@ -511,11 +543,12 @@ class PrepPlotData(MakePlots):
 
     def make_overrepresented(self, plotname=str):
         """
+        Takes the data from the overrepresented sequences module and turns those into a
+        dictionary where the first row from the data is used as the keys. This is turned into a
+        dataframe, which is passed to the super function to make a html table.
 
-        :type entry: object
-        :param header_list:
-        :param line:
-        :return:
+        :param plotname: string with the name of the plot
+        :return: string of the html table
         """
         header_list = []
         entry = {}
@@ -534,19 +567,21 @@ class PrepPlotData(MakePlots):
                 line = line.lstrip("#").rstrip("\n").split("\t")
                 header_list.extend(line)
 
+        # using parent class to plot the processed data
         if len(entry) > 0:
             df_overrepresented = pd.DataFrame(entry)
             html_string = super().make_html_table(df_overrepresented)
-        else:
+        else: #when there are none
             html_string = "No overrepresented sequences"
 
         return html_string
 
     def make_adapter (self, plotname=str):
         """
-
-        :param line:
-        :return:
+        Takes the data from the adapter content module and turns those into lists,
+        which get passed to the super function to turn them into a line plot.
+        :param plotname: string with the name of the plot
+        :return: 0
         """
         base_list = []
         illumina_universal_list = []
@@ -581,54 +616,9 @@ class PrepPlotData(MakePlots):
 
         labels = ["Illumina Universal Adapter", "Illumina Small RNA 3' Adapter",
                   "Illumina Small RNA 5' Adapter", "Nextera Transposase Sequence", "PolyA", "PolyG"]
+        # using parent class to plot the processed data
         super().make_lineplot(base_list, illumina_universal_list, illumina_small_3_list,
                               illumina_small_5_list, nextera_transposase_list, PolyA_list,
                               PolyG_list, labels=labels, plot_name=plotname)
 
-
         return 0
-
-    def make_kmer (self, header_list, entry):
-        """
-
-        :param entry:
-        :param header_list:
-        :param line:
-        :return:
-        """
-        header_list = []
-        entry = {}
-
-        for line in self.rows_list:
-            # skipping module title and column names
-            if not line.startswith(">>") and not line.startswith("#"):
-                line = line.rstrip().split("\t")
-                for i, num in enumerate(line):
-                    key = header_list[i]
-                    if key not in entry.keys():  # checking if already in dictionary
-                        entry[key] = [num]  # adding new key:value pair
-                    else:
-                        entry[key].append(num)  # extending already existing key:value pair
-            elif line.startswith("#"):  # saving header seperate
-                line = line.lstrip("#").rstrip("\n").split("\t")
-                header_list.extend(line)
-
-        if line.startswith("#"):  # saving header seperate
-            line = line.lstrip("#").rstrip("\n").split("\t")
-            header_list.extend(line)
-        else:
-            line = line.rstrip().split("\t")
-            for i, num in enumerate(line):  # looping through list with the elements from the line
-                key = header_list[i]
-                if key not in entry.keys():  # checking if already in dictionary
-                    entry[key] = [num]  # adding new key:value pair
-                else:
-                    entry[key].append(num)  # extending already existing key:value pair
-
-        return 0
-
-
-
-
-
-

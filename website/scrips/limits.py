@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """
-limits class to edit limits.txt of fastqc tool
-use:
+limits class to edit the limits.txt file of the fastqc tool in the Tools directory. By changing
+this file you change how many of the modules from the tool get executed and which warning and
+error limits they use.
+
+This class gets imported in the app.py script of this project. To use this class in other projects
+import the class like you would any other selfmade class.
 """
 
 __author__ = "Maartje van der Hulst"
 __date__ = 2025.3
-__version__ = 1.0
+__version__ = 2.0
 
 
 import re
@@ -18,9 +22,13 @@ class Limits:
     """
     def __init__(self, limits, file):
         """
-        initializes the class
-        :param limits:
-        :param file:
+        initializes global variables and executes file_handler function, which executes both
+        change_limits and make_outfile function thus, if user gives file and limits the file
+        will be changed after the class is instantiated.
+        :param limits: dict with titles of the modules as keys and a list starting with 'on' for
+        each module to be executed followed by their limits. If the module is to be switched off,
+        the list will only contain the standard limits.
+        :param file: string with (path to) file name
         """
         self.limits = limits
         self.file = file
@@ -30,16 +38,16 @@ class Limits:
 
     def __repr__(self):
         """
-
-        :return:
+        An unambiguous string representation of an object, primarily for developers and debugging.
+        :return: string
         """
-
-        return f"changes {self.file!r} with given {self.limits!r}"
+        return f"Limits({self.limits}, {self.file})"
 
     def change_limits(self):
         """
-        loops through dict with settings given by user
-        :return:
+        loops through dict with settings given by user so only wanted modules are returned and
+        the quality base module limits are split into lower and median limits
+        :return: dict only containing the 'on' modules with their limits
         """
         for key, value in self.limits.items():
             # each module that the user switched on has 2 or 4 limits
@@ -59,18 +67,21 @@ class Limits:
 
     def file_handler(self):
         """
-
-        :return:
+        executes change_limits function
+        loops through file, changes which modules are switched on and their changed limits,
+        saves changes in string, uses that string to write the changes back to the file with the
+        make_outfile function
+        :return: string confirming full execution
         """
         # calling previous function to have usable dict with settings
         changes_dict = self.change_limits()
 
         # looping through file
-        with open(self.file, 'r+') as open_file:
+        with open(self.file, 'r') as open_file:
             for line in open_file:
                 if not line.startswith("#"): #skipping lines with instructions
                     line = line.strip('\n')
-                    line = re.sub("\s+", "\t", line) #removing excessive whitespaces
+                    line = re.sub(r"\s+", "\t", line) #removing excessive whitespaces
                     line = line.split('\t')
                     if len(line) < 2: #empty lines
                         self.full_file += '\n'
@@ -99,20 +110,20 @@ class Limits:
                     self.full_file += line
         # calling function to write all made changes to the file
         self.make_outfile()
-        return f'limits.txt changed'
+        return 'limits.txt changed'
 
     def make_outfile(self):
         """
         writes changes back to the file
         :return: 0
         """
-        with open(self.file, 'w') as outfile:
+        with open(self.file, 'w') as outfile: #same as input file, 'w' mode to override current file
             outfile.write(self.full_file)
         return 0
 
 
 # --------------------testing-------------
-
+#
 # limits = {'quality_base': ['on', '11', '4', '26', '21'],
 # 'sequence': ['10', '20'],
 # 'gc_sequence': ['15', '30'],
@@ -120,8 +131,9 @@ class Limits:
 # 'tile': ['on', '6', '11'],
 # 'sequence_length': ['1', '1'],
 # 'adapter': ['6', '11']}
+# #
+# new = Limits(limits, "../Tools/fastqc_v0.12.1/FastQC/Configuration/limits.txt")
 #
-# new = Limits(limits, "../../../fastqc_v0.12.1/FastQC/Configuration/limits_kopie.txt")
-# a = new.file_handler()
-# print(new.change_limits())
-# print(a)
+# # a = new.file_handler()
+# # print(new.change_limits())
+# # print(a)
