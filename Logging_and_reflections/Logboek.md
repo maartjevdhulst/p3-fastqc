@@ -95,5 +95,74 @@ kmer table gemaakt, plot is niet mogelijk;
 Omschrijving werk: Opschoning ticketing & planning; 
 
 ----
-**Datum: 20-3-2025**
-Omschrijving werk: Betere oplossing voor de tables gemaakt; OOP refresher; 
+**Datum: 21-3-2025**
+Omschrijving werk: Betere oplossing voor de tables gemaakt; OOP refresher;
+
+----
+**Datum: 24-3-2025**
+Omschrijving werk: limits.py limits class; hoofdfunctie gemaakt; prep functie gemaakt; output 
+functie gemaakt; limits.py testing; main.py aangemaakt; FastQC class voor uitvoeren tool via de 
+terminal; FastQC class testing; start plotting class in Plotting_v2.py 
+
+----
+**Datum: 25-3-2025**
+Omschrijving werk: main.py hoofdfunctie naar ReadingDataTextFile class omgezet; onderlinge 
+koppeling zodat de limits class; fastqc class; readingdatatextfile class & maketables class 
+vanuit app.py uitgevoerd kunnen; koppeling in html en css;
+
+----
+**Datum: 26-3-2025**
+Omschrijving werk: Verder in plotting class met boxplot; onderlinge koppeling; styling boxplot; 
+start heatplot;
+
+----
+**Datum: 27-3-2025**
+Omschrijving werk: Verder met heatplot; styling heatplot; start 1e lineplot;
+
+----
+**Datum: 28-3-2025**
+Omschrijving werk: Verder met lineplotten; styling verschillende lineplotten; data prep 
+verschillende lineplotten gekoppeld; 
+
+----
+**Datum: 29-3-2025**
+Omschrijving werk: Herverdeling Plotting class tot MakePlots & PrepPlotData gebruikmakend van 
+inheritance;
+----
+**Datum: 31-3-2025**
+Omschrijving werk: Afronding plotting classes; achtergrond styling plotten; theoretische 
+normaalverdeling plot niet werkend gekregen en in overleg met docent geschrapt; 
+
+----
+**Datum: 1-4-2025**
+Omschrijving werk: Onderlinge koppeling van alle python scrips; koppeling app.py & resultaten 
+html; verbetering limits.py; verbetering fastqc class;
+
+----
+**Datum: 2-4-2025**
+Omschrijving werk: Als alle methodes aangevinkt zijn alles werkend en kloppend; gestart met 
+becommentariëren main.py & plotting.py; feedback moment; fastqc tool toegevoegd aan project & 
+onderlinge koppeling relatief gemaakt;
+
+----
+**Datum: 3-4-2025**
+Omschrijving werk: limits class werkend met relatief pad; write output functie verbeterd; 
+limits.py becommentarieerd;
+
+----
+**Datum: 7-4-2025**
+Omschrijving werk: git branches merge; limits.py pylint, docstrings & comments; app.py pylint,
+docstrings & comments; main.py pylint, docstrings & comments; start plotting.py pylint, 
+docstrings & comments;
+
+----
+**Datum: 8-4-2025**
+Omschrijving werk: pylint & comments plotting.py afgerond; file knopje gefikst;
+streaming ipv saving plotten; deelse weergave van uitgevoerde methods gemaakt; logboek & reflectie
+opgeschoond & gecommit
+
+----
+**Datum: 9-4-2025**
+Omschrijving werk: 
+
+
