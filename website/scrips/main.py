@@ -12,9 +12,9 @@ __author__ = "Maartje van der Hulst"
 __date__ = 2025.3
 __version__ = 2.0
 
-import sys #uncomment for testing
+# import sys #uncomment for testing
 import subprocess
-from plotting import PrepPlotData #remove . for testing
+from .plotting import PrepPlotData #remove . for testing
 
 
 
@@ -228,15 +228,15 @@ class ReadingDataTextFile:
 
 # ----------testing---------------
 
-def main():
-    # subprocess.run("cd ../fastqc_v0.12.1/FastQC/ |
-    # /run_fastqc.bat ../../Practicum_3/Example_Data/test.fastq", shell=True)
-    # FastQC("ERR550643_1.fastq")
-    # unzip_results()
-
-    ReadingDataTextFile("../static/fastqc_data.txt")
-
-
-if __name__ == "__main__":
-    EXITCODE = main()
-    sys.exit(EXITCODE)
+# def main():
+#     # subprocess.run("cd ../fastqc_v0.12.1/FastQC/ |
+#     # /run_fastqc.bat ../../Practicum_3/Example_Data/test.fastq", shell=True)
+#     # FastQC("ERR550643_1.fastq")
+#     # unzip_results()
+#
+#     ReadingDataTextFile("../static/fastqc_data.txt")
+#
+#
+# if __name__ == "__main__":
+#     EXITCODE = main()
+#     sys.exit(EXITCODE)

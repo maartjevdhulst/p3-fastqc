@@ -164,6 +164,8 @@ opgeschoond & gecommit
 ----
 **Datum: 9-4-2025**
 Omschrijving werk: readme verbeterd, grove versie; overzicht laatste taken; vertalen tool pagina;
-valideren html; limits whitespacing; verwijderen oude versies & test files; 
+valideren html; limits whitespacing; verwijderen oude versies & test files; layout plotten; 
+x-assen verbeterd; bijschriften assen; y-assen verbeterd; readme definitief; requirements.txt 
+verbeterd; repo opruimen
 
 
