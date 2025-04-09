@@ -1,21 +1,19 @@
 # Logboek practicum 3
 
 ---
-Template;
-**Datum:**
-Omschrijving werk:
----
 **Datum: 24-2-2025**
 Omschrijving werk: Github repository aangemaakt. Logboek aangemaakt. 
 Afmaken plan van aanpak; evaluatie en reflectie schrijven; 
 planning afbeelding vervangen; inleiding, achtergrond informatie, 
 project beschrijving, project fases en planning afgemaakt; spellingscontrole; 
 toevoegen bronnenlijst; plan van aanpak ingeleverd en geüpload naar github
+
 ---
 **Datum: 25-2-2025**
 Omschrijving werk: Feedback plan van aanpak; reflectie geschreven; ticketing fase 2
 opgezet en bijgewerkt; html & css bestanden in git; teksten uit PvA op juiste pagina's;
 footer github link gemaakt; menu en andere links werkend gemaakt;
+
 ---
 **Datum 26-2-2025**
 Omschrijving werk: Inhoudelijke teksten verbeteren; styling consistent maken; css bestand
@@ -75,16 +73,20 @@ Omschrijving werk: reflectie fase 3 geschreven; ticketing fase 4; readme;
 ----
 **Datum: 13-3-2025**
 Omschrijving werk: plotting boxplot; plotting table; 
+
 ----
 **Datum: 14-3-2025**
 Omschrijving werk: start plotting heatmap; research in per tile quality module;
+
 ----
 **Datum: 15-3-2025**
 Omschrijving werk: plotting heatmap werkend gemaakt; plot per sequence quality scores; plot
 per base sequence content; plot per sequence GC content; plot per base N content;
+
 ----
 **Datum: 17-3-2025**
 Omschrijving werk: plot sequence length distribution; plot sequence duplication levels;
+
 ----
 **Datum: 19-3-2025**
 Omschrijving werk: Duplication plot gefixt; overrepresented plot gemaakt; adapter plot gemaakt;
@@ -128,6 +130,7 @@ verschillende lineplotten gekoppeld;
 **Datum: 29-3-2025**
 Omschrijving werk: Herverdeling Plotting class tot MakePlots & PrepPlotData gebruikmakend van 
 inheritance;
+
 ----
 **Datum: 31-3-2025**
 Omschrijving werk: Afronding plotting classes; achtergrond styling plotten; theoretische 
