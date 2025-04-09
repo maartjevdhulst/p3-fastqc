@@ -12,9 +12,9 @@ __author__ = "Maartje van der Hulst"
 __date__ = 2025.3
 __version__ = 2.0
 
-# import sys #uncomment for testing
+import sys #uncomment for testing
 import subprocess
-from .plotting import PrepPlotData #remove . for testing
+from plotting import PrepPlotData #remove . for testing
 
 
 
@@ -112,6 +112,7 @@ class ReadingDataTextFile:
                     if module.startswith(">>Basic Statistics"):
                         basic_string = PrepPlotData(current_module)
                         html_string = basic_string.make_basics_dataframe()
+                        basic_df = basic_string.df_basics
                         # saving name, icon, number, stream of result in dict
                         self.results["Basic Statistics"] = {'icon': icon_list[-1],
                                                             'num':len(icon_list),
@@ -120,7 +121,7 @@ class ReadingDataTextFile:
                     elif module.startswith('>>Per base sequence quality'):
                         boxplot = PrepPlotData(current_module)
                         stream = boxplot.make_base_sequence_quality_data(
-                            'Per_base_sequence_quality')
+                            'Quality scores across all bases', basic_df)
                         # saving name, icon, number, stream of result in dict
                         self.results["Per base sequence quality"] = {'icon': icon_list[-1],
                                                             'num': len(icon_list),
@@ -128,7 +129,7 @@ class ReadingDataTextFile:
                                                             'result': stream}
                     elif module.startswith('>>Per tile sequence quality'):
                         heatmap = PrepPlotData(current_module)
-                        stream = heatmap.make_per_tile('Per_base_sequence_quality')
+                        stream = heatmap.make_per_tile('Quality per tile')
                         # saving name, icon, number, stream of result in dict
                         self.results["Per tile sequence quality"] = {'icon': icon_list[-1],
                                                             'num': len(icon_list),
@@ -136,7 +137,8 @@ class ReadingDataTextFile:
                                                             'result': stream}
                     elif module.startswith(">>Per sequence quality scores"):
                         lineplot = PrepPlotData(current_module)
-                        stream = lineplot.make_sequence_quality("Per_sequence_quality_scores")
+                        stream = lineplot.make_sequence_quality("Quality score distribution over "
+                                                                "all sequences")
                         # saving name, icon, number, stream of result in dict
                         self.results["Per sequence quality scores"] = {'icon': icon_list[-1],
                                                             'num': len(icon_list),
@@ -144,7 +146,7 @@ class ReadingDataTextFile:
                                                             'result': stream}
                     elif module.startswith(">>Per base sequence content"):
                         lineplot = PrepPlotData(current_module)
-                        stream = lineplot.make_base_sequence("Per_base_sequence_content")
+                        stream = lineplot.make_base_sequence("Sequence content across all bases")
                         # saving name, icon, number, stream of result in dict
                         self.results["Per base sequence content"] = {'icon': icon_list[-1],
                                                             'num': len(icon_list),
@@ -152,7 +154,7 @@ class ReadingDataTextFile:
                                                             'result': stream}
                     elif module.startswith(">>Per sequence GC content"):
                         lineplot = PrepPlotData(current_module)
-                        stream = lineplot.make_gc_content("Per_sequence_GC_content")
+                        stream = lineplot.make_gc_content("GC distribution over all sequences")
                         # saving name, icon, number, stream of result in dict
                         self.results["Per sequence GC content"] = {'icon': icon_list[-1],
                                                             'num': len(icon_list),
@@ -160,7 +162,7 @@ class ReadingDataTextFile:
                                                             'result': stream}
                     elif module.startswith(">>Per base N content"):
                         lineplot = PrepPlotData(current_module)
-                        stream = lineplot.make_n_count("Per_base_N_content")
+                        stream = lineplot.make_n_count("N content across all bases")
                         # saving name, icon, number, stream of result in dict
                         self.results["Per base N content"] = {'icon': icon_list[-1],
                                                             'num': len(icon_list),
@@ -168,7 +170,8 @@ class ReadingDataTextFile:
                                                             'result': stream}
                     elif module.startswith(">>Sequence Length Distribution"):
                         lineplot = PrepPlotData(current_module)
-                        stream = lineplot.make_sequence_length("Sequence_Length_Distribution")
+                        stream = lineplot.make_sequence_length("Distribution of sequence lengths "
+                                                               "over all sequences")
                         # saving name, icon, number, stream of result in dict
                         self.results["Sequence Length Distribution"] = {'icon': icon_list[-1],
                                                             'num': len(icon_list),
@@ -192,7 +195,7 @@ class ReadingDataTextFile:
                                                             'result': overrepresented_html}
                     elif module.startswith(">>Adapter Content"):
                         lineplot = PrepPlotData(current_module)
-                        stream = lineplot.make_adapter("Adapter_Content")
+                        stream = lineplot.make_adapter("% Adapter")
                         # saving name, icon, number, stream of result in dict
                         self.results["Adapter Content"] = {'icon': icon_list[-1],
                                                             'num': len(icon_list),
@@ -225,15 +228,15 @@ class ReadingDataTextFile:
 
 # ----------testing---------------
 
-# def main():
-#     # subprocess.run("cd ../fastqc_v0.12.1/FastQC/ |
-#     /run_fastqc.bat ../../Practicum_3/Example_Data/test.fastq", shell=True)
-#     FastQC("ERR550643_1.fastq")
-#     # unzip_results()
-#
-#     # ReadingDataTextFile("../static/fastqc_data_lang.txt")
-#
-#
-# if __name__ == "__main__":
-#     EXITCODE = main()
-#     sys.exit(EXITCODE)
+def main():
+    # subprocess.run("cd ../fastqc_v0.12.1/FastQC/ |
+    # /run_fastqc.bat ../../Practicum_3/Example_Data/test.fastq", shell=True)
+    # FastQC("ERR550643_1.fastq")
+    # unzip_results()
+
+    ReadingDataTextFile("../static/fastqc_data.txt")
+
+
+if __name__ == "__main__":
+    EXITCODE = main()
+    sys.exit(EXITCODE)

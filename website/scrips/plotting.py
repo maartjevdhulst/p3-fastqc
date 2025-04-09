@@ -17,6 +17,7 @@ import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import colors
+from more_itertools.more import padded
 
 
 class MakePlots:
@@ -38,7 +39,8 @@ class MakePlots:
         """
         return "MakePlots()"
 
-    def make_boxplot(self, boxplot_data_list, meanplot_list, x_labels=None, plotname=str):
+    def make_boxplot(self, boxplot_data_list, meanplot_list,
+                     plotname, x_labels=None):
         """
         makes a graph with boxplots from a list of dictionaries and a overlapping lineplot from a
         list of means
@@ -57,7 +59,6 @@ class MakePlots:
         fig.set_size_inches(8, 6, forward=True)
         # extracting labels from the data list containing dictionairies
         label_list = [box_data_dict['label'] for box_data_dict in boxplot_data_list]
-
         #only drawing the boxplots using the already calculated statistics from data file
         boxplot = ax.bxp(bxpstats=boxplot_data_list, zorder=3, widths=0.8, label=label_list,
                          capwidths=0.8, showfliers=False, manage_ticks=False, patch_artist=True)
@@ -88,23 +89,29 @@ class MakePlots:
             if i % 2 == 0:
                 plt.axvspan(i-0.5, i + 0.5, facecolor='white', alpha=0.3, zorder=2)
         #coloring background horizontally
-        plt.axhspan(1, 20, facecolor='xkcd:salmon pink', alpha=0.5)
+        plt.axhspan(-1, 20, facecolor='xkcd:salmon pink', alpha=0.5)
         plt.axhspan(20, 28, facecolor='xkcd:light yellow', alpha=0.5)
         plt.axhspan(28, 45, facecolor='xkcd:soft green', alpha=0.5)
 
         #if there are labels for the x-ticks use them
         if x_labels:
             ax.set_xticks(x_labels[0], x_labels[1], fontsize=7)
+        else:
+            ax.set_xticks(np.arange(0, max(xticks)+1, 1.0))
 
-
+        # setting y-axis labels with interval of 2
+        plt.yticks(np.arange(0, ymax+1, 2.0), fontsize=7)
+        # adding title
+        plt.title(plotname, fontsize=7)
 
         #saving with custom name in png format
         # plt.savefig(f"static/images/boxplot_{plotname}.png")
         # plt.close()
-        # plt.show()
+
+
         return self.create_website_plot(fig)
 
-    def make_heatplot(self, tile_list, plotname=str):
+    def make_heatplot(self, tile_list, plotname=str, x_labels=None):
         """
         makes a graph containing a heatmap of the tile list
         :param plotname: string with the name of the plot
@@ -129,8 +136,34 @@ class MakePlots:
                                  norm=colors.CenteredNorm(), aspect=ratio)
         # when the tile quality varies
         else:
-            heatmap = ax.matshow(df_pivot, cmap='jet_r' , origin='lower')
-            fig.colorbar(heatmap, ax=ax)
+            heatmap = ax.matshow(df_pivot, cmap='jet_r' , origin='lower', interpolation='nearest')
+            # ax1_divider = make_axes_locatable(ax)
+            # cax1 = ax1_divider.append_axes("right", size="7%", pad="2%")
+            fig.colorbar(heatmap, shrink=0.9, pad=0.001)
+
+
+        # if there are labels for the x-ticks use them
+        if x_labels:
+            ax.set_xticks(x_labels[0], x_labels[1], fontsize=6)
+        else:
+            ax.set_xticks(np.arange(0, len(df_pivot.columns) + 1, 1.0))
+
+        ## Move the x-axis tick labels to the bottom
+        ax.tick_params(
+            axis='x',  ## Apply changes to the x-axis
+            top=False,  ## Hide ticks on the top side
+            labeltop=False,  ## Hide tick labels on the top side
+            bottom=True,  ## show ticks on the bottom side
+            labelbottom=True  ## show tick labels on the bottom side
+        )
+        plt.xlabel("Position in read (bp)", fontsize=7)
+        plt.axis('tight')
+        # getting y labels from database indexes
+        y_labels = df_pivot.index.tolist()
+        y_ticks = np.arange(0, len(y_labels), 1.0) #matching lenght of labels-list
+        # setting y-ticks & plottitle
+        plt.yticks(y_ticks, y_labels, fontsize=7)
+        plt.title(plotname, fontsize=7)
 
         # plt.show()
         # plt.savefig(f"static/images/heatmap{plotname}.png")
@@ -139,7 +172,7 @@ class MakePlots:
         return self.create_website_plot(fig)
 
     def make_lineplot(self, x_list, *y_lists, x_labels=None, title=None,
-                      labels=None, plot_name=str):
+                      labels=None, ylim=None, axis_label=None, plot_name=str):
         """
         create a graph with line plots from an x-list and y-list(s)
         :type y_lists: list of lists of floats of the x-values
@@ -154,6 +187,10 @@ class MakePlots:
         # setting the figure size
         fig, ax = plt.subplots(layout='constrained')
         fig.set_size_inches(8,6)
+        plt.xlim(min(x_list)-0.5, max(x_list)+0.5)
+        plt.xlabel(axis_label, fontsize=7)
+        if ylim:
+            plt.ylim(bottom=0, top=ylim)
         #setting line colors to cycle through
         ax.set_prop_cycle(color=['purple', 'blue', 'green', 'yellow', 'teal', 'pink'])
         #plotting each line individually
@@ -168,19 +205,22 @@ class MakePlots:
 
         # when x_labels are given to the function, use them
         if x_labels:
-            ax.set_xticks(x_labels[0], x_labels[1])
+            ax.set_xticks(x_labels[0], x_labels[1], fontsize=7)
+
+        else:
+            ax.set_xticks(x_list, x_list, fontsize=7)
+
         # adding legend and title
         ax.legend(loc='upper right')
-        plt.title(title)
+        plt.title(title, fontsize=7)
 
 
         # plt.savefig(f"static/images/lineplot_{plot_name}.png")
         # plt.close()
         #
-        # plt.show()
+        plt.show()
 
         return self.create_website_plot(fig)
-
 
     def make_html_table(self,dataframe):
         """
@@ -264,7 +304,7 @@ class PrepPlotData(MakePlots):
 
         return html_string
 
-    def make_base_sequence_quality_data(self, plotname=str):
+    def make_base_sequence_quality_data(self, plotname, basic_df):
         """
         Takes data from the per base sequence quality module and turns into a list of
         dictionaries and a list of the means. This is passed to the super function to turn it
@@ -275,13 +315,15 @@ class PrepPlotData(MakePlots):
         boxplot_data_list = []
         meanplot_list = []
         x_ticks = []
+        x_ticker_necassary = False
         for line in self.rows_list:
             # skipping module title and column names
             if not line.startswith(">>") and not line.startswith("#"):
                 line = line.rstrip().split("\t")
                 for i, num in enumerate(line):  # looping through list of strings
                     if i == 0:  # putting each float in its corresponding variable
-                        if num.find("-"): #checking for grouped bases
+                        if "-" in num: #checking for grouped bases
+                            x_ticker_necassary = True
                             x_ticks.append(str(num)) #saving those so they can be used for x-tick
                             # labels
                             num = num.split("-")[0]  #only using the first number so it can be
@@ -319,7 +361,7 @@ class PrepPlotData(MakePlots):
                         meanplot_list.append(mean)  #adding mean to separate list for line plot
 
         # when there are bases grouped (e.g. 14-19), use fewer x-tick labels so they don't overlap
-        if x_ticks:
+        if x_ticker_necassary:
             xticks = np.arange(1, len(meanplot_list) + 1).tolist()
             # matching the number of ticks to the number of labels in the same interval
             base_num = [x for i, x in enumerate(x_ticks) if i > 9 and (i - 10) % 3 == 0 or i < 9]
@@ -327,6 +369,9 @@ class PrepPlotData(MakePlots):
             x_ticks = [x_ticks, base_num]
         else:  #turning empty list to None so x_labels stay None if x_ticks is unused
             x_ticks = None
+
+        # adding encoding type to the plotname
+        plotname = plotname + ' (' + basic_df.at[2, 'Value'] + ')'
 
         # using parent class to make boxplot from the processed data
         boxplot_stream = super().make_boxplot(boxplot_data_list, meanplot_list, x_labels=x_ticks,
@@ -341,6 +386,8 @@ class PrepPlotData(MakePlots):
         :return: 0
         """
         tile_list = []
+        x_ticker_necassary = False
+        x_ticks = []
         for line in self.rows_list:
             # skipping module title and column names
             if not line.startswith(">>") and not line.startswith("#"):
@@ -350,21 +397,39 @@ class PrepPlotData(MakePlots):
                         num = int(num)
                         y = num
                     elif i == 1:
-                        if num.find("-"):
-                            num = num.split("-")[0] #using only the first int so it can be used
-                            # for plotting
-                            num = int(num)
-                            x = num
+                        if "-" in num:  # checking for grouped bases
+                            x_ticker_necassary = True
+                            if str(num) not in x_ticks:
+                                x_ticks.append(str(num))  # saving so they can be
+                            # used as x-tick labels
+                            num = num.split("-")[0]  # only using the first number so it can be
+                            # converted to int and used for plotting
+                            x = int(num)
                         else:
-                            num = int(num)
-                            x = num
+                            if str(num) not in x_ticks:
+                                x_ticks.append(str(num))
+                            x = int(num)
                     elif i == 2:
                         num = float(num)
                         z = num
                 tile_list.append({'x': x, 'y': y, 'z': z}) #saving each line as a dict inside a list
 
+        if x_ticker_necassary:
+            xticks = np.arange(1, len(x_ticks) + 1).tolist()
+            # matching the number of ticks to the number of labels in the same interval
+            base_num = [x for i, x in enumerate(x_ticks)
+                        if 9 < i < len(xticks) and (i - 10) % 3 == 0
+                        or i < 9]
+            # base_num = base_num[:]
+            x_ticks = [x for x in xticks if x > 10 and x % 3 == 0 or x < 10]
+            x_ticks = [x_ticks, base_num]
+        else:  #turning empty list to None so x_labels stay None if x_ticks is unused
+            x_ticks = None
+
+
+
         # using parent class to make a heatplot from the processed data
-        tile_stream = super().make_heatplot(tile_list, plotname)
+        tile_stream = super().make_heatplot(tile_list, plotname, x_ticks)
 
         return tile_stream
 
@@ -392,8 +457,9 @@ class PrepPlotData(MakePlots):
                         y_list.append(num)
 
         # using parent class to plot the processed data
-        sequence_quality_stream = super().make_lineplot(x_list, y_list, plot_name=plotname,
-                              labels=["Average Quality per read"])
+        sequence_quality_stream = super().make_lineplot(x_list, y_list, title=plotname,
+                              labels=["Average Quality per read"],
+                                axis_label="Mean Sequence Quality (Phred Score)")
 
         return sequence_quality_stream
 
@@ -409,16 +475,23 @@ class PrepPlotData(MakePlots):
         A_base = []
         T_base = []
         C_base = []
+        x_ticker_necassary = False
+        x_ticks = []
         for line in self.rows_list:
             # skipping module title and column names
             if not line.startswith(">>") and not line.startswith("#"):
                 line = line.rstrip().split("\t") #list of strings
                 for i, num in enumerate(line):
-                    if i == 0:  #adding each number to their corresponding list
-                        if num.find("-"): #checking for grouped bases
-                            num = num.split("-")[0]
+                    if i == 0:  # putting each float in its corresponding variable
+                        if "-" in num: #checking for grouped bases
+                            x_ticker_necassary = True
+                            x_ticks.append(str(num)) #saving those so they can be used for x-tick
+                            # labels
+                            num = num.split("-")[0]  #only using the first number so it can be
+                            # converted to int and used for plotting
                             base_num.append(int(num))
                         else:
+                            x_ticks.append(str(num))
                             base_num.append(int(num))
                     elif i == 1:
                         G_base.append(float(num))
@@ -429,14 +502,22 @@ class PrepPlotData(MakePlots):
                     elif i == 4:
                         C_base.append(float(num))
         labels = ["%T", "%C", "%A", "%G"]
-        #
-        x_list = [i + 1 for i, num in enumerate(base_num)]
-        x_ticks = [x for x in x_list if x>=10 and x%5 == 0 or x<10]
-        base_num = [x for i, x in enumerate(base_num) if x > 10 and i % 5 == 0 or x < 10]
+
+        # when there are bases grouped (e.g. 14-19), use fewer x-tick labels so they don't overlap
+        if x_ticker_necassary:
+            x_list = np.arange(1, len(base_num) + 1).tolist()
+            base_num = [x for x in x_list if x > 10 and x % 3 == 0 or x < 10]
+            x_ticks = [x for i, x in enumerate(x_ticks) if i > 9 and (i - 10) % 3 == 0 or i < 9]
+            x_ticks = [base_num, x_ticks]
+        else:  # turning empty list to None so x_labels stay None if x_ticks is unused
+            x_ticks = None
+            x_list = base_num
+
+
         # using parent class to plot the processed data
         base_sequence_stream = super().make_lineplot(x_list, T_base, C_base, A_base, G_base,
-                                               labels=labels,
-                              x_labels=[x_ticks, base_num], plot_name=plotname)
+                      axis_label= "Position in read (bp)", labels=labels, ylim=100,
+                              x_labels=x_ticks, title=plotname)
 
         return base_sequence_stream
 
@@ -460,9 +541,13 @@ class PrepPlotData(MakePlots):
                     elif i == 1:
                         count.append(float(num))
 
+        x_ticks = range(0, 101, 2)
+        x_ticks = [x_ticks, mean_gc_perc[::2]]
+
         # using parent class to plot the processed data
-        gc_stream = super().make_lineplot(mean_gc_perc, count, plot_name=plotname,
-                              labels=["GC count per read"])
+        gc_stream = super().make_lineplot(mean_gc_perc, count, title=plotname,
+                                          axis_label="Mean GC content (%)",
+                              labels=["GC count per read"], x_labels=x_ticks)
 
         return gc_stream
 
@@ -473,25 +558,45 @@ class PrepPlotData(MakePlots):
         :param plotname: string with the name of the plot
         :return: 0
         """
-        base = []
+        base_num = []
         n_count = []
-
+        x_ticker_necassary = False
+        x_ticks = []
         for line in self.rows_list:
             # skipping module title and column names
             if not line.startswith(">>") and not line.startswith("#"):
                 line = line.rstrip().split("\t") #list of strings
                 for i, num in enumerate(line):
                     if i == 0:
-                        if num.find("-"):
-                            num = num.split("-")[0]
-                            base.append(int(num))
+                        if "-" in num:  # checking for grouped bases
+                            x_ticker_necassary = True
+                            x_ticks.append(str(num))  # saving those so they can be used for x-tick
+                            # labels
+                            num = num.split("-")[0]  # only using the first number so it can be
+                            # converted to int and used for plotting
+                            base_num.append(int(num))
                         else:
-                            base.append(int(num))
-
+                            x_ticks.append(str(num))
+                            base_num.append(int(num))
                     elif i == 1:
                         n_count.append(float(num))
+
+        # when there are bases grouped (e.g. 14-19), use fewer x-tick labels so they don't overlap
+        if x_ticker_necassary:
+            x_list = np.arange(1, len(base_num) + 1).tolist()
+            base_num = [x for x in x_list if x > 10 and x % 3 == 0 or x < 10]
+            x_ticks = [x for i, x in enumerate(x_ticks) if i > 9 and (i - 10) % 3 == 0 or i < 9]
+            x_ticks = [base_num, x_ticks]
+        else:  # turning empty list to None so x_labels stay None if x_ticks is unused
+            x_ticks = None
+            x_list = base_num
+
+
+
         # using parent class to plot the processed data
-        n_stream = super().make_lineplot(base, n_count, plot_name=plotname, labels= ["%N"])
+        n_stream = super().make_lineplot(x_list, n_count, title=plotname, ylim=100,
+                                         labels= ["%N"], axis_label="Position in read (bp)",
+                                         x_labels=x_ticks)
 
         return n_stream
 
@@ -504,17 +609,23 @@ class PrepPlotData(MakePlots):
         """
         length = []
         count = []
-
+        x_ticker_necassary = False
+        x_ticks = []
         for line in self.rows_list:
             # skipping module title and column names
             if not line.startswith(">>") and not line.startswith("#"):
                 line = line.rstrip().split("\t") #list of strings
                 for i, num in enumerate(line):
                     if i == 0:
-                        if num.find("-"):
-                            num = num.split("-")[0]
+                        if "-" in num:  # checking for grouped bases
+                            x_ticker_necassary = True
+                            x_ticks.append(str(num))  # saving those so they can be used for x-tick
+                            # labels
+                            num = num.split("-")[0]  # only using the first number so it can be
+                            # converted to int and used for plotting
                             length.append(int(num))
                         else:
+                            x_ticks.append(str(num))
                             length.append(int(num))
                     elif i == 1:
                         count.append(float(num))
@@ -523,10 +634,20 @@ class PrepPlotData(MakePlots):
             length = [length[0] - 1, length[0], length[0] + 1]
             count = [0, count[0], 0]
 
+        # when there are bases grouped (e.g. 14-19), use fewer x-tick labels so they don't overlap
+        if x_ticker_necassary:
+            x_list = [x for i, x in enumerate(length) if i % 3 == 0 ]
+            x_ticks = [x for i, x in enumerate(x_ticks) if i  % 3 == 0 ]
+            x_ticks = [x_list, x_ticks]
+        else:  # turning empty list to None so x_labels stay None if x_ticks is unused
+            x_ticks = None
+
+
+
+
         # using parent class to plot the processed data
-        sequence_length_stream = super().make_lineplot(length, count, plot_name=plotname,
-                                               labels=["Sequence "
-                                                                                  "Length"])
+        sequence_length_stream = super().make_lineplot(length, count, title=plotname,
+            labels=["Sequence Length"], x_labels=x_ticks, axis_label="Sequence Lenght (bp)")
 
         return sequence_length_stream
 
@@ -560,14 +681,14 @@ class PrepPlotData(MakePlots):
                         last_num += 1 #keeping track of the numbers even for the non int/floats
             elif line.startswith("#Total Deduplicated Percentage"): #extra end result
                 line = line.rstrip().split("\t")
-                title = f"Percent of secs remaining if deduplicated {line[-1]}%"
+                title = f"Percent of secs remaining if deduplicated {round(float(line[-1]), 2)}%"
 
         x_labels = [duplication, x_label]
         label = ["% Total sequences"]
         # using parent class to plot the processed data
         sequence_duplication_steam = super().make_lineplot(duplication, perc, x_labels=x_labels,
-                                                  labels=label,
-                              title=title, plot_name=plotname)
+                                                  labels=label, ylim=100,
+                              title=title, axis_label="Sequence Duplication Level")
 
         return sequence_duplication_steam
 
@@ -613,24 +734,31 @@ class PrepPlotData(MakePlots):
         :param plotname: string with the name of the plot
         :return: 0
         """
-        base_list = []
+        base_num = []
         illumina_universal_list = []
         illumina_small_3_list = []
         illumina_small_5_list = []
         nextera_transposase_list = []
         PolyA_list = []
         PolyG_list = []
+        x_ticker_necessary = False
+        x_ticks = []
         for line in self.rows_list:
             # skipping module title and column names
             if not line.startswith(">>") and not line.startswith("#"):
                 line = line.rstrip().split("\t")
                 for i, num in enumerate(line):
                     if i == 0:
-                        if num.find("-"):
-                            num = num.split("-")[0]
-                            base_list.append(int(num))
+                        if "-" in num:  # checking for grouped bases
+                            x_ticker_necessary = True
+                            x_ticks.append(str(num))  # saving those so they can be used for x-tick
+                            # labels
+                            num = num.split("-")[0]  # only using the first number so it can be
+                            # converted to int and used for plotting
+                            base_num.append(int(num))
                         else:
-                            base_list.append(int(num))
+                            x_ticks.append(str(num))
+                            base_num.append(int(num))
                     elif i == 1:
                         illumina_universal_list.append(float(num))
                     elif i == 2:
@@ -644,13 +772,24 @@ class PrepPlotData(MakePlots):
                     elif i == 6:
                         PolyG_list.append(float(num))
 
+        if x_ticker_necessary:
+            x_list = np.arange(1, len(base_num) + 1).tolist()
+            base_num = [x for x in x_list if x > 10 and (x+1) % 3 == 0 or x < 10]
+            x_ticks = [x for i, x in enumerate(x_ticks) if i > 9 and (i - 10) % 3 == 0 or i < 9]
+            x_ticks = [base_num, x_ticks]
+        else:  # turning empty list to None so x_labels stay None if x_ticks is unused
+            x_ticks = None
+            x_list = base_num
+
+
         labels = ["Illumina Universal Adapter", "Illumina Small RNA 3' Adapter",
                   "Illumina Small RNA 5' Adapter", "Nextera Transposase Sequence", "PolyA", "PolyG"]
         # using parent class to plot the processed data
-        adapter_stream = super().make_lineplot(base_list, illumina_universal_list,
+        adapter_stream = super().make_lineplot(x_list, illumina_universal_list,
                                            illumina_small_3_list,
                               illumina_small_5_list, nextera_transposase_list, PolyA_list,
-                              PolyG_list, labels=labels, plot_name=plotname)
+                              PolyG_list, labels=labels, ylim=100, title=plotname,
+                              x_labels=x_ticks, axis_label="Position in read (bp)")
 
         return adapter_stream
 
