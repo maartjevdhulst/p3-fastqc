@@ -33,4 +33,12 @@ voor mijn gevoel alleen maar ingewikkelder van werd. Verder heb ik deze keer de 
 daar wil ik de komende fase beter op letten.
 
 
-
+-----
+##### Reflectie 3 2-4-2025 Fase 4,5,6 *(117 woorden)*
+De laatste 3 fasen hebben vanwege ziekte deels door elkaar gelopen. Ik heb fase 4 en fase 5 niet 
+los ingeleverd en hierdoor ook feedback op gehad. Ik vind het erg jammer dat dit zo gelopen is, 
+omdat ik hierdoor ook weinig contact met de docenten gehad heb tijdens deze fase. Hierdoor heb 
+ik weer weinig om hulp gevraagd, maar ik kwam uiteindelijk gelukkig wel overal uit. Ook werd 
+mijn ticketing, logboek en git vrij rommelig afgelopen fase. Ik ben wel tevreden over wat ik nu 
+uiteindelijk heb ingeleverd en de feedback was ook positief, dus dat is wel erg fijn. Op wat 
+kleine dingen na is het vooral zorgen dat alles netjes, leesbaar en geordend wordt.

@@ -1,108 +1,68 @@
 # p3-fastqc
-*version 1.0 27-2-2025*
- 
-Practicum 3 &amp; BIN toolbox opdracht met FastQC als tool.
+### Practicum 3 &amp; BIN toolbox opdracht with FastQC al tool.
 
-**System requirements** 
-FastQC is a java application. To run you need a Java Runtime Environment (JRE)
+*version 2.0 7-4-2025*
 
 
-FastQC is een java applicatie en om die te runnen heb je een 
-Java Runtime Environment (JRE) nodig. Voor de meeste linux ?systemen?
-is dit automatisch geïnstalleerd. Dit kun je controleren door:
+This is web app created using the Flask web framework in python for the backend and HTML/CSS & 
+  Javaschript for the frontend. The website contains more info about the project and the 
+  FastQC tool. You can also use the tool via the web app, just upload a fastq-file and select your 
+  preferred settings. The size of the file determines the speed of the tool, but as soon as the 
+  file is uploaded and processed the app will take you to the results page with your report. The 
+  FastQC tool is mostly used to check the quality of unprocessed genetic data. If there are 
+  problems which are helped with, for example, trimming the data, than the test is usually run 
+  again to check if the desired outcome is achieved. The tool gives per test it has run either a 
+  pass (tick), warning (exclamation mark) or fail (cross/x) determined by the standard limits or 
+  custom limits given by the user. While entering the setting for the tool, the help-pages for 
+  each selected test is show for a description, example and common errors. The picture below 
+  shows an example of a finished report. 
 
-java -version (resultaat hiervan?)
-
-in de terminal in te typen. Als java niet geïnstalleerd is kun je dit doen door:
-
-Ubuntu / Mint: sudo apt install default-jre
-
-CentOS / Redhat: sudo yum install java-1.8.0-openjdk
-
-java
-
-**Installatie**
-
-Actually installing FastQC is as simple as unzipping the zip file it comes in into a
-suitable location.  That's it.  Once unzipped it's ready to go.
+![img.png](website/static/images/Example_report.png)
 
 
-uit die van fastq halen, nu nog 100% gestolen
-verander mappen structuur niet?!
+#### System requirements
+This project is a python project, so having python installed is necessary. For the necessary 
+packages please reference the requirements.txt file.
 
-**Commandline**
+FastQC is a java application. In order to run it needs your system to have a suitable
+Java Runtime Environment (JRE) installed.
 
-Linux:  We have included a wrapper script, called 'fastqc' which is the easiest way to 
-start the program.  The wrapper is in the top level of the FastQC installation.  You 
-may need to make this file executable:
+Actually installing FastQC is not necessary as it comes included in the project. 
 
-chmod 755 fastqc
+#### Installation and running the project
+To install the project locally, please fork this repository. After that you can clone it to run 
+the project locally.
 
-..but once you have done that you can run it directly
+To run you can use your preferred IDE or via the commandline using *python 
+PathToProject/website/app.py* This should give the following output:
+> * Serving Flask app 'app' (lazy loading)
+> * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+> * Debug mode: on
+> * Restarting with stat
+> * Debugger is active!
+> * Debugger PIN: 122-348-451
+> * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 
-./fastqc
+Click on the link, which should open a browser hosting the web app.
 
-..or place a link in /usr/local/bin to be able to run the program from any location:
+#### Author
+Maartje van der Hulst
 
-sudo ln -s /path/to/FastQC/fastqc /usr/local/bin/fastqc
-Running FastQC as part of a pipeline
-------------------------------------
-To run FastQC non-interactively you should use the fastqc wrapper script to launch
-the program.  You will probably want to use the zipped install file on every platform
-(even OSX).
-
-To run non-interactively you simply have to specify a list of files to process
-on the commandline
-
-fastqc somefile.txt someotherfile.txt
-
-You can specify as many files to process in a single run as you like.  If you don't
-specify any files to process the program will try to open the interactive application
-which may result in an error if you're running in a non-graphical environment.
-
-There are a few extra options you can specify when running non-interactively.  Full
-details of these can be found by running 
-
-fastqc --help
-
-By default, in non-interactive mode FastQC will create an HTML report with embedded
-graphs, but also a zip file containing individual graph files and additional data files
-containing the raw data from which plots were drawn.  The zip file will not be extracted
-by default but you can enable this by adding:
-
---extract
-
-To the launch command.
-
-If you want to save your reports in a folder other than the folder which contained
-your original FastQ files then you can specify an alternative location by setting a
---outdir value:
-
---outdir=/some/other/dir/
-
-If you want to run fastqc on a stream of data to be read from standard input then you
-can do this by specifing 'stdin' as the name of the file to be processed and then 
-streaming uncompressed fastq format data to the program.  For example:
-
-zcat *fastq.gz | fastqc stdin
-
-If you want the results from a streamed analysis sent to a file with a name other than
-stdin then you can add a colon and put the file name you want, for example:
-
-zcat *fastq.gz | fastqc stdin:my_results
-
-..would write results to my_result.html and my_results.zip.
-
-
-**author, contact & support**
-
-Maartje van der Hulst contact?!
-
-**references**
-
+#### References
+Reference to the FastQC tool: 
 https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 
-**licences**
+Background reseach references can be found in the project proposal or on the references page of 
+the web app.
+#### License
+The FastQC licence is available in this repository under 
+[licence] (website/tools/fastqc_v0.12.1/FastQC/LICENSE.txt)
+
+"website/tools/fastqc_v0.12.1/FastQC/LICENSE.txt"
+
+
 
 
 

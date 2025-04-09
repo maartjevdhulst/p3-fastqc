@@ -17,193 +17,44 @@
 <!--adding the pages content to the base body-->
 {% block body %}
 
-<!--    <ul>-->
-<!--        &lt;!&ndash; display the values provided in the form ('fastqc_page.html') &ndash;&gt;-->
-<!--        <li><strong>Duplication:</strong> {{ duplication }}</li>-->
-<!--        <li><strong>Kmer:</strong> {{ kmer }}</li>-->
-<!--        <li><strong>N content:</strong> {{ n_content }}</li>-->
-<!--        <li><strong>Overrepresented:</strong> {{overrepresented}}</li>-->
-<!--        <li><strong>Quality base:</strong> {{quality_base}}</li>-->
-<!--        <li><strong>Sequence:</strong> {{ sequence }}</li>-->
-<!--        <li><strong>GC sequence:</strong> {{ gc_sequence }}</li>-->
-<!--        <li><strong>Quality sequence:</strong> {{ quality_sequence }}</li>-->
-<!--        <li><strong>Tile:</strong> {{tile}}</li>-->
-<!--        <li><strong>Sequence length:</strong> {{sequence_length}}</li>-->
-<!--        <li><strong>Adapter:</strong> {{adapter}}</li>-->
-<!--        <li><strong>basic table:</strong> </li>-->
-<!--        <a href="{{ url_for('access_file', filename=file, as_attachment=True )}}">Index</a>-->
-
-<!--    </ul>-->
 <div class="colomns">
     <div class="summary">
         <h2>Summary</h2>
         <ul>
-            <li>
-                <img src="../static/images/Icons/{{icons[0]}}_pink.png" alt="{{icons[0]}}"/>
-                <a href="#M0">Basic Statistics</a>
-            </li>
-            <li>
-                <img src="../static/images/Icons/{{icons[1]}}_pink.png" alt="{{icons[1]}}"/>
-                <a href="#M1">Per base sequence quality</a>
-            </li>
-            <li><img src="../static/images/Icons/{{icons[2]}}_pink.png" alt="{{icons[2]}}"/>
-                <a href="#M2">Per tile sequence quality</a>
-            </li>
-            <li>
-                <img src="../static/images/Icons/{{icons[3]}}_pink.png" alt="{{icons[3]}}"/>
-                <a href="#M3">Per sequence quality scores</a>
-            </li>
-            <li>
-                <img src="../static/images/Icons/{{icons[4]}}_pink.png" alt="{{icons[4]}}"/>
-                <a href="#M4">Per base sequence content</a>
-            </li>
-            <li>
-                <img src="../static/images/Icons/{{icons[5]}}_pink.png" alt="{{icons[5]}}"/>
-                <a href="#M5">Per sequence GC content</a>
-            </li>
-            <li>
-                <img src="../static/images/Icons/{{icons[6]}}_pink.png" alt="{{icons[6]}}"/>
-                <a href="#M6">Per base N content</a>
-            </li>
-            <li>
-                <img src="../static/images/Icons/{{icons[7]}}_pink.png" alt="{{icons[7]}}"/>
-                <a href="#M7">Sequence Length Distribution</a>
-            </li>
-            <li>
-                <img src="../static/images/Icons/{{icons[8]}}_pink.png" alt="{{icons[8]}}"/>
-                <a href="#M8">Sequence Duplication Levels</a>
-            </li>
-            <li>
-                <img src="../static/images/Icons/{{icons[9]}}_pink.png" alt="{{icons[9]}}"/>
-                <a href="#M9">Overrepresented sequences</a>
-            </li>
-            <li>
-                <img src="../static/images/Icons/{{icons[10]}}_pink.png" alt="{{icons[10]}}"/>
-                <a href="#M10">Adapter Content</a>
-            </li>
-            <li>
-                <img src="../static/images/Icons/{{icons[11]}}_pink.png" alt="{{icons[11]}}"/>
-                <a href="#M11">Kmer Content</a>
-            </li>
+
+            {% for item in results %}
+                <li>
+                <img src="../static/images/Icons/{{results[item].icon}}_pink.png"
+                     alt="{{results[item].icon}}">
+                <a href="#M{{ results[item].num }}">{{ item }} </a>
+                </li>
+            {% endfor %}
+
         </ul>
     </div>
 
 
     <div class="main">
-        <div class="module">
-            <h2 id="M0">
-                <img src="../static/images/Icons/{{icons[0]}}_pink.png" alt="{{icons[0]}}"/>
-                Basic Statistics
+        {% for item in results %}
+            <div class="module">
+            <h2 id="M{{results[item].num}}">
+                <img src="../static/images/Icons/{{ results[item].icon }}_pink.png"
+                     alt="{{ results[item].icon }}">
+                {{ item }}
             </h2>
-<!--            <span>{{basic_table}}</span>-->
-            {{basic_table | safe}}
+
+                {% if results[item].type == 'stream'  -%}
+                    <img src="data:image/png;base64,{{ results[item].result }}"
+                    alt="{{item}} graph">
+
+                {% else  -%}
+                    {{ results[item].result | safe }}
+
+                {% endif %}
+            </div>
+        {% endfor %}
 
 
-        </div>
-        <div class="module">
-            <h2 id="M1">
-                <img src="../static/images/Icons/{{icons[1]}}_pink.png" alt="{{icons[1]}}"/>
-                Per base sequence quality
-            </h2>
-            <p>
-                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                Quality scores across all bases ({{encoding}})
-                <img class="indented" src="../static/images/boxplot_Per_base_sequence_quality.png" alt="Per base quality graph"/>
-            </p>
-        </div>
-        <div class="module">
-            <h2 id="M2">
-                <img src="../static/images/Icons/{{icons[2]}}_pink.png" alt="{{icons[2]}}"/>
-                Per tile sequence quality
-            </h2>
-            <p>
-                <img class="indented" src="../static/images/heatmapPer_base_sequence_quality.png" alt="Per tile quality graph"/>
-            </p>
-        </div>
-        <div class="module">
-            <h2 id="M3">
-                <img src="../static/images/Icons/{{icons[3]}}_pink.png" alt="{{icons[3]}}"/>
-                Per sequence quality scores
-            </h2>
-            <p>
-                <img class="indented" src="../static/images/lineplot_Per_sequence_quality_scores.png" alt="Per Sequence quality graph"/>
-            </p>
-        </div>
-        <div class="module">
-            <h2 id="M4">
-            <img src="../static/images/Icons/{{icons[4]}}_pink.png" alt="{{icons[4]}}"/>
-                Per base sequence content
-            </h2>
-            <p>
-                <img class="indented" src="../static/images/lineplot_Per_base_sequence_content.png" alt="Per base sequence content"/>
-            </p>
-        </div>
-        <div class="module">
-            <h2 id="M5">
-                <img src="../static/images/Icons/{{icons[5]}}_pink.png" alt="{{icons[5]}}"/>
-                Per sequence GC content
-            </h2>
-            <p>
-                <img class="indented" src="../static/images/lineplot_Per_sequence_GC_content.png" alt="Per sequence GC content graph"/>
-            </p>
-        </div>
-        <div class="module">
-            <h2 id="M6">
-                <img src="../static/images/Icons/{{icons[6]}}_pink.png" alt="{{icons[6]}}"/>
-                Per base N content
-            </h2>
-            <p>
-                <img class="indented" src="../static/images/lineplot_Per_base_N_content.png" alt="N content graph"/>
-            </p>
-        </div>
-        <div class="module">
-            <h2 id="M7">
-                <img src="../static/images/Icons/{{icons[7]}}_pink.png" alt="{{icons[7]}}"/>
-                Sequence Length Distribution
-            </h2>
-            <p>
-                <img class="indented" src="../static/images/lineplot_Sequence_Length_Distribution.png" alt="Sequence length distribution"/>
-            </p>
-        </div>
-        <div class="module">
-            <h2 id="M8">
-                <img src="../static/images/Icons/{{icons[8]}}_pink.png" alt="{{icons[8]}}"/>
-                Sequence Duplication Levels
-            </h2>
-            <p>
-                <img class="indented" src="../static/images/lineplot_Sequence_Duplication_Levels.png" alt="Duplication level graph"/>
-            </p>
-        </div>
-        <div class="module">
-            <h2 id="M9">
-                <img src="../static/images/Icons/{{icons[9]}}_pink.png" alt="{{icons[9]}}"/>
-                Overrepresented sequences
-            </h2>
-            <p>
-<!--                <img class="indented" src="../static/images/table_overrepresented.png" alt="Overrepresented sequences table"/>-->
-            {{overrepresented | safe}}
-
-            </p>
-        </div>
-        <div class="module">
-            <h2 id="M10">
-                <img src="../static/images/Icons/{{icons[10]}}_pink.png" alt="{{icons[10]}}"/>
-                Adapter Content
-            </h2>
-            <p>
-                <img class="indented" src="../static/images/lineplot_Adapter_Content.png" alt="Adapter graph"/>
-            </p>
-        </div>
-        <div class="module">
-            <h2 id="M11">
-                <img src="../static/images/Icons/{{icons[11]}}_pink.png" alt="{{icons[11]}}"/>
-                Kmer Content
-            </h2>
-            <p>
-<!--                <img class="indented" src="../static/images/table_kmer.png" alt="Kmer graph"/>-->
-            {{kmer | safe}}
-            </p>
-         </div>
     </div>
 </div>
 

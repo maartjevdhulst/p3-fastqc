@@ -1,26 +1,29 @@
 #!/usr/bin/env python3
 """
 main script running the flask application
+imports limits class to change the user uploaded limits and methods
+imports main script with FastQC and ReadingDataTextFile classes to execute the tool and read the
+created data to plot those using the plotting classes
 use: python .\website\app.py  > click on the link ( http://127.0.0.1:5000/ )
 """
 
 __author__ = "Maartje van der Hulst"
 __date__ = 2025.3
-__version__ = 1.2
+__version__ = 1.3
 
 import base64
 
+import os
+from datetime import date
 from flask import Flask, render_template, request, send_from_directory
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
-import os
-from scrips.Limits import Limits
+
+from scrips.limits import Limits
 from scrips.main import FastQC, ReadingDataTextFile
 
-from datetime import date
-today = date.today()
-today = today.strftime('%a %d %B %Y')
-
+#GLOBALS
+today = date.today().strftime('%a %d %B %Y')
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "./uploads"
@@ -58,19 +61,23 @@ def fastqc():
     elif request.method == 'POST':
 
         try:
-            file = request.files['myfile2']
+            # getting file from html form
+            file = request.files['file']
             file_name = os.path.splitext(file.filename)[0]
             extention = os.path.splitext(file.filename)[1]
+            # checking if file has the correct file extention for the tool
             if extention not in app.config['ALLOWED_EXTENSIONS']:
                 return f"file type not allowed, please use a {app.config['ALLOWED_EXTENSIONS']}"
-            if file:
+            if file: #checking if file is uploaded and saving it to the upload folder
                 file.save(os.path.join(
                     app.config['UPLOAD_FOLDER'],
                     secure_filename(file.filename),
                 ))
+        # error handling when file exceeds allowed size
         except RequestEntityTooLarge:
-            return f'File too large, try smaller file'
-
+            return 'File too large, try smaller file'
+        # making dict with which module should be switched on and which corresponding limits
+        # should be used
         settings = {
             'duplication' : request.form.getlist('duplication'),
             'kmer' : request.form.getlist('kmer'),
@@ -85,25 +92,24 @@ def fastqc():
             'adapter' : request.form.getlist('adapter'),
             'file': file.filename
         }
-        limits = Limits(settings, "Tools/fastqc_v0.12.1/FastQC/Configuration/limits.txt")
-        print(limits)
+        #changing limits.txt file of the tool using user entered settings
+        Limits(settings, "tools/fastqc_v0.12.1/FastQC/Configuration/limits.txt")
+        # executing fastqc tool via FastQC class
         FastQC(file.filename)
-        # output = ReadingDataTextFile("static/fastqc_data_lang.txt")
+
+        # plotting output by using ReadingDataTextFile and plotting classes
         output = ReadingDataTextFile(f"{file_name}_fastqc/fastqc_data.txt")
-        results = { 'basic_table': output.table,
+
+        results_dict = {'results':output.results,
                     'encoding': output.dataframe.loc[2]['Value'],
                     'today': today,
-                    'filename': file.filename,
-                    'icons': output.icons,
-                    'overrepresented': output.overrepresented,
-                    'kmer': output.kmer,
+                    'filename': file.filename,}
 
-        }
-
-        return render_template('fastqc_page_results.html', **results)
+        return render_template('fastqc_page_results.html', **results_dict)
 
 @app.route("/uploads/<path:filename>", methods=['GET'])
 def access_file(filename):
+    """uploading file?!"""
     return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
 
@@ -128,7 +134,7 @@ def ncontent():
 @app.route('/overrepresented')
 def overrepresented():
     """makes the overrepresented help page by rendering the overrepresented file"""
-    return render_template('fastqc_help/9OverrepresentedSequences.html')
+    return render_template('fastqc_help/9_Overrepresented_Sequences.html')
 
 @app.route('/quality_base')
 def quality_base():
@@ -143,7 +149,7 @@ def sequence():
 @app.route('/gc_sequence')
 def gc_sequence():
     """makes the gc content help page by rendering the gc content file"""
-    return render_template('fastqc_help/5PerSequenceGCContent.html')
+    return render_template('fastqc_help/5_Per_Sequence_GC_Content.html')
 
 @app.route('/quality_sequence')
 def quality_sequence():
@@ -153,17 +159,17 @@ def quality_sequence():
 @app.route('/tile')
 def tile():
     """makes the tile help page by rendering the tile file"""
-    return render_template('fastqc_help/12PerTileSequenceQuality.html')
+    return render_template('fastqc_help/12_Per_Tile_Sequence_Quality.html')
 
 @app.route('/sequence_length')
 def sequence_length():
     """makes the sequence length help page by rendering sequence length file"""
-    return render_template('fastqc_help/7SequenceLengthDistribution.html')
+    return render_template('fastqc_help/7_Sequence_Length_Distribution.html')
 
 @app.route('/adapter')
 def adapter():
     """makes the adapter page by rendering adapter file"""
-    return render_template('fastqc_help/10AdapterContent.html')
+    return render_template('fastqc_help/10_Adapter_Content.html')
 
 
 if __name__ == '__main__':
