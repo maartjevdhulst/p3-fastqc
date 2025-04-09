@@ -163,6 +163,7 @@ opgeschoond & gecommit
 
 ----
 **Datum: 9-4-2025**
-Omschrijving werk: 
+Omschrijving werk: readme verbeterd, grove versie; overzicht laatste taken; vertalen tool pagina;
+valideren html; limits whitespacing
 
 

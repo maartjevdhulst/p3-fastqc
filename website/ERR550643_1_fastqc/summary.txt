@@ -1,2 +1,0 @@
-PASS	Basic Statistics	ERR550643_1.fastq
-PASS	Adapter Content	ERR550643_1.fastq

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-limits class to edit the limits.txt file of the fastqc tool in the Tools directory. By changing
+limits class to edit the limits.txt file of the fastqc tool in the tools directory. By changing
 this file you change how many of the modules from the tool get executed and which warning and
 error limits they use.
 
@@ -132,7 +132,7 @@ class Limits:
 # 'sequence_length': ['1', '1'],
 # 'adapter': ['6', '11']}
 # #
-# new = Limits(limits, "../Tools/fastqc_v0.12.1/FastQC/Configuration/limits.txt")
+# new = Limits(limits, "../tools/fastqc_v0.12.1/FastQC/Configuration/limits.txt")
 #
 # # a = new.file_handler()
 # # print(new.change_limits())

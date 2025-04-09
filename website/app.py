@@ -62,7 +62,7 @@ def fastqc():
 
         try:
             # getting file from html form
-            file = request.files['myfile2']
+            file = request.files['file']
             file_name = os.path.splitext(file.filename)[0]
             extention = os.path.splitext(file.filename)[1]
             # checking if file has the correct file extention for the tool
@@ -93,23 +93,19 @@ def fastqc():
             'file': file.filename
         }
         #changing limits.txt file of the tool using user entered settings
-        limits = Limits(settings, "Tools/fastqc_v0.12.1/FastQC/Configuration/limits.txt")
-        print(limits)
+        Limits(settings, "tools/fastqc_v0.12.1/FastQC/Configuration/limits.txt")
         # executing fastqc tool via FastQC class
         FastQC(file.filename)
 
         # plotting output by using ReadingDataTextFile and plotting classes
-        # output = ReadingDataTextFile("static/fastqc_data_lang.txt")
         output = ReadingDataTextFile(f"{file_name}_fastqc/fastqc_data.txt")
-        results = { 'basic_table': output.table,
+
+        results_dict = {'results':output.results,
                     'encoding': output.dataframe.loc[2]['Value'],
                     'today': today,
-                    'filename': file.filename,
-                    'icons': output.icons,
-                    'overrepresented': output.overrepresented,
-                    'kmer': output.kmer,
-        }
-        return render_template('fastqc_page_results.html', **results)
+                    'filename': file.filename,}
+
+        return render_template('fastqc_page_results.html', **results_dict)
 
 @app.route("/uploads/<path:filename>", methods=['GET'])
 def access_file(filename):
@@ -138,7 +134,7 @@ def ncontent():
 @app.route('/overrepresented')
 def overrepresented():
     """makes the overrepresented help page by rendering the overrepresented file"""
-    return render_template('fastqc_help/9OverrepresentedSequences.html')
+    return render_template('fastqc_help/9_Overrepresented_Sequences.html')
 
 @app.route('/quality_base')
 def quality_base():
@@ -153,7 +149,7 @@ def sequence():
 @app.route('/gc_sequence')
 def gc_sequence():
     """makes the gc content help page by rendering the gc content file"""
-    return render_template('fastqc_help/5PerSequenceGCContent.html')
+    return render_template('fastqc_help/5_Per_Sequence_GC_Content.html')
 
 @app.route('/quality_sequence')
 def quality_sequence():
@@ -163,17 +159,17 @@ def quality_sequence():
 @app.route('/tile')
 def tile():
     """makes the tile help page by rendering the tile file"""
-    return render_template('fastqc_help/12PerTileSequenceQuality.html')
+    return render_template('fastqc_help/12_Per_Tile_Sequence_Quality.html')
 
 @app.route('/sequence_length')
 def sequence_length():
     """makes the sequence length help page by rendering sequence length file"""
-    return render_template('fastqc_help/7SequenceLengthDistribution.html')
+    return render_template('fastqc_help/7_Sequence_Length_Distribution.html')
 
 @app.route('/adapter')
 def adapter():
     """makes the adapter page by rendering adapter file"""
-    return render_template('fastqc_help/10AdapterContent.html')
+    return render_template('fastqc_help/10_Adapter_Content.html')
 
 
 if __name__ == '__main__':

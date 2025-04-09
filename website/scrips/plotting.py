@@ -11,12 +11,12 @@ __author__ = "Maartje van der Hulst"
 __date__ = 2025.3
 __version__ = 3.2
 
-
+import base64
+from io import BytesIO
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import colors
-
 
 
 class MakePlots:
@@ -96,11 +96,13 @@ class MakePlots:
         if x_labels:
             ax.set_xticks(x_labels[0], x_labels[1], fontsize=7)
 
+
+
         #saving with custom name in png format
-        plt.savefig(f"static/images/boxplot_{plotname}.png")
-        plt.close()
+        # plt.savefig(f"static/images/boxplot_{plotname}.png")
+        # plt.close()
         # plt.show()
-        return "boxplot made"
+        return self.create_website_plot(fig)
 
     def make_heatplot(self, tile_list, plotname=str):
         """
@@ -131,8 +133,10 @@ class MakePlots:
             fig.colorbar(heatmap, ax=ax)
 
         # plt.show()
-        plt.savefig(f"static/images/heatmap{plotname}.png")
-        plt.close()
+        # plt.savefig(f"static/images/heatmap{plotname}.png")
+        # plt.close()
+
+        return self.create_website_plot(fig)
 
     def make_lineplot(self, x_list, *y_lists, x_labels=None, title=None,
                       labels=None, plot_name=str):
@@ -168,10 +172,15 @@ class MakePlots:
         # adding legend and title
         ax.legend(loc='upper right')
         plt.title(title)
-        plt.savefig(f"static/images/lineplot_{plot_name}.png")
-        plt.close()
+
+
+        # plt.savefig(f"static/images/lineplot_{plot_name}.png")
+        # plt.close()
         #
         # plt.show()
+
+        return self.create_website_plot(fig)
+
 
     def make_html_table(self,dataframe):
         """
@@ -183,6 +192,22 @@ class MakePlots:
         # returning it in string format
         return f'{html_string}'
 
+    def create_website_plot(self, fig):
+        """
+        Given a figure create a stream that can be placed into a <img > tag
+        Use the following attribute value for the <img>tag
+        <img src="data:image/png;base64,{{ results }}">
+
+        :param fig: a figure created using mathlotlib
+        :return: png figure as stream to insert into html
+        """
+
+        figfile = BytesIO()
+        fig.savefig(figfile, format='png')
+        figfile.seek(0)  # rewind to beginning of file
+        website_png = base64.b64encode(figfile.getvalue()).decode('ascii')
+
+        return website_png
 
 
 class PrepPlotData(MakePlots):
@@ -197,6 +222,7 @@ class PrepPlotData(MakePlots):
 
         :param rows_list: list of strings containing the rows of the text file of one module
         """
+        # self.html_string = None
         self.rows_list = rows_list
         self.df_basics = ""
         super().__init__()
@@ -236,7 +262,7 @@ class PrepPlotData(MakePlots):
         # using parent class to turn the database into string containing the html table
         html_string = super().make_html_table(self.df_basics)
 
-        return html_string, self.df_basics
+        return html_string
 
     def make_base_sequence_quality_data(self, plotname=str):
         """
@@ -303,9 +329,9 @@ class PrepPlotData(MakePlots):
             x_ticks = None
 
         # using parent class to make boxplot from the processed data
-        super().make_boxplot(boxplot_data_list, meanplot_list, x_labels=x_ticks,
+        boxplot_stream = super().make_boxplot(boxplot_data_list, meanplot_list, x_labels=x_ticks,
                              plotname=plotname)
-        return 0
+        return boxplot_stream
 
     def make_per_tile(self, plotname=str):
         """
@@ -338,9 +364,9 @@ class PrepPlotData(MakePlots):
                 tile_list.append({'x': x, 'y': y, 'z': z}) #saving each line as a dict inside a list
 
         # using parent class to make a heatplot from the processed data
-        super().make_heatplot(tile_list, plotname)
+        tile_stream = super().make_heatplot(tile_list, plotname)
 
-        return 0
+        return tile_stream
 
     def make_sequence_quality(self, plotname=str):
         """
@@ -366,10 +392,10 @@ class PrepPlotData(MakePlots):
                         y_list.append(num)
 
         # using parent class to plot the processed data
-        super().make_lineplot(x_list, y_list, plot_name=plotname,
+        sequence_quality_stream = super().make_lineplot(x_list, y_list, plot_name=plotname,
                               labels=["Average Quality per read"])
 
-        return 0
+        return sequence_quality_stream
 
     def make_base_sequence(self, plotname=str):
         """
@@ -408,10 +434,11 @@ class PrepPlotData(MakePlots):
         x_ticks = [x for x in x_list if x>=10 and x%5 == 0 or x<10]
         base_num = [x for i, x in enumerate(base_num) if x > 10 and i % 5 == 0 or x < 10]
         # using parent class to plot the processed data
-        super().make_lineplot(x_list, T_base, C_base, A_base, G_base, labels=labels,
+        base_sequence_stream = super().make_lineplot(x_list, T_base, C_base, A_base, G_base,
+                                               labels=labels,
                               x_labels=[x_ticks, base_num], plot_name=plotname)
 
-        return 0
+        return base_sequence_stream
 
     def make_gc_content(self, plotname=str):
         """
@@ -434,10 +461,10 @@ class PrepPlotData(MakePlots):
                         count.append(float(num))
 
         # using parent class to plot the processed data
-        super().make_lineplot(mean_gc_perc, count, plot_name=plotname,
+        gc_stream = super().make_lineplot(mean_gc_perc, count, plot_name=plotname,
                               labels=["GC count per read"])
 
-        return 0
+        return gc_stream
 
     def make_n_count(self, plotname=str):
         """
@@ -464,9 +491,9 @@ class PrepPlotData(MakePlots):
                     elif i == 1:
                         n_count.append(float(num))
         # using parent class to plot the processed data
-        super().make_lineplot(base, n_count, plot_name=plotname, labels= ["%N"])
+        n_stream = super().make_lineplot(base, n_count, plot_name=plotname, labels= ["%N"])
 
-        return 0
+        return n_stream
 
     def make_sequence_length(self, plotname=str):
         """
@@ -497,9 +524,11 @@ class PrepPlotData(MakePlots):
             count = [0, count[0], 0]
 
         # using parent class to plot the processed data
-        super().make_lineplot(length, count, plot_name=plotname, labels=["Sequence Length"])
+        sequence_length_stream = super().make_lineplot(length, count, plot_name=plotname,
+                                               labels=["Sequence "
+                                                                                  "Length"])
 
-        return 0
+        return sequence_length_stream
 
     def make_sequence_duplication(self, plotname=str):
         """
@@ -536,12 +565,13 @@ class PrepPlotData(MakePlots):
         x_labels = [duplication, x_label]
         label = ["% Total sequences"]
         # using parent class to plot the processed data
-        super().make_lineplot(duplication, perc, x_labels=x_labels, labels=label,
+        sequence_duplication_steam = super().make_lineplot(duplication, perc, x_labels=x_labels,
+                                                  labels=label,
                               title=title, plot_name=plotname)
 
-        return 0
+        return sequence_duplication_steam
 
-    def make_overrepresented(self, plotname=str):
+    def make_overrepresented(self):
         """
         Takes the data from the overrepresented sequences module and turns those into a
         dictionary where the first row from the data is used as the keys. This is turned into a
@@ -617,8 +647,44 @@ class PrepPlotData(MakePlots):
         labels = ["Illumina Universal Adapter", "Illumina Small RNA 3' Adapter",
                   "Illumina Small RNA 5' Adapter", "Nextera Transposase Sequence", "PolyA", "PolyG"]
         # using parent class to plot the processed data
-        super().make_lineplot(base_list, illumina_universal_list, illumina_small_3_list,
+        adapter_stream = super().make_lineplot(base_list, illumina_universal_list,
+                                           illumina_small_3_list,
                               illumina_small_5_list, nextera_transposase_list, PolyA_list,
                               PolyG_list, labels=labels, plot_name=plotname)
 
-        return 0
+        return adapter_stream
+
+    def make_kmer(self):
+        """
+        Takes the data from the overrepresented sequences module and turns those into a
+        dictionary where the first row from the data is used as the keys. This is turned into a
+        dataframe, which is passed to the super function to make a html table.
+
+        :param plotname: string with the name of the plot
+        :return: string of the html table
+        """
+        header_list = []
+        entry = {}
+
+        for line in self.rows_list:
+            # skipping module title and column names
+            if not line.startswith(">>") and not line.startswith("#"):
+                line = line.rstrip().split("\t")
+                for i, num in enumerate(line):
+                    key = header_list[i]
+                    if key not in entry.keys():  # checking if already in dictionary
+                        entry[key] = [num]  # adding new key:value pair
+                    else:
+                        entry[key].append(num)  # extending already existing key:value pair
+            elif line.startswith("#"): #saving header seperate
+                line = line.lstrip("#").rstrip("\n").split("\t")
+                header_list.extend(line)
+
+        # using parent class to plot the processed data
+        if len(entry) > 0:
+            df_overrepresented = pd.DataFrame(entry)
+            html_string = super().make_html_table(df_overrepresented)
+        else: #when there are none
+            html_string = None
+
+        return html_string
