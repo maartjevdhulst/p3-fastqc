@@ -57,10 +57,7 @@ https://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 Background reseach references can be found in the project proposal or on the references page of 
 the web app.
 #### License
-The FastQC licence is available in this repository under 
-[licence] (website/tools/fastqc_v0.12.1/FastQC/LICENSE.txt)
-
-"website/tools/fastqc_v0.12.1/FastQC/LICENSE.txt"
+The FastQC licence is available in this repository under website/tools/fastqc_v0.12.1/FastQC/LICENSE.txt
 
 
 
